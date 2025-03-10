@@ -12,9 +12,9 @@ And are available at the following itch.io pages:
 - [Enemies 24x24 retro pixelart asset pack!](https://pixymoon.itch.io/cute-rpg-enemies)
 - [Dungeon Cute RPG 16x16 retro tileset asset pack!](https://pixymoon.itch.io/cute-rpg-dungeon)
 
-These follow a custom licence, by the auther, being the following :
+These follow a custom licence, by the author, being the following :
 
-```
+```text
 License:
 - You can use it on your project, personal or commercial.
 - Modify and edit it to fit your project.
