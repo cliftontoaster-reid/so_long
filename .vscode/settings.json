@@ -1,8 +1,8 @@
 {
-    "files.associations": {
-        "fcntl.h": "c",
-        "mlx.h": "c",
-        "format": "c",
-        "unistd.h": "c"
-    }
+  "files.associations": {
+    "fcntl.h": "c",
+    "mlx.h": "c",
+    "format": "c",
+    "unistd.h": "c"
+  }
 }
