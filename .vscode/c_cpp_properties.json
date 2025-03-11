@@ -2,7 +2,11 @@
   "configurations": [
     {
       "name": "Linux",
-      "includePath": ["${workspaceFolder}/**", "${workspaceFolder}/include"],
+      "includePath": [
+        "${workspaceFolder}/**",
+        "${workspaceFolder}/include",
+        "${workspaceFolder}/.cache/obj/tests/cunit/include"
+      ],
       "defines": [],
       "compilerPath": "/usr/lib64/ccache/clang",
       "cStandard": "c17",

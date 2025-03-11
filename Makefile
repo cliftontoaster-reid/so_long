@@ -150,9 +150,17 @@ uninstall:
 	@echo -e "$(GREEN)====================================\n    Uninstallation complete.\n====================================$(RESET)"
 
 test: all
-	@$(MAKE) -C tests OBJ_DIR=$(abspath $(OBJ_DIR))/tests CAC_DIR=$(abspath $(CAC_DIR)) \
-		LFT_DIR=$(abspath $(LFT_DIR)) MLX_DIR=$(abspath $(MLX_DIR)) BUILD_DIR=$(abspath $(BUILD_DIR)) \
-		INC_DIR=$(abspath $(INC_DIR)) -j$(NPROC)
+	@$(MAKE) -C $(abspath tests) \
+		OBJ_DIR=$(abspath $(OBJ_DIR))/tests \
+		CAC_DIR=$(abspath $(CAC_DIR)) \
+		LFT_DIR=$(abspath $(LFT_DIR)) \
+		MLX_DIR=$(abspath $(MLX_DIR)) \
+		BUILD_DIR=$(abspath $(BUILD_DIR)) \
+		INC_DIR=$(abspath $(INC_DIR)) \
+		CRUST_DIR=$(abspath $(CRUST_DIR)) \
+		EXT_OBJ="$(abspath $(OBJ))" \
+		-j$(NPROC)
+
 	@echo -e "$(CYAN)====================================\n         Tests executed.\n====================================$(RESET)"
 
 help:
