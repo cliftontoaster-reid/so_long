@@ -6,13 +6,12 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 11:27:03 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/11 11:22:29 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/11 13:09:50 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <fcntl.h>
-#include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
 
 #define BUFSIZE 1024
@@ -29,8 +28,8 @@ char	*strjoinfree(char *s1, const char *s2)
 	size_t	len2;
 	char	*new_str;
 
-	len1 = s1 ? strlen(s1) : 0;
-	len2 = s2 ? strlen(s2) : 0;
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
 	new_str = malloc(len1 + len2 + 1);
 	if (!new_str)
 	{
@@ -38,12 +37,37 @@ char	*strjoinfree(char *s1, const char *s2)
 		return (NULL);
 	}
 	if (s1)
-		memcpy(new_str, s1, len1);
+		ft_memcpy(new_str, s1, len1);
 	if (s2)
-		memcpy(new_str + len1, s2, len2);
+		ft_memcpy(new_str + len1, s2, len2);
 	new_str[len1 + len2] = '\0';
 	free(s1);
 	return (new_str);
+}
+
+/*
+ * Reads data chunks from a file descriptor and appends to the result buffer.
+ * Returns 1 on success, 0 on error.
+ */
+int	fs_read_chunks(int fd, char **result)
+{
+	char	buffer[BUFSIZE];
+	ssize_t	bytes_read;
+	char	*temp;
+
+	bytes_read = read(fd, buffer, BUFSIZE - 1);
+	while (bytes_read > 0)
+	{
+		buffer[bytes_read] = '\0';
+		temp = strjoinfree(*result, buffer);
+		if (!temp)
+			return (0);
+		*result = temp;
+		bytes_read = read(fd, buffer, BUFSIZE - 1);
+	}
+	if (bytes_read < 0)
+		return (0);
+	return (1);
 }
 
 /*
@@ -53,9 +77,6 @@ char	*strjoinfree(char *s1, const char *s2)
  */
 char	*fs_read_fd(int fd)
 {
-	char	buffer[BUFSIZE];
-	ssize_t	bytes_read;
-	char	*temp;
 	char	*result;
 
 	if (fd < 0)
@@ -64,15 +85,7 @@ char	*fs_read_fd(int fd)
 	if (!result)
 		return (NULL);
 	result[0] = '\0';
-	while ((bytes_read = read(fd, buffer, BUFSIZE - 1)) > 0)
-	{
-		buffer[bytes_read] = '\0';
-		temp = strjoinfree(result, buffer);
-		if (!temp)
-			return (NULL);
-		result = temp;
-	}
-	if (bytes_read < 0)
+	if (!fs_read_chunks(fd, &result))
 	{
 		free(result);
 		return (NULL);

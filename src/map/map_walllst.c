@@ -6,13 +6,13 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 10:13:51 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/11 10:14:58 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/11 13:01:21 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 
-int	**map_walllst(t_map *map)
+static int	**init_walllst(t_map *map)
 {
 	t_2d	pos;
 	int		**res;
@@ -33,6 +33,22 @@ int	**map_walllst(t_map *map)
 			free(res);
 			return (NULL);
 		}
+		pos.y++;
+	}
+	return (res);
+}
+
+int	**map_walllst(t_map *map)
+{
+	t_2d	pos;
+	int		**res;
+
+	res = init_walllst(map);
+	if (!res)
+		return (NULL);
+	ft_bzero(&pos, sizeof(t_2d));
+	while (pos.y < map->size.y)
+	{
 		while (pos.x < map->size.x)
 		{
 			res[pos.y][pos.x] = map_wallvar(map, pos);
