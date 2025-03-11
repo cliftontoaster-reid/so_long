@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:27:24 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/11 11:43:45 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/11 12:30:34 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,6 +244,62 @@ void test_find_neibours(void)
     ft_lstclear(&accessible, free);
 }
 
+void test_map_wallvar(void)
+{
+    t_map map;
+    char *str;
+    int wallvar;
+
+    str = (char *)"111\n1P1\n111\n";
+    map.map = ft_split(str, '\n');
+    map.size.x = 3;
+    map.size.y = 3;
+
+    t_2d pos = {1, 1};
+
+    wallvar = map_wallvar(&map, pos);
+
+    CU_ASSERT_EQUAL(wallvar, 0);
+
+    str = (char *)"111\n111\n111\n";
+    map.map = ft_split(str, '\n');
+
+    wallvar = map_wallvar(&map, pos);
+
+    CU_ASSERT_EQUAL(wallvar, 0x1 | 0x2 | 0x4 | 0x8);
+
+    str = (char *)"101\n111\n101\n";
+    map.map = ft_split(str, '\n');
+
+    wallvar = map_wallvar(&map, pos);
+
+    CU_ASSERT_EQUAL(wallvar, 0x2 | 0x4);
+}
+
+void test_map_walllst(void)
+{
+    t_map map;
+    char *str;
+    int **walllst;
+
+    str = (char *)"111\n1P1\n111\n";
+    map.map = ft_split(str, '\n');
+    map.size.x = 3;
+    map.size.y = 3;
+
+    walllst = map_walllst(&map);
+
+    CU_ASSERT_EQUAL(walllst[0][0], 0x4 | 0x8);
+    CU_ASSERT_EQUAL(walllst[0][1], 0x2 | 0x4);
+    CU_ASSERT_EQUAL(walllst[0][2], 0x2 | 0x8);
+    CU_ASSERT_EQUAL(walllst[1][0], 0x1 | 0x8);
+    CU_ASSERT_EQUAL(walllst[1][1], 0);
+    CU_ASSERT_EQUAL(walllst[1][2], 0x1 | 0x8);
+    CU_ASSERT_EQUAL(walllst[2][0], 0x1 | 0x4);
+    CU_ASSERT_EQUAL(walllst[2][1], 0x2 | 0x4);
+    CU_ASSERT_EQUAL(walllst[2][2], 0x1 | 0x2);
+}
+
 void run_map_checks(void)
 {
     CU_pSuite suite;
@@ -261,4 +317,6 @@ void run_map_checks(void)
     CU_ADD_TEST(suite, test_map_is_exit);
     CU_ADD_TEST(suite, test_map_is_valid);
     CU_ADD_TEST(suite, test_find_neibours);
+    CU_ADD_TEST(suite, test_map_wallvar);
+    CU_ADD_TEST(suite, test_map_walllst);
 }

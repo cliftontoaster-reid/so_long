@@ -53,6 +53,8 @@ SRC = \
 	$(SRC_DIR)map/map_find_player.c \
 	$(SRC_DIR)map/map_find_exit.c \
 	$(SRC_DIR)map/map_find_collectibles.c \
+	$(SRC_DIR)map/map_walllst.c \
+	$(SRC_DIR)map/map_wallvar.c \
 	\
 	$(SRC_DIR)utils/fs_exists.c \
 	$(SRC_DIR)utils/fs_read_file.c \

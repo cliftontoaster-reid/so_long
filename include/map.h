@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:36:35 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/10 15:20:40 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/11 10:18:28 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,7 @@ void		find_neibours(t_map *map, t_list **to_visit, t_list **visited,
 bool		is2d_inlist(t_list *list, t_2d *pos);
 t_2d		*t2dclone(t_2d src);
 char		*map_errstr(t_map_error err);
+int			map_wallvar(t_map *map, t_2d pos);
+int			**map_walllst(t_map *map);
 
 #endif
