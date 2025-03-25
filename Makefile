@@ -25,10 +25,32 @@ CYAN   = \033[0;36m
 RESET  = \033[0m
 
 # Compiler and flags
-CCFLAGS  = -Wall -Wextra -Werror -Wpedantic -g -O3 -MMD -MP -I$(INC_DIR) -I$(LFT_DIR) -I$(MLX_DIR) -I$(CRUST_DIR)/build/include \
-		   -Wno-strict-prototypes -fPIC
-LDFLAGS  = -L$(LFT_DIR) -L$(MLX_DIR) -lft -lmlx -lXext -lX11 -lm -fPIC \
-		   -Wl,-rpath,$(LFT_DIR) -Wl,-rpath,$(MLX_DIR) -Wl,-rpath,$(BUILD_DIR)
+# Build configuration
+DEBUG ?= 0
+SANITIZE ?= 0
+
+# Base compiler flags
+CCFLAGS = -Wall -Wextra -Werror -Wpedantic -MMD -MP \
+		  -I$(INC_DIR) -I$(LFT_DIR) -I$(MLX_DIR) -I$(CRUST_DIR)/build/include \
+		  -Wno-strict-prototypes -fPIC
+
+# Linker flags
+LDFLAGS = -L$(LFT_DIR) -L$(MLX_DIR) -lft -lmlx -lXext -lX11 -lm \
+		  -Wl,--as-needed -Wl,-rpath,$(LFT_DIR) -Wl,-rpath,$(MLX_DIR) -Wl,-rpath,$(BUILD_DIR)
+
+# Optimization flags based on build type
+ifeq ($(DEBUG), 1)
+	CCFLAGS += -g3 -O0 -DDEBUG
+	ifeq ($(SANITIZE), 1)
+		CCFLAGS += -fsanitize=address,undefined -fno-omit-frame-pointer
+		LDFLAGS += -fsanitize=address,undefined
+	endif
+else
+	CCFLAGS += -O3 -march=native -flto -ffast-math -funroll-loops -fomit-frame-pointer
+	CCFLAGS += -pipe -ffunction-sections -fdata-sections
+	LDFLAGS += -Wl,--gc-sections -flto
+endif
+
 
 LFT      = $(LFT_DIR)/libft.a
 MLX      = $(MLX_DIR)/libmlx.a
