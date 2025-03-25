@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 13:13:41 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/25 13:00:30 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/25 13:36:28 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -413,6 +413,24 @@ inline t_img	*wall_tbi(t_data *data, t_map *map, t_wall_vars vars,
 	}
 }
 
+inline t_img	*wall_no(t_data *data)
+{
+	t_img	*wall;
+	t_img	*none;
+
+	wall = img_new(32, 32);
+	if (!wall)
+		return (NULL);
+	none = get_wall(data, 1, 1);
+	if (!none)
+		return (NULL);
+	crust_img_draw(wall, none, (t_2d){0, 0});
+	crust_img_draw(wall, none, (t_2d){16, 0});
+	crust_img_draw(wall, none, (t_2d){0, 16});
+	crust_img_draw(wall, none, (t_2d){16, 16});
+	return (wall);
+}
+
 /**
 	* @brief Renders a wall tile at the specified position.
 	*
@@ -446,9 +464,12 @@ void	render_wall(t_data *data, t_map *map, t_2d pos, t_img *img)
 	else if (n == 3)
 		wall = wall_tbi(data, map, vars, img);
 	else
-		wall = NULL;
+		wall = wall_no(data);
 	if (wall)
-		crust_img_drop(wall);
+	{
+		crust_img_draw(img, wall, (t_2d){pos.x * 32, pos.y * 32});
+		img_free(wall);
+	}
 	else
 		log_error("Wall rendering failed, dumbass", __FILE__, __LINE__);
 	log_info("End of wall rendering process", __FILE__, __LINE__);
