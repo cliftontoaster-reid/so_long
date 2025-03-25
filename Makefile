@@ -1,4 +1,6 @@
 CC         = clang
+TIDY      = clang-tidy
+TIDY_OPTS = -checks=*
 
 # Directories and versions
 CAC_DIR    = .cache
@@ -165,11 +167,17 @@ test: all
 
 	@echo -e "$(CYAN)====================================\n         Tests executed.\n====================================$(RESET)"
 
+
+# Add this rule near your other targets
+tidy:
+	@echo -e "$(YELLOW)====================================\n      Running clang-tidy...\n====================================$(RESET)"
+	@$(TIDY) $(TIDY_OPTS) $(SRC) -- $(CCFLAGS)
+	@echo -e "$(GREEN)====================================\n      clang-tidy complete.\n====================================$(RESET)"
+
 help:
 	@echo -e "$(BLUE)Usage: make [all|static|shared|clean|nclean|fclean|re|qre|incl|install|uninstall|test|help]$(RESET)"
 	@echo -e "$(GREEN)all:$(RESET) Build both static and shared libraries."
-	@echo -e "$(GREEN)static:$(RESET) Build the static library."
-	@echo -e "$(GREEN)shared:$(RESET) Build the shared library."
+	@echo -e "$(GREEN)tidy:$(RESET) Run clang-tidy on source files."
 	@echo -e "$(YELLOW)clean:$(RESET) Remove object files only."
 	@echo -e "$(YELLOW)nclean:$(RESET) Remove object files and the build directory."
 	@echo -e "$(RED)fclean:$(RESET) Remove object files, build directory, and dependencies."

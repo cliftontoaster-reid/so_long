@@ -6,13 +6,13 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:59:39 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/10 15:21:31 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/18 10:16:55 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Crust/img/img.h"
+#include "Crust/img/set.h"
 #include "data.h"
-#include "img/img.h"
-#include "img/set.h"
 #include "libft.h"
 #include "map.h"
 #include "mlx.h"

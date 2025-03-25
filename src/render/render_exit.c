@@ -1,0 +1,62 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_exit.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/17 10:38:49 by lfiorell          #+#    #+#             */
+/*   Updated: 2025/03/18 13:59:58 by lfiorell         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "img/img.h"
+#include "img/set.h"
+#include "render.h"
+#include "utils.h"
+
+static inline bool	is_won(t_data *data)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < data->map->size.y)
+	{
+		j = 0;
+		while (j < data->map->size.x)
+		{
+			if (data->col_available[i][j])
+				return (false);
+			j++;
+		}
+		i++;
+	}
+	return (true);
+}
+
+void	render_exit(t_data *data, t_map *map, t_2d pos, t_img *img)
+{
+	t_2d	ipos;
+	t_2d	image_pos;
+	t_2d	image_size;
+	t_img	*door;
+
+	if (!data || !map || !img)
+		if (!(data && map && img))
+			ipos = map_find_exit(map);
+	if (ipos.x < 0 || ipos.y < 0 || pos.x < 0 || pos.y < 0 || ipos.x != pos.x
+		|| ipos.y != pos.y)
+		return ;
+	image_size = (t_2d){16, 14};
+	if (!is_won(data))
+		image_pos = (t_2d){16 * 11, 4};
+	else
+		image_pos = (t_2d){16 * 11, 4 + 14};
+	if (!data->set)
+		return ;
+	door = crust_set_get_img_offgrid(data->set, image_pos, image_size);
+	if (!door)
+		return ;
+	crust_img_draw(img, door, (t_2d){pos.x * 32, (pos.y * 32) + 4});
+}

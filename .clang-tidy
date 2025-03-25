@@ -1,0 +1,6 @@
+Checks: "*"
+ExtraArgs:
+  - -Iinclude
+  - -Ilibft
+  - -I.cache/minilibx
+  - -I.cache/crust/build/include
