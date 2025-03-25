@@ -6,12 +6,12 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:38:49 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/18 13:59:58 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:52:47 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "img/img.h"
-#include "img/set.h"
+#include "Crust/img/img.h"
+#include "Crust/img/set.h"
 #include "render.h"
 #include "utils.h"
 
@@ -43,20 +43,38 @@ void	render_exit(t_data *data, t_map *map, t_2d pos, t_img *img)
 	t_img	*door;
 
 	if (!data || !map || !img)
-		if (!(data && map && img))
-			ipos = map_find_exit(map);
+		return ;
+	ipos = map_find_exit(map);
 	if (ipos.x < 0 || ipos.y < 0 || pos.x < 0 || pos.y < 0 || ipos.x != pos.x
 		|| ipos.y != pos.y)
 		return ;
-	image_size = (t_2d){16, 14};
+	image_size = (t_2d){32, 24};
 	if (!is_won(data))
-		image_pos = (t_2d){16 * 11, 4};
+		image_pos = (t_2d){16 * 11, 4 + 28};
 	else
-		image_pos = (t_2d){16 * 11, 4 + 14};
+		image_pos = (t_2d){16 * 11, 8};
 	if (!data->set)
 		return ;
 	door = crust_set_get_img_offgrid(data->set, image_pos, image_size);
 	if (!door)
 		return ;
-	crust_img_draw(img, door, (t_2d){pos.x * 32, (pos.y * 32) + 4});
+	crust_img_draw(img, door, (t_2d){pos.x * 32, (pos.y * 32) + 8});
+}
+
+void	just_render_exit(t_data *data)
+{
+	t_2d	pos;
+
+	pos.y = 0;
+	while (pos.y < data->map->size.y)
+	{
+		pos.x = 0;
+		while (pos.x < data->map->size.x)
+		{
+			if (data->map->map[pos.y][pos.x] == 'E')
+				render_exit(data, data->map, pos, data->img);
+			pos.x++;
+		}
+		pos.y++;
+	}
 }

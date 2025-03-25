@@ -6,11 +6,23 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:55:14 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/21 12:47:50 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/25 14:11:00 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
+
+/* Basic neighbor directions */
+#define NEIGHBOR_N 0x01 /* North / Top:        0000 0001 */
+#define NEIGHBOR_S 0x02 /* South / Bottom:     0000 0010 */
+#define NEIGHBOR_W 0x04 /* West / Left:        0000 0100 */
+#define NEIGHBOR_E 0x08 /* East / Right:       0000 1000 */
+
+/* Extended neighbor directions */
+#define NEIGHBOR_NW 0x10 /* Northwest:         0001 0000 */
+#define NEIGHBOR_NE 0x20 /* Northeast:         0010 0000 */
+#define NEIGHBOR_SW 0x40 /* Southwest:         0100 0000 */
+#define NEIGHBOR_SE 0x80 /* Southeast:         1000 0000 */
 
 /// Finds the neighbours of a given position
 ///
@@ -42,19 +54,19 @@ inline uint8_t	find_neighbours(t_map *map, int x, int y)
 	neighbours = 0;
 	if (x > 0 && map->map[y][x - 1] == '1')
 	{
-		neighbours |= 0b00000001;
+		neighbours |= NEIGHBOR_W;
 	}
 	if (x < map->size.x - 1 && map->map[y][x + 1] == '1')
 	{
-		neighbours |= 0b00000010;
+		neighbours |= NEIGHBOR_E;
 	}
 	if (y > 0 && map->map[y - 1][x] == '1')
 	{
-		neighbours |= 0b00000100;
+		neighbours |= NEIGHBOR_N;
 	}
 	if (y < map->size.y - 1 && map->map[y + 1][x] == '1')
 	{
-		neighbours |= 0b00001000;
+		neighbours |= NEIGHBOR_S;
 	}
 	return (neighbours);
 }
@@ -102,20 +114,20 @@ uint8_t	find_neighbours_extended(t_map *map, int x, int y)
 	neighbours = find_neighbours(map, x, y);
 	if (x > 0 && y > 0 && map->map[y - 1][x - 1] == '1')
 	{
-		neighbours |= 0b00010000;
+		neighbours |= NEIGHBOR_NW;
 	}
 	if (x < map->size.x - 1 && y > 0 && map->map[y - 1][x + 1] == '1')
 	{
-		neighbours |= 0b00100000;
+		neighbours |= NEIGHBOR_NE;
 	}
 	if (x > 0 && y < map->size.y - 1 && map->map[y + 1][x - 1] == '1')
 	{
-		neighbours |= 0b01000000;
+		neighbours |= NEIGHBOR_SW;
 	}
 	if (x < map->size.x - 1 && y < map->size.y - 1 && map->map[y + 1][x
 		+ 1] == '1')
 	{
-		neighbours |= 0b10000000;
+		neighbours |= NEIGHBOR_SE;
 	}
 	return (neighbours);
 }
@@ -151,19 +163,19 @@ inline uint8_t	find_neibours_border(t_map *map, int x, int y)
 	neighbours = 0;
 	if (x == 0)
 	{
-		neighbours |= 0b00000001;
+		neighbours |= NEIGHBOR_W;
 	}
 	if (x == map->size.x - 1)
 	{
-		neighbours |= 0b00000010;
+		neighbours |= NEIGHBOR_E;
 	}
 	if (y == 0)
 	{
-		neighbours |= 0b00000100;
+		neighbours |= NEIGHBOR_N;
 	}
 	if (y == map->size.y - 1)
 	{
-		neighbours |= 0b00001000;
+		neighbours |= NEIGHBOR_S;
 	}
 	return (neighbours);
 }
@@ -209,19 +221,19 @@ inline uint8_t	find_neibours_border_extended(t_map *map, int x, int y)
 	neighbours = find_neibours_border(map, x, y);
 	if (x == 0 && y == 0)
 	{
-		neighbours |= 0b00010000;
+		neighbours |= NEIGHBOR_NW;
 	}
 	if (x == map->size.x - 1 && y == 0)
 	{
-		neighbours |= 0b00100000;
+		neighbours |= NEIGHBOR_NE;
 	}
 	if (x == 0 && y == map->size.y - 1)
 	{
-		neighbours |= 0b01000000;
+		neighbours |= NEIGHBOR_SW;
 	}
 	if (x == map->size.x - 1 && y == map->size.y - 1)
 	{
-		neighbours |= 0b10000000;
+		neighbours |= NEIGHBOR_SE;
 	}
 	return (neighbours);
 }

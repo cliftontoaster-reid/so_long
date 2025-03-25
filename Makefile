@@ -39,18 +39,9 @@ LDFLAGS = -L$(LFT_DIR) -L$(MLX_DIR) -lft -lmlx -lXext -lX11 -lm \
 		  -Wl,--as-needed -Wl,-rpath,$(LFT_DIR) -Wl,-rpath,$(MLX_DIR) -Wl,-rpath,$(BUILD_DIR)
 
 # Optimization flags based on build type
-ifeq ($(DEBUG), 1)
-	CCFLAGS += -g3 -O0 -DDEBUG
-	ifeq ($(SANITIZE), 1)
-		CCFLAGS += -fsanitize=address,undefined -fno-omit-frame-pointer
-		LDFLAGS += -fsanitize=address,undefined
-	endif
-else
-	CCFLAGS += -O3 -march=native -flto -ffast-math -funroll-loops -fomit-frame-pointer
-	CCFLAGS += -pipe -ffunction-sections -fdata-sections
-	LDFLAGS += -Wl,--gc-sections -flto
-endif
 
+#	CCFLAGS += -O3 -march=native -flto -ffast-math -funroll-loops -fomit-frame-pointer
+	CCFLAGS += -flto -O3 -g
 
 LFT      = $(LFT_DIR)/libft.a
 MLX      = $(MLX_DIR)/libmlx.a
@@ -88,6 +79,15 @@ SRC = \
 	$(SRC_DIR)utils/log_warning.c \
 	$(SRC_DIR)utils/log_debug.c \
 	\
+	$(SRC_DIR)render/pos_scale.c \
+	$(SRC_DIR)render/random.c \
+	$(SRC_DIR)render/render_floor.c \
+	$(SRC_DIR)render/render_cosmetic.c \
+	$(SRC_DIR)render/render_exit.c \
+	$(SRC_DIR)render/render_wall.c \
+	$(SRC_DIR)render/compute_wall_connections.c \
+	$(SRC_DIR)render/get_neighbour_count.c \
+	$(SRC_DIR)render/find_neibours.c \
 
 OBJ = $(addprefix $(OBJ_DIR)/so_long/, $(SRC:.c=.o))
 

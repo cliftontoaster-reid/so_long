@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 13:13:41 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/25 13:36:28 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:58:13 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@
 #include "render.h"
 #include "utils.h"
 
-#define SIDES_VALUE 0b00001111
-#define DIAGO_VALUE 0b11110000
-#define FULLL_VALUE 0b11111111
+#define SIDES_VALUE 0x0F
+#define DIAGO_VALUE 0xF0
+#define FULLL_VALUE 0xFF
 
-#define WALL_TOP 0b00000001
-#define WALL_BOTTOM 0b00000010
-#define WALL_LEFT 0b00000100
-#define WALL_RIGHT 0b00001000
+#define WALL_TOP 0x01
+#define WALL_BOTTOM 0x02
+#define WALL_LEFT 0x04
+#define WALL_RIGHT 0x08
 
 #define WALLBASE 8
 
@@ -48,13 +48,12 @@
  * @param img Pointer to the base image.
  * @return Pointer to the created wall image, or NULL on failure.
  */
-static inline t_img	*wall_hull(t_data *data, t_map *map, t_wall_vars vars,
-		t_img *img)
+inline t_img	*wall_hull(t_data *data)
 {
 	t_img	*wall;
 	t_img	*gay[4];
 
-	wall = img_new(32, 32);
+	wall = crust_img_new(data->mlx, 32, 32);
 	(void)"This is a comment made to annoy the norm";
 	gay[0] = crust_set_get_img_by_pos(data->set, (t_2d){WALLBASE, 0});
 	gay[1] = crust_set_get_img_by_pos(data->set, (t_2d){WALLBASE + 2, 0});
@@ -119,7 +118,7 @@ static inline t_2d	posadd(t_2d a, int x, int y)
  * @param y The y coordinate in the set.
  * @return Pointer to the retrieved wall image, or NULL on failure.
  */
-static inline t_img	*get_wall(t_data *data, int x, int y)
+inline t_img	*get_wall(t_data *data, int x, int y)
 {
 	t_2d	pos;
 	t_img	*img;
@@ -146,13 +145,12 @@ static inline t_img	*get_wall(t_data *data, int x, int y)
  * @return          Pointer to the newly created wall image,
  *                  or NULL if memory allocation fails
  */
-static inline t_img	*wall_tbone(t_data *data, t_map *map, t_wall_vars vars,
-		t_img *img)
+static inline t_img	*wall_tbone(t_data *data, t_wall_vars vars)
 {
 	t_img	*wall;
 	t_img	*gay[4];
 
-	wall = img_new(32, 32);
+	wall = crust_img_new(data->mlx, 32, 32);
 	if (!wall)
 		return (NULL);
 	if (vars.n & WALL_TOP)
@@ -237,8 +235,7 @@ static inline t_img	*wall_tbone(t_data *data, t_map *map, t_wall_vars vars,
  *
  * @return Pointer to the created wall image, or NULL on failure.
  */
-static inline t_img	*wall_t600_connected(t_data *data, t_map *map,
-		t_wall_vars vars, t_img *img)
+static inline t_img	*wall_t600_connected(t_data *data, t_wall_vars vars)
 {
 	t_img	*wall;
 	t_img	*gay[4];
@@ -271,13 +268,14 @@ static inline t_img	*wall_t600_connected(t_data *data, t_map *map,
 		gay[2] = get_wall(data, 0, 1);
 		gay[3] = get_wall(data, 1, 1);
 	}
-	wall = img_new(32, 32);
+	wall = crust_img_new(data->mlx, 32, 32);
 	if (!wall)
 		return (NULL);
 	crust_img_draw(wall, gay[0], (t_2d){0, 0});
 	crust_img_draw(wall, gay[1], (t_2d){16, 0});
 	crust_img_draw(wall, gay[2], (t_2d){0, 16});
 	crust_img_draw(wall, gay[3], (t_2d){16, 16});
+	return (wall);
 }
 
 /**
@@ -294,8 +292,7 @@ static inline t_img	*wall_t600_connected(t_data *data, t_map *map,
  *
  * @return Pointer to the created wall image, or NULL on failure.
  */
-static inline t_img	*wall_t600_lonely(t_data *data, t_map *map,
-		t_wall_vars vars, t_img *img)
+static inline t_img	*wall_t600_lonely(t_data *data, t_wall_vars vars)
 {
 	t_img	*wall;
 	t_img	*gay[4];
@@ -319,6 +316,9 @@ static inline t_img	*wall_t600_lonely(t_data *data, t_map *map,
 			__LINE__);
 	if (!(gay[0] && gay[1] && gay[2] && gay[3]))
 		return (NULL);
+	wall = crust_img_new(data->mlx, 32, 32);
+	if (!wall)
+		return (NULL);
 	crust_img_draw(wall, gay[0], (t_2d){0, 0});
 	crust_img_draw(wall, gay[1], (t_2d){16, 0});
 	crust_img_draw(wall, gay[2], (t_2d){0, 16});
@@ -341,7 +341,7 @@ static inline t_img	*wall_t600_lonely(t_data *data, t_map *map,
  *
  * @return Pointer to the created wall image, or NULL on failure.
  */
-t_img	*wall_t600(t_data *data, t_map *map, t_wall_vars vars, t_img *img)
+t_img	*wall_t600(t_data *data, t_wall_vars vars)
 {
 	t_img	*wall;
 	bool	connected;
@@ -350,11 +350,11 @@ t_img	*wall_t600(t_data *data, t_map *map, t_wall_vars vars, t_img *img)
 		&& vars.n & (WALL_LEFT | WALL_RIGHT);
 	if (connected)
 	{
-		wall = wall_t600_connected(data, map, vars, img);
+		wall = wall_t600_connected(data, vars);
 	}
 	else
 	{
-		wall = wall_t600_lonely(data, map, vars, img);
+		wall = wall_t600_lonely(data, vars);
 	}
 	return (wall);
 }
@@ -377,8 +377,7 @@ t_img	*wall_t600(t_data *data, t_map *map, t_wall_vars vars, t_img *img)
  * @note        This function appears incomplete as it doesn't assign the wall
  *              variable or include a return statement
  */
-inline t_img	*wall_tbi(t_data *data, t_map *map, t_wall_vars vars,
-		t_img *img)
+static inline t_img	*wall_tbi(t_data *data, t_wall_vars vars)
 {
 	t_img	*wall;
 	t_img	*gay[4];
@@ -411,6 +410,14 @@ inline t_img	*wall_tbi(t_data *data, t_map *map, t_wall_vars vars,
 		gay[2] = get_wall(data, 1, 1);
 		gay[3] = get_wall(data, 1, 2);
 	}
+	wall = crust_img_new(data->mlx, 32, 32);
+	if (!wall)
+		return (NULL);
+	crust_img_draw(wall, gay[0], (t_2d){0, 0});
+	crust_img_draw(wall, gay[1], (t_2d){16, 0});
+	crust_img_draw(wall, gay[2], (t_2d){0, 16});
+	crust_img_draw(wall, gay[3], (t_2d){16, 16});
+	return (wall);
 }
 
 inline t_img	*wall_no(t_data *data)
@@ -418,7 +425,7 @@ inline t_img	*wall_no(t_data *data)
 	t_img	*wall;
 	t_img	*none;
 
-	wall = img_new(32, 32);
+	wall = crust_img_new(data->mlx, 32, 32);
 	if (!wall)
 		return (NULL);
 	none = get_wall(data, 1, 1);
@@ -456,22 +463,40 @@ void	render_wall(t_data *data, t_map *map, t_2d pos, t_img *img)
 		return ;
 	n = get_neighbour_count(vars.n);
 	if (n == 0)
-		wall = wall_hull(data, map, vars, img);
+		wall = wall_hull(data);
 	else if (n == 1)
-		wall = wall_tbone(data, map, vars, img);
+		wall = wall_tbone(data, vars);
 	else if (n == 2)
-		wall = wall_t600(data, map, vars, img);
+		wall = wall_t600(data, vars);
 	else if (n == 3)
-		wall = wall_tbi(data, map, vars, img);
+		wall = wall_tbi(data, vars);
 	else
 		wall = wall_no(data);
 	if (wall)
 	{
 		crust_img_draw(img, wall, (t_2d){pos.x * 32, pos.y * 32});
-		img_free(wall);
+		crust_img_drop(wall);
 	}
 	else
 		log_error("Wall rendering failed, dumbass", __FILE__, __LINE__);
 	log_info("End of wall rendering process", __FILE__, __LINE__);
 	return ;
+}
+
+void	just_render_walls(t_data *data)
+{
+	t_2d	pos;
+
+	pos.y = 0;
+	while (pos.y < data->map->size.y)
+	{
+		pos.x = 0;
+		while (pos.x < data->map->size.x)
+		{
+			if (data->map->map[pos.y][pos.x] == '1')
+				render_wall(data, data->map, pos, data->img);
+			pos.x++;
+		}
+		pos.y++;
+	}
 }

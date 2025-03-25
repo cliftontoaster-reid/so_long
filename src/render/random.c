@@ -6,12 +6,13 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:18:19 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/11 14:23:11 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/25 13:51:15 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 

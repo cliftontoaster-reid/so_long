@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 13:16:40 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/21 15:24:40 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:54:49 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,12 @@ void		render(t_data *data, t_map *map);
 
 t_img		*create_floor(t_data *data);
 void		render_floor(t_data *data, t_map *map, t_2d pos, t_img *img);
+
+void		setup_cosmetics(t_data *data);
+void		render_cosmetics(t_data *data);
 void		render_cosmetic(t_data *data, t_map *map, t_2d pos, t_img *img);
+
+void		just_render_exit(t_data *data);
 void		render_exit(t_data *data, t_map *map, t_2d pos, t_img *img);
 
 typedef struct s_wall_vars
@@ -32,6 +37,7 @@ typedef struct s_wall_vars
 	t_2d	pos;
 }			t_wall_vars;
 
+void		just_render_walls(t_data *data);
 void		render_wall(t_data *data, t_map *map, t_2d pos, t_img *img);
 
 uint8_t		**compute_wall_connections(t_map *map);
@@ -195,9 +201,6 @@ int			get_neighbour_count(uint8_t neighbours);
 /// @return the number of neighbours
 int			get_neighbour_count_extended(uint8_t neighbours);
 /// ALL DUN
-t_img		*wall_hull(t_data *data, t_map *map, t_wall_vars vars, t_img *img);
-/// ALL DUN
-t_img		*wall_diagonal(t_data *data, t_map *map, t_wall_vars vars,
-				t_img *img);
+t_img		*wall_hull(t_data *data);
 
 #endif

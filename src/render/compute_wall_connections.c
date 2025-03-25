@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 16:40:21 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/18 10:31:11 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:19:13 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ static inline void	safe_set(uint8_t **connections, t_map *map, int posx,
 		connections[posy][posx] = 1;
 	}
 }
-
-#pragma unroll
 
 static inline uint8_t	**allocate_connections(t_map *map)
 {
@@ -51,8 +49,6 @@ static inline uint8_t	**allocate_connections(t_map *map)
 	return (connections);
 }
 
-#pragma unroll
-
 static inline void	set_wall_connection(uint8_t **connections, t_map *map,
 		int posx, int posy)
 {
@@ -77,8 +73,6 @@ static inline void	set_wall_connection(uint8_t **connections, t_map *map,
 	}
 }
 
-#pragma unroll
-
 uint8_t	**compute_wall_connections(t_map *map)
 {
 	uint8_t	**connections;
@@ -101,4 +95,3 @@ uint8_t	**compute_wall_connections(t_map *map)
 	}
 	return (connections);
 }
-#pragma unroll

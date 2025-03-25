@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 11:28:14 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/18 11:28:29 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:57:26 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@
 ///
 /// @param neighbours the bitfield representing the neighbours
 /// @return the number of neighbours
-inline int	get_neighbour_count(uint8_t neighbours)
+int	get_neighbour_count(uint8_t neighbours)
 {
 	int	count;
 
 	count = 0;
-	if (neighbours & 0b00000001)
+	if (neighbours & 1)
 		count++;
-	if (neighbours & 0b00000010)
+	if (neighbours & 2)
 		count++;
-	if (neighbours & 0b00000100)
+	if (neighbours & 4)
 		count++;
-	if (neighbours & 0b00001000)
+	if (neighbours & 8)
 		count++;
 	return (count);
 }
@@ -47,13 +47,13 @@ int	get_neighbour_count_extended(uint8_t neighbours)
 	int	count;
 
 	count = get_neighbour_count(neighbours);
-	if (neighbours & 0b00010000)
+	if (neighbours & 16)
 		count++;
-	if (neighbours & 0b00100000)
+	if (neighbours & 32)
 		count++;
-	if (neighbours & 0b01000000)
+	if (neighbours & 64)
 		count++;
-	if (neighbours & 0b10000000)
+	if (neighbours & 128)
 		count++;
 	return (count);
 }
