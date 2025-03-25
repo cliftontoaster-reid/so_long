@@ -6,10 +6,11 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:10:06 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/06 15:22:54 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/18 10:24:49 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "utils.h"
 
 void	log_debug(char *msg, char *file, int line)

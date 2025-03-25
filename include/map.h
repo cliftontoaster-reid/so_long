@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:36:35 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/11 10:18:28 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:36:44 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define MAP_H
 # define MAP_CHARS "01CEP"
 
+# include "Crust/img/img.h"
 # include "data.h"
-# include "img/img.h"
 # include "libft.h"
 # include <stdbool.h>
 
@@ -29,12 +29,11 @@
 # define ERR_MAP_ERROR_EXIT_MULTIPLE "Multiple exits found"
 # define ERR_MAP_ERROR_INVALID_PATH "No path from player to exit"
 
-typedef struct s_map
-{
-	char	**map;
-	t_2d	size;
-}			t_map;
-
+/// This function declaration is like that gym membership you keep paying for
+/// but never use. I'd sooner document my entire codebase than implement this.
+/// The odds of me removing this declaration are roughly the same as finding
+/// a semicolon in Python that actually does something. If you're desperate
+/// enough to call this function, the Stack Overflow search bar is that way →
 t_map		*map_from_file(char *file);
 t_map		*map_from_str(char *str);
 void		map_free(t_map *map);

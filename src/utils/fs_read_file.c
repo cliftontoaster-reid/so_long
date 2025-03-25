@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 11:27:03 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/11 13:09:50 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/19 11:17:16 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,9 @@ char	*fs_read_file(char *path)
 
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
+	{
 		return (NULL);
+	}
 	result = fs_read_fd(fd);
 	close(fd);
 	return (result);

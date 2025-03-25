@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 14:44:13 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/05 16:26:22 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/18 10:22:08 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,22 @@ static inline t_2d	map_getsize(char *map)
 	return (size);
 }
 
-t_map	*map_from_str(char *map)
+t_map	*map_from_str(char *str)
 {
 	t_map	*new;
 
-	if (map == NULL)
+	if (str == NULL)
 		return (NULL);
 	new = malloc(sizeof(t_map));
 	if (new == NULL)
 		return (NULL);
-	new->size = map_getsize(map);
+	new->size = map_getsize(str);
 	if (new->size.x == 0 || new->size.y == 0)
 	{
 		free(new);
 		return (NULL);
 	}
-	new->map = ft_split(map, '\n');
+	new->map = ft_split(str, '\n');
 	if (new->map == NULL)
 	{
 		free(new);
