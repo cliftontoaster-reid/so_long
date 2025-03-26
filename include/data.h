@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:08:20 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/26 13:23:12 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/26 14:35:39 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@
 # include "libft.h"
 # include <stdbool.h>
 
+typedef enum e_dir
+{
+	DOWN = 0,
+	LEFT = 1,
+	RIGHT = 2,
+	UP = 3,
+}			t_dir;
+
 typedef struct s_map
 {
 	char	**map;
@@ -26,12 +34,17 @@ typedef struct s_data
 {
 	void	*mlx;
 	void	*win;
+
 	t_set	*set;
+	t_set	*guy;
 	t_img	*img;
+	t_img	*floor;
 
 	bool	**col_available;
 	int8_t	**collectibles;
 	uint8_t	**wall_vars;
+	t_2d	player;
+	t_2d	last_player;
 
 	t_map	*map;
 	/// @brief I hate this code more than segfaults at 3am.

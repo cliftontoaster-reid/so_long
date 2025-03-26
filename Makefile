@@ -88,6 +88,7 @@ SRC = \
 	$(SRC_DIR)render/compute_wall_connections.c \
 	$(SRC_DIR)render/get_neighbour_count.c \
 	$(SRC_DIR)render/find_neibours.c \
+	$(SRC_DIR)render/render_guy.c \
 
 OBJ = $(addprefix $(OBJ_DIR)/so_long/, $(SRC:.c=.o))
 

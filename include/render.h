@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 13:16:40 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/26 13:23:06 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/26 14:44:31 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void		render_floor(t_data *data, t_map *map, t_2d pos, t_img *img);
 void		setup_cosmetics(t_data *data);
 void		render_cosmetics(t_data *data);
 void		render_cosmetic(t_data *data, t_map *map, t_2d pos, t_img *img);
+void		render_guy(t_data *data);
 
 void		just_render_exit(t_data *data);
 void		render_exit(t_data *data, t_map *map, t_2d pos, t_img *img);
