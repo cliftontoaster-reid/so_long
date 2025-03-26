@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:59:39 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/26 15:04:45 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/26 15:38:50 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,28 +28,7 @@ int	err(char *str)
 	return (1);
 }
 
-static inline void	render_floors(t_data *data)
-{
-	t_2d	pos;
-
-	data->floor = crust_img_new(data->mlx, data->map->size.x * 32,
-			data->map->size.y * 32);
-	if (!data->floor)
-		return ;
-	pos.y = 0;
-	while (pos.y < data->map->size.y)
-	{
-		pos.x = 0;
-		while (pos.x < data->map->size.x)
-		{
-			render_floor(data, data->map, pos, data->floor);
-			pos.x++;
-		}
-		pos.y++;
-	}
-}
-
-static inline int	render_map(t_data *data, char *map)
+static inline int	setup_assets(t_data *data, char *map)
 {
 	// parsing map & loading stuff
 	data->map = map_from_str(map);
@@ -62,6 +41,8 @@ static inline int	render_map(t_data *data, char *map)
 		return (err("Image set creation failed"));
 	data->img = crust_img_new(data->mlx, data->map->size.x * 32,
 			data->map->size.y * 32);
+	if (!data->img)
+		return (err("Image creation failed"));
 	/// character assets
 	data->guy = crust_set_from_xpm(data->mlx, "assets/images/guy.xpm",
 			(t_2d){24, 24});
@@ -69,23 +50,6 @@ static inline int	render_map(t_data *data, char *map)
 		return (err("Guy set creation failed"));
 	data->player = map_find_player(data->map);
 	data->last_player = (t_2d){data->player.x, data->player.y - 1};
-	/// DUN
-	if (!data->img)
-		return (err("Image creation failed"));
-	// rendering map
-	// rendering floor
-	render_floors(data);
-	crust_img_cpy(data->img, data->floor, (t_2d){0, 0}, (t_2d){data->img->width
-		* 32, data->img->height});
-	// rendering cosmetics
-	setup_cosmetics(data);
-	render_cosmetics(data);
-	// rendering exit
-	just_render_exit(data);
-	// rendering walls
-	just_render_walls(data);
-	// rendering GUY
-	render_guy(data);
 	return (0);
 }
 
@@ -110,8 +74,9 @@ int	main(int argc, char *argv[])
 	if (res == MAP_ERROR_NONE)
 	{
 		ft_printf("\033[34mMap '%s' valid\033[0m\n", argv[1]);
-		if (render_map(&data, map))
+		if (setup_assets(&data, map))
 			return (1);
+		render(&data, data.map);
 		// upscale image based on scale factor
 		scaled = crust_img_scale(data.img, (t_2d){data.map->size.x * 64,
 				data.map->size.y * 64}, CRUST_IMG_SCALE_NEAREST);

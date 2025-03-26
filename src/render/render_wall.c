@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 13:13:41 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/26 13:30:52 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/26 15:33:50 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -614,7 +614,7 @@ void	just_render_walls(t_data *data)
 		while (pos.x < data->map->size.x)
 		{
 			if (data->map->map[pos.y][pos.x] == '1' && !isgay(data, pos))
-				render_wall(data, data->map, pos, data->img);
+				render_wall(data, data->map, pos, data->floor);
 			pos.x++;
 		}
 		pos.y++;
