@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 13:16:40 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/26 13:02:12 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:23:06 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ typedef struct s_wall_vars
 {
 	uint8_t	n;
 	t_2d	pos;
-	/// @brief Darker then ever
-	bool	d;
 }			t_wall_vars;
 
 void		just_render_walls(t_data *data);

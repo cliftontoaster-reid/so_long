@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:42:56 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/25 16:22:14 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:33:34 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@
 // images[2] = (t_2d){4, 15};
 // images[3] = (t_2d){5, 15};
 
-static inline void	eeemages(t_2d *imgs)
+static inline void	eeemages(t_2d *imgs, t_data *data)
 {
-	imgs[0] = (t_2d){4, 14};
-	imgs[1] = (t_2d){5, 14};
-	imgs[2] = (t_2d){4, 15};
-	imgs[3] = (t_2d){5, 15};
+	imgs[0] = (t_2d){4 + (data->d * 8), 14};
+	imgs[1] = (t_2d){5 + (data->d * 8), 14};
+	imgs[2] = (t_2d){4 + (data->d * 8), 15};
+	imgs[3] = (t_2d){5 + (data->d * 8), 15};
 }
 
 void	init_cosmetic_position(t_data *data, t_2d pos)
@@ -76,7 +76,7 @@ void	render_cosmetic(t_data *data, t_map *map, t_2d pos, t_img *img)
 	t_img	*new;
 
 	(void)map;
-	eeemages(images);
+	eeemages(images, data);
 	if (data->collectibles[pos.y][pos.x] != -1)
 	{
 		img_to_draw = crust_set_get_img_by_pos(data->set,

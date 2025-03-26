@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:33:12 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/25 14:17:52 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:30:13 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,30 @@
 #include "Crust/img/set.h"
 #include "render.h"
 
-static inline t_img	*get_floor(t_set *set)
+static inline t_img	*get_floor(t_data *data)
 {
 	t_2d	images[9];
 	int		rand;
 
-	images[0] = (t_2d){2, 0};
-	images[1] = (t_2d){0, 1};
-	images[2] = (t_2d){1, 1};
-	images[3] = (t_2d){2, 1};
-	images[4] = (t_2d){0, 2};
-	images[5] = (t_2d){1, 2};
-	images[6] = (t_2d){2, 2};
-	images[7] = (t_2d){2, 3};
-	images[8] = (t_2d){2, 4};
+	images[0] = (t_2d){2, 0 + data->d * 5};
+	images[1] = (t_2d){0, 1 + data->d * 5};
+	images[2] = (t_2d){1, 1 + data->d * 5};
+	images[3] = (t_2d){2, 1 + data->d * 5};
+	images[4] = (t_2d){0, 2 + data->d * 5};
+	images[5] = (t_2d){1, 2 + data->d * 5};
+	images[6] = (t_2d){2, 2 + data->d * 5};
+	images[7] = (t_2d){2, 3 + data->d * 5};
+	images[8] = (t_2d){2, 4 + data->d * 5};
 	rand = ft_rand_int(0, 8);
 	(void)rand;
-	return (crust_set_get_img_by_pos(set, images[rand]));
+	return (crust_set_get_img_by_pos(data->set, images[rand]));
 }
 
-static inline void	draw_random(t_img *base, t_2d pos, t_set *set)
+static inline void	draw_random(t_img *base, t_2d pos, t_data *data)
 {
 	t_img	*random;
 
-	random = get_floor(set);
+	random = get_floor(data);
 	if (!random)
 		return ;
 	crust_img_draw(base, random, pos);
@@ -56,10 +56,10 @@ t_img	*create_floor(t_data *data)
 	poses[1] = (t_2d){16, 0};
 	poses[2] = (t_2d){0, 16};
 	poses[3] = (t_2d){16, 16};
-	draw_random(floors, poses[0], data->set);
-	draw_random(floors, poses[1], data->set);
-	draw_random(floors, poses[2], data->set);
-	draw_random(floors, poses[3], data->set);
+	draw_random(floors, poses[0], data);
+	draw_random(floors, poses[1], data);
+	draw_random(floors, poses[2], data);
+	draw_random(floors, poses[3], data);
 	return (floors);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 13:13:41 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/26 13:16:25 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:30:52 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,12 +186,14 @@ static inline t_2d	posadd(t_2d a, int x, int y)
  * @param y The y coordinate in the set.
  * @return Pointer to the retrieved wall image, or NULL on failure.
  */
-inline t_img	*get_wall(t_data *data, int x, int y)
+inline t_img	*get_wall(t_data *data, int x, int y, bool colour)
 {
 	t_2d	pos;
 	t_img	*img;
 
 	pos = (t_2d){WALLBASE + x, y};
+	if (colour)
+		pos.y += 5;
 	img = crust_set_get_img_by_pos(data->set, pos);
 	if (!img)
 		return (NULL);
@@ -223,31 +225,31 @@ static inline t_img	*wall_tbone(t_data *data, t_wall_vars vars)
 		return (NULL);
 	if (vars.n & WALL_TOP)
 	{
-		gay[0] = get_wall(data, 0, 1);
-		gay[1] = get_wall(data, 2, 1);
-		gay[2] = get_wall(data, 0, 2);
-		gay[3] = get_wall(data, 2, 2);
+		gay[0] = get_wall(data, 0, 1, data->d);
+		gay[1] = get_wall(data, 2, 1, data->d);
+		gay[2] = get_wall(data, 0, 2, data->d);
+		gay[3] = get_wall(data, 2, 2, data->d);
 	}
 	else if (vars.n & WALL_BOTTOM)
 	{
-		gay[0] = get_wall(data, 0, 0);
-		gay[1] = get_wall(data, 2, 0);
-		gay[2] = get_wall(data, 0, 1);
-		gay[3] = get_wall(data, 2, 1);
+		gay[0] = get_wall(data, 0, 0, data->d);
+		gay[1] = get_wall(data, 2, 0, data->d);
+		gay[2] = get_wall(data, 0, 1, data->d);
+		gay[3] = get_wall(data, 2, 1, data->d);
 	}
 	else if (vars.n & WALL_LEFT)
 	{
-		gay[0] = get_wall(data, 1, 0);
-		gay[1] = get_wall(data, 2, 0);
-		gay[2] = get_wall(data, 1, 2);
-		gay[3] = get_wall(data, 2, 2);
+		gay[0] = get_wall(data, 1, 0, data->d);
+		gay[1] = get_wall(data, 2, 0, data->d);
+		gay[2] = get_wall(data, 1, 2, data->d);
+		gay[3] = get_wall(data, 2, 2, data->d);
 	}
 	else if (vars.n & WALL_RIGHT)
 	{
-		gay[0] = get_wall(data, 0, 0);
-		gay[1] = get_wall(data, 1, 0);
-		gay[2] = get_wall(data, 0, 2);
-		gay[3] = get_wall(data, 1, 2);
+		gay[0] = get_wall(data, 0, 0, data->d);
+		gay[1] = get_wall(data, 1, 0, data->d);
+		gay[2] = get_wall(data, 0, 2, data->d);
+		gay[3] = get_wall(data, 1, 2, data->d);
 	}
 	crust_img_draw(wall, gay[0], (t_2d){0, 0});
 	crust_img_draw(wall, gay[1], (t_2d){16, 0});
@@ -316,35 +318,35 @@ static inline t_img	*wall_t600_connected(t_data *data, t_wall_vars vars,
 
 	n = vars.n;
 	if (!is600cornered(data, vars, pos))
-		return (crust_img_scale(get_wall(data, 1, 1), (t_2d){32, 32},
+		return (crust_img_scale(get_wall(data, 1, 1, false), (t_2d){32, 32},
 				CRUST_IMG_SCALE_NEAREST));
 	if ((n & WALL_LEFT) && (n & WALL_TOP))
 	{
-		gay[0] = get_wall(data, 1, 1);
-		gay[1] = get_wall(data, 1, 2);
-		gay[2] = get_wall(data, 1, 2);
-		gay[3] = get_wall(data, 2, 2);
+		gay[0] = get_wall(data, 1, 1, data->d);
+		gay[1] = get_wall(data, 1, 2, data->d);
+		gay[2] = get_wall(data, 1, 2, data->d);
+		gay[3] = get_wall(data, 2, 2, data->d);
 	}
 	else if ((n & WALL_LEFT) && (n & WALL_BOTTOM))
 	{
-		gay[0] = get_wall(data, 0, 1);
-		gay[1] = get_wall(data, 2, 0);
-		gay[2] = get_wall(data, 1, 1);
-		gay[3] = get_wall(data, 2, 1);
+		gay[0] = get_wall(data, 0, 1, data->d);
+		gay[1] = get_wall(data, 2, 0, data->d);
+		gay[2] = get_wall(data, 1, 1, data->d);
+		gay[3] = get_wall(data, 2, 1, data->d);
 	}
 	else if ((n & WALL_RIGHT) && (n & WALL_TOP))
 	{
-		gay[0] = get_wall(data, 0, 1);
-		gay[1] = get_wall(data, 1, 1);
-		gay[2] = get_wall(data, 0, 2);
-		gay[3] = get_wall(data, 1, 2);
+		gay[0] = get_wall(data, 0, 1, data->d);
+		gay[1] = get_wall(data, 1, 1, data->d);
+		gay[2] = get_wall(data, 0, 2, data->d);
+		gay[3] = get_wall(data, 1, 2, data->d);
 	}
 	else if ((n & WALL_RIGHT) && (n & WALL_BOTTOM))
 	{
-		gay[0] = get_wall(data, 0, 0);
-		gay[1] = get_wall(data, 1, 0);
-		gay[2] = get_wall(data, 0, 1);
-		gay[3] = get_wall(data, 1, 1);
+		gay[0] = get_wall(data, 0, 0, data->d);
+		gay[1] = get_wall(data, 1, 0, data->d);
+		gay[2] = get_wall(data, 0, 1, data->d);
+		gay[3] = get_wall(data, 1, 1, data->d);
 	}
 	wall = crust_img_new(data->mlx, 32, 32);
 	if (!wall)
@@ -379,46 +381,46 @@ static inline t_img	*wall_t600_lonely(t_data *data, t_wall_vars vars, t_2d pos)
 	{
 		if (!islesbian(data, posadd(pos, -1, 0)))
 		{
-			gay[0] = get_wall(data, 0, 1);
-			gay[2] = get_wall(data, 0, 1);
+			gay[0] = get_wall(data, 0, 1, data->d);
+			gay[2] = get_wall(data, 0, 1, data->d);
 		}
 		else
 		{
-			gay[0] = get_wall(data, 1, 1);
-			gay[2] = get_wall(data, 1, 1);
+			gay[0] = get_wall(data, 1, 1, data->d);
+			gay[2] = get_wall(data, 1, 1, data->d);
 		}
 		if (!islesbian(data, posadd(pos, 1, 0)))
 		{
-			gay[1] = get_wall(data, 2, 1);
-			gay[3] = get_wall(data, 2, 1);
+			gay[1] = get_wall(data, 2, 1, data->d);
+			gay[3] = get_wall(data, 2, 1, data->d);
 		}
 		else
 		{
-			gay[1] = get_wall(data, 1, 1);
-			gay[3] = get_wall(data, 1, 1);
+			gay[1] = get_wall(data, 1, 1, data->d);
+			gay[3] = get_wall(data, 1, 1, data->d);
 		}
 	}
 	else if (vars.n & WALL_LEFT)
 	{
 		if (!islesbian(data, posadd(pos, 0, -1)))
 		{
-			gay[0] = get_wall(data, 1, 0);
-			gay[1] = get_wall(data, 1, 0);
+			gay[0] = get_wall(data, 1, 0, data->d);
+			gay[1] = get_wall(data, 1, 0, data->d);
 		}
 		else
 		{
-			gay[0] = get_wall(data, 1, 1);
-			gay[1] = get_wall(data, 1, 1);
+			gay[0] = get_wall(data, 1, 1, data->d);
+			gay[1] = get_wall(data, 1, 1, data->d);
 		}
 		if (!islesbian(data, posadd(pos, 0, 1)))
 		{
-			gay[2] = get_wall(data, 1, 2);
-			gay[3] = get_wall(data, 1, 2);
+			gay[2] = get_wall(data, 1, 2, data->d);
+			gay[3] = get_wall(data, 1, 2, data->d);
 		}
 		else
 		{
-			gay[2] = get_wall(data, 1, 1);
-			gay[3] = get_wall(data, 1, 1);
+			gay[2] = get_wall(data, 1, 1, data->d);
+			gay[3] = get_wall(data, 1, 1, data->d);
 		}
 	}
 	else
@@ -493,34 +495,39 @@ static inline t_img	*wall_tbi(t_data *data, t_wall_vars vars, t_2d pos)
 	t_img	*gay[4];
 
 	if (isasexual(data, pos))
-		return (NULL);
-	if (!(vars.n & WALL_BOTTOM))
 	{
-		gay[0] = get_wall(data, 1, 1);
-		gay[1] = get_wall(data, 1, 1);
-		gay[2] = get_wall(data, 1, 2);
-		gay[3] = get_wall(data, 1, 2);
+		gay[0] = get_wall(data, 1, 1, data->d);
+		gay[1] = get_wall(data, 1, 1, data->d);
+		gay[2] = get_wall(data, 1, 1, data->d);
+		gay[3] = get_wall(data, 1, 1, data->d);
+	}
+	else if (!(vars.n & WALL_BOTTOM))
+	{
+		gay[0] = get_wall(data, 1, 1, data->d);
+		gay[1] = get_wall(data, 1, 1, data->d);
+		gay[2] = get_wall(data, 1, 2, data->d);
+		gay[3] = get_wall(data, 1, 2, data->d);
 	}
 	else if (!(vars.n & WALL_TOP))
 	{
-		gay[0] = get_wall(data, 1, 0);
-		gay[1] = get_wall(data, 1, 0);
-		gay[2] = get_wall(data, 1, 1);
-		gay[3] = get_wall(data, 1, 1);
+		gay[0] = get_wall(data, 1, 0, data->d);
+		gay[1] = get_wall(data, 1, 0, data->d);
+		gay[2] = get_wall(data, 1, 1, data->d);
+		gay[3] = get_wall(data, 1, 1, data->d);
 	}
 	else if (!(vars.n & WALL_RIGHT))
 	{
-		gay[0] = get_wall(data, 1, 1);
-		gay[1] = get_wall(data, 2, 1);
-		gay[2] = get_wall(data, 1, 1);
-		gay[3] = get_wall(data, 2, 1);
+		gay[0] = get_wall(data, 1, 1, data->d);
+		gay[1] = get_wall(data, 2, 1, data->d);
+		gay[2] = get_wall(data, 1, 1, data->d);
+		gay[3] = get_wall(data, 2, 1, data->d);
 	}
 	else if (!(vars.n & WALL_LEFT))
 	{
-		gay[0] = get_wall(data, 2, 1);
-		gay[1] = get_wall(data, 1, 1);
-		gay[2] = get_wall(data, 2, 1);
-		gay[3] = get_wall(data, 1, 1);
+		gay[0] = get_wall(data, 2, 1, data->d);
+		gay[1] = get_wall(data, 1, 1, data->d);
+		gay[2] = get_wall(data, 2, 1, data->d);
+		gay[3] = get_wall(data, 1, 1, data->d);
 	}
 	wall = crust_img_new(data->mlx, 32, 32);
 	if (!wall)
@@ -540,7 +547,7 @@ inline t_img	*wall_no(t_data *data)
 	wall = crust_img_new(data->mlx, 32, 32);
 	if (!wall)
 		return (NULL);
-	none = get_wall(data, 1, 1);
+	none = get_wall(data, 1, 1, false);
 	if (!none)
 		return (NULL);
 	crust_img_draw(wall, none, (t_2d){0, 0});

@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:08:20 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/25 16:20:03 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:23:12 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef struct s_data
 	/// it would be a mayonnaise and pickle sandwich
 	/// left in a hot car for 3 days.
 	bool	**rndwall;
+	/// @brief Darker then ever
+	bool	d;
 }			t_data;
 
 typedef enum e_trinary
