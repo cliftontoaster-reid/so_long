@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:26:37 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/06 15:38:22 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:36:52 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 static t_map_error	freenret(t_map *map, t_map_error ret, char *msg)
 {
 	if (msg)
-		log_warning(msg, __FILE__, __LINE__);
+		log_warning("%s", __FILE__, __LINE__, msg);
 	map_free(map);
 	return (ret);
 }

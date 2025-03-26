@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 13:13:41 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/25 15:58:13 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:16:25 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,63 @@ inline t_img	*wall_hull(t_data *data)
 }
 
 /**
+ * @brief Checks if a position is surrounded by walls or boundaries.
+ *
+ * This function determines if a given position has all four cardinal neighbors
+ * (top, bottom, left, right) either as walls or out of bounds. A position
+ * is considered "asexual" if it's completely surrounded, with no non-wall
+ * adjacent cells.
+ *
+ * @param data Pointer to the main data structure.
+ * @param pos The position to check.
+ * @return true if all four neighbors are walls or boundaries, false otherwise.
+ */
+static inline bool	isasexual(t_data *data, t_2d pos)
+{
+	int8_t	nei;
+
+	nei = find_neibours_border(data->map, pos.x, pos.y);
+	nei |= find_neighbours(data->map, pos.x, pos.y);
+	log_warning("NEIGHBOURS: %d", __FILE__, __LINE__, get_neighbour_count(nei));
+	if (nei == 0xF)
+		return (true);
+	return (false);
+}
+
+/**
+ * @brief Determines if a map position should be rendered as a wall.
+ *
+ * This function checks if a given position on the map should be rendered as a
+ * wall based on two criteria: whether it's a valid wall according to the base
+ * map data and whether it's flagged as a "random wall" that should be hidden.
+ *
+ * @param data Pointer to the main game data structure containing map and
+ *             random wall information.
+ * @param pos The 2D position (x, y) on the map to check.
+ * @return true if the position should be rendered as a wall, false otherwise.
+ *
+ * @note This function first checks if the position is a valid wall based on
+ *       the original map data. If it is, it then checks the random wall data
+ *       to determine if this specific wall should be hidden.
+ */
+static inline bool	islesbian(t_data *data, t_2d pos)
+{
+	if (!data)
+		return (true);
+	if (!data->map)
+		return (true);
+	if (pos.x < 0)
+		return (true);
+	if (pos.y < 0)
+		return (true);
+	if (pos.x >= data->map->size.x)
+		return (true);
+	if (pos.y >= data->map->size.y)
+		return (true);
+	return (data->map->map[pos.y][pos.x] == '1');
+}
+
+/**
  * @brief Checks if a position is considered a wall.
  *
  * This function determines if a given position is considered in the closet
@@ -84,11 +141,22 @@ inline t_img	*wall_hull(t_data *data)
  */
 static inline bool	isgay(t_data *data, t_2d pos)
 {
-	if (pos.x < 0 || pos.y < 0 || pos.x >= data->map->size.x
-		|| pos.y >= data->map->size.y)
+	if (!data)
+		return (true);
+	if (!data->map)
+		return (true);
+	if (pos.x < 0)
+		return (true);
+	if (pos.y < 0)
+		return (true);
+	if (pos.x >= data->map->size.x)
+		return (true);
+	if (pos.y >= data->map->size.y)
 		return (true);
 	if (data->map->map[pos.y][pos.x] != '1')
-		return (true);
+		return (false);
+	if (!data->rndwall || !data->rndwall[pos.y])
+		return (false);
 	return (!(data->rndwall[pos.y][pos.x]));
 }
 
@@ -155,63 +223,31 @@ static inline t_img	*wall_tbone(t_data *data, t_wall_vars vars)
 		return (NULL);
 	if (vars.n & WALL_TOP)
 	{
-		if (isgay(data, posadd(vars.pos, 0, -1)))
-		{
-			gay[0] = get_wall(data, 1, 3);
-			gay[1] = get_wall(data, 1, 3);
-		}
-		else
-		{
-			gay[0] = get_wall(data, 1, 1);
-			gay[1] = get_wall(data, 1, 1);
-		}
-		gay[2] = get_wall(data, 1, 2);
-		gay[3] = get_wall(data, 1, 2);
+		gay[0] = get_wall(data, 0, 1);
+		gay[1] = get_wall(data, 2, 1);
+		gay[2] = get_wall(data, 0, 2);
+		gay[3] = get_wall(data, 2, 2);
 	}
 	else if (vars.n & WALL_BOTTOM)
 	{
-		gay[0] = get_wall(data, 1, 0);
-		gay[1] = get_wall(data, 1, 0);
-		if (isgay(data, posadd(vars.pos, 0, 1)))
-		{
-			gay[2] = get_wall(data, 1, 1);
-			gay[3] = get_wall(data, 1, 1);
-		}
-		else
-		{
-			gay[2] = get_wall(data, 1, 2);
-			gay[3] = get_wall(data, 1, 2);
-		}
+		gay[0] = get_wall(data, 0, 0);
+		gay[1] = get_wall(data, 2, 0);
+		gay[2] = get_wall(data, 0, 1);
+		gay[3] = get_wall(data, 2, 1);
 	}
 	else if (vars.n & WALL_LEFT)
 	{
-		if (isgay(data, posadd(vars.pos, -1, 0)))
-		{
-			gay[0] = get_wall(data, 1, 3);
-			gay[2] = get_wall(data, 1, 3);
-		}
-		else
-		{
-			gay[0] = get_wall(data, 1, 1);
-			gay[2] = get_wall(data, 1, 1);
-		}
-		gay[1] = get_wall(data, 2, 1);
-		gay[3] = get_wall(data, 2, 1);
+		gay[0] = get_wall(data, 1, 0);
+		gay[1] = get_wall(data, 2, 0);
+		gay[2] = get_wall(data, 1, 2);
+		gay[3] = get_wall(data, 2, 2);
 	}
 	else if (vars.n & WALL_RIGHT)
 	{
-		if (isgay(data, posadd(vars.pos, 1, 0)))
-		{
-			gay[1] = get_wall(data, 1, 3);
-			gay[3] = get_wall(data, 1, 3);
-		}
-		else
-		{
-			gay[1] = get_wall(data, 1, 1);
-			gay[3] = get_wall(data, 1, 1);
-		}
-		gay[0] = get_wall(data, 0, 1);
-		gay[2] = get_wall(data, 0, 1);
+		gay[0] = get_wall(data, 0, 0);
+		gay[1] = get_wall(data, 1, 0);
+		gay[2] = get_wall(data, 0, 2);
+		gay[3] = get_wall(data, 1, 2);
 	}
 	crust_img_draw(wall, gay[0], (t_2d){0, 0});
 	crust_img_draw(wall, gay[1], (t_2d){16, 0});
@@ -220,13 +256,49 @@ static inline t_img	*wall_tbone(t_data *data, t_wall_vars vars)
 	return (wall);
 }
 
+static inline bool	is600cornered(t_data *data, t_wall_vars vars, t_2d pos)
+{
+	int8_t	n;
+
+	(void)vars;
+	n = find_neighbours_extended(data->map, pos.x, pos.y);
+	log_debug("Checking if cornered (%d, %d: 0x%x)", __FILE__, __LINE__, pos.x,
+		pos.y, n);
+	if ((n & WALL_LEFT) && (n & WALL_TOP))
+	{
+		return (n & NEIGHBOR_NW);
+	}
+	else if ((n & WALL_RIGHT) && (n & WALL_TOP))
+	{
+		return (n & NEIGHBOR_NE);
+	}
+	else if ((n & WALL_LEFT) && (n & WALL_BOTTOM))
+	{
+		return (n & NEIGHBOR_SW);
+	}
+	else if ((n & WALL_RIGHT) && (n & WALL_BOTTOM))
+	{
+		log_info("WALL SW: %d", __FILE__, __LINE__, NEIGHBOR_NW);
+		log_debug("NORTH CAT %d", __FILE__, __LINE__, n & isgay(data,
+				posadd(pos, -1, 0)));
+		log_debug("WEST CAT %d", __FILE__, __LINE__, n & isgay(data, posadd(pos,
+					0, -1)));
+		// if none of the two are gay, then it's a corner
+		if (!isgay(data, posadd(pos, -1, 0)) && !isgay(data, posadd(pos, 0,
+					-1)))
+			return (true);
+		return (n & NEIGHBOR_SE);
+	}
+	return (false);
+}
+
 /**
  * @brief Creates a wall image for connected corners.
  *
  * This function generates a 32x32 pixel wall image for a corner where two walls
  * connect (such as an L-shape). The corner appearance varies based on which
  * directions (top-left, top-right, bottom-left,
-	bottom-right) the walls connect.
+ * bottom-right) the walls connect.
  *
  * @param data Pointer to the main data structure.
  * @param map Pointer to the map structure.
@@ -235,33 +307,39 @@ static inline t_img	*wall_tbone(t_data *data, t_wall_vars vars)
  *
  * @return Pointer to the created wall image, or NULL on failure.
  */
-static inline t_img	*wall_t600_connected(t_data *data, t_wall_vars vars)
+static inline t_img	*wall_t600_connected(t_data *data, t_wall_vars vars,
+		t_2d pos)
 {
 	t_img	*wall;
 	t_img	*gay[4];
+	int8_t	n;
 
-	if (vars.n & (WALL_LEFT | WALL_TOP))
+	n = vars.n;
+	if (!is600cornered(data, vars, pos))
+		return (crust_img_scale(get_wall(data, 1, 1), (t_2d){32, 32},
+				CRUST_IMG_SCALE_NEAREST));
+	if ((n & WALL_LEFT) && (n & WALL_TOP))
 	{
 		gay[0] = get_wall(data, 1, 1);
 		gay[1] = get_wall(data, 1, 2);
 		gay[2] = get_wall(data, 1, 2);
 		gay[3] = get_wall(data, 2, 2);
 	}
-	else if (vars.n & (WALL_LEFT | WALL_BOTTOM))
+	else if ((n & WALL_LEFT) && (n & WALL_BOTTOM))
 	{
 		gay[0] = get_wall(data, 0, 1);
 		gay[1] = get_wall(data, 2, 0);
 		gay[2] = get_wall(data, 1, 1);
 		gay[3] = get_wall(data, 2, 1);
 	}
-	else if (vars.n & (WALL_RIGHT | WALL_TOP))
+	else if ((n & WALL_RIGHT) && (n & WALL_TOP))
 	{
 		gay[0] = get_wall(data, 0, 1);
 		gay[1] = get_wall(data, 1, 1);
 		gay[2] = get_wall(data, 0, 2);
 		gay[3] = get_wall(data, 1, 2);
 	}
-	else if (vars.n & (WALL_RIGHT | WALL_BOTTOM))
+	else if ((n & WALL_RIGHT) && (n & WALL_BOTTOM))
 	{
 		gay[0] = get_wall(data, 0, 0);
 		gay[1] = get_wall(data, 1, 0);
@@ -292,24 +370,56 @@ static inline t_img	*wall_t600_connected(t_data *data, t_wall_vars vars)
  *
  * @return Pointer to the created wall image, or NULL on failure.
  */
-static inline t_img	*wall_t600_lonely(t_data *data, t_wall_vars vars)
+static inline t_img	*wall_t600_lonely(t_data *data, t_wall_vars vars, t_2d pos)
 {
 	t_img	*wall;
 	t_img	*gay[4];
 
 	if (vars.n & WALL_TOP)
 	{
-		gay[0] = get_wall(data, 0, 1);
-		gay[1] = get_wall(data, 2, 1);
-		gay[2] = get_wall(data, 0, 1);
-		gay[3] = get_wall(data, 2, 1);
+		if (!islesbian(data, posadd(pos, -1, 0)))
+		{
+			gay[0] = get_wall(data, 0, 1);
+			gay[2] = get_wall(data, 0, 1);
+		}
+		else
+		{
+			gay[0] = get_wall(data, 1, 1);
+			gay[2] = get_wall(data, 1, 1);
+		}
+		if (!islesbian(data, posadd(pos, 1, 0)))
+		{
+			gay[1] = get_wall(data, 2, 1);
+			gay[3] = get_wall(data, 2, 1);
+		}
+		else
+		{
+			gay[1] = get_wall(data, 1, 1);
+			gay[3] = get_wall(data, 1, 1);
+		}
 	}
 	else if (vars.n & WALL_LEFT)
 	{
-		gay[0] = get_wall(data, 1, 0);
-		gay[1] = get_wall(data, 1, 0);
-		gay[2] = get_wall(data, 1, 2);
-		gay[3] = get_wall(data, 1, 2);
+		if (!islesbian(data, posadd(pos, 0, -1)))
+		{
+			gay[0] = get_wall(data, 1, 0);
+			gay[1] = get_wall(data, 1, 0);
+		}
+		else
+		{
+			gay[0] = get_wall(data, 1, 1);
+			gay[1] = get_wall(data, 1, 1);
+		}
+		if (!islesbian(data, posadd(pos, 0, 1)))
+		{
+			gay[2] = get_wall(data, 1, 2);
+			gay[3] = get_wall(data, 1, 2);
+		}
+		else
+		{
+			gay[2] = get_wall(data, 1, 1);
+			gay[3] = get_wall(data, 1, 1);
+		}
 	}
 	else
 		log_error("WHAT THE FUCK IS THAT GAY WALL DOING HERE", __FILE__,
@@ -341,7 +451,7 @@ static inline t_img	*wall_t600_lonely(t_data *data, t_wall_vars vars)
  *
  * @return Pointer to the created wall image, or NULL on failure.
  */
-t_img	*wall_t600(t_data *data, t_wall_vars vars)
+t_img	*wall_t600(t_data *data, t_wall_vars vars, t_2d pos)
 {
 	t_img	*wall;
 	bool	connected;
@@ -350,11 +460,11 @@ t_img	*wall_t600(t_data *data, t_wall_vars vars)
 		&& vars.n & (WALL_LEFT | WALL_RIGHT);
 	if (connected)
 	{
-		wall = wall_t600_connected(data, vars);
+		wall = wall_t600_connected(data, vars, pos);
 	}
 	else
 	{
-		wall = wall_t600_lonely(data, vars);
+		wall = wall_t600_lonely(data, vars, pos);
 	}
 	return (wall);
 }
@@ -377,11 +487,13 @@ t_img	*wall_t600(t_data *data, t_wall_vars vars)
  * @note        This function appears incomplete as it doesn't assign the wall
  *              variable or include a return statement
  */
-static inline t_img	*wall_tbi(t_data *data, t_wall_vars vars)
+static inline t_img	*wall_tbi(t_data *data, t_wall_vars vars, t_2d pos)
 {
 	t_img	*wall;
 	t_img	*gay[4];
 
+	if (isasexual(data, pos))
+		return (NULL);
 	if (!(vars.n & WALL_BOTTOM))
 	{
 		gay[0] = get_wall(data, 1, 1);
@@ -398,17 +510,17 @@ static inline t_img	*wall_tbi(t_data *data, t_wall_vars vars)
 	}
 	else if (!(vars.n & WALL_RIGHT))
 	{
-		gay[0] = get_wall(data, 0, 1);
-		gay[1] = get_wall(data, 1, 1);
-		gay[2] = get_wall(data, 0, 1);
-		gay[3] = get_wall(data, 1, 1);
-	}
-	else if (!(vars.n & WALL_LEFT))
-	{
 		gay[0] = get_wall(data, 1, 1);
 		gay[1] = get_wall(data, 2, 1);
 		gay[2] = get_wall(data, 1, 1);
-		gay[3] = get_wall(data, 1, 2);
+		gay[3] = get_wall(data, 2, 1);
+	}
+	else if (!(vars.n & WALL_LEFT))
+	{
+		gay[0] = get_wall(data, 2, 1);
+		gay[1] = get_wall(data, 1, 1);
+		gay[2] = get_wall(data, 2, 1);
+		gay[3] = get_wall(data, 1, 1);
 	}
 	wall = crust_img_new(data->mlx, 32, 32);
 	if (!wall)
@@ -467,9 +579,9 @@ void	render_wall(t_data *data, t_map *map, t_2d pos, t_img *img)
 	else if (n == 1)
 		wall = wall_tbone(data, vars);
 	else if (n == 2)
-		wall = wall_t600(data, vars);
+		wall = wall_t600(data, vars, pos);
 	else if (n == 3)
-		wall = wall_tbi(data, vars);
+		wall = wall_tbi(data, vars, pos);
 	else
 		wall = wall_no(data);
 	if (wall)
@@ -479,7 +591,8 @@ void	render_wall(t_data *data, t_map *map, t_2d pos, t_img *img)
 	}
 	else
 		log_error("Wall rendering failed, dumbass", __FILE__, __LINE__);
-	log_info("End of wall rendering process", __FILE__, __LINE__);
+	log_info("End of wall rendering process for wall at (%d, %d)", __FILE__,
+		__LINE__, pos.x, pos.y);
 	return ;
 }
 
@@ -493,7 +606,7 @@ void	just_render_walls(t_data *data)
 		pos.x = 0;
 		while (pos.x < data->map->size.x)
 		{
-			if (data->map->map[pos.y][pos.x] == '1')
+			if (data->map->map[pos.y][pos.x] == '1' && !isgay(data, pos))
 				render_wall(data, data->map, pos, data->img);
 			pos.x++;
 		}

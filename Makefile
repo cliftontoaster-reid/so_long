@@ -13,7 +13,7 @@ SRC_DIR    = src/
 BUILD_DIR  = build
 VERSION    = 0.1.0
 
-LFT_VER    = ef18a848e7ff89229ed47ebb177cbaee5b91e0be
+LFT_VER    = d04a425
 
 # ANSI Color Variables
 RED    = \033[0;31m

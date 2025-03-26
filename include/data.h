@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:08:20 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/24 13:44:12 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:20:03 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ typedef struct s_data
 	uint8_t	**wall_vars;
 
 	t_map	*map;
-	/// @brief I hate this code more than segfaults at 3am. This data structure
-	/// is so painful I'd rather debug Windows ME with a spoon while simultaneously
-	/// explaining recursion to my grandma over dial-up. If this code were food,
-	/// it would be a mayonnaise and pickle sandwich left in a hot car for 3 days.
+	/// @brief I hate this code more than segfaults at 3am.
+	/// This data structure is so painful I'd rather debug Windows ME
+	/// with a spoon while simultaneously explaining recursion to my
+	/// grandma over dial-up. If this code were food,
+	/// it would be a mayonnaise and pickle sandwich
+	/// left in a hot car for 3 days.
 	bool	**rndwall;
 }			t_data;
 

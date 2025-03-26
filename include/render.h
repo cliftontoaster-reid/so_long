@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 13:16:40 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/25 15:54:49 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:02:12 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,18 @@
 
 # include "data.h"
 # include "map.h"
+
+/* Basic neighbor directions */
+# define NEIGHBOR_N 0x01 /* North / Top:        0000 0001 */
+# define NEIGHBOR_S 0x02 /* South / Bottom:     0000 0010 */
+# define NEIGHBOR_W 0x04 /* West / Left:        0000 0100 */
+# define NEIGHBOR_E 0x08 /* East / Right:       0000 1000 */
+
+/* Extended neighbor directions */
+# define NEIGHBOR_NW 0x10 /* Northwest:         0001 0000 */
+# define NEIGHBOR_NE 0x20 /* Northeast:         0010 0000 */
+# define NEIGHBOR_SW 0x40 /* Southwest:         0100 0000 */
+# define NEIGHBOR_SE 0x80 /* Southeast:         1000 0000 */
 
 int			ft_rand_int(int x, int y);
 t_2d		pos_scale(t_2d pos, t_2d size, int scale);
@@ -35,6 +47,8 @@ typedef struct s_wall_vars
 {
 	uint8_t	n;
 	t_2d	pos;
+	/// @brief Darker then ever
+	bool	d;
 }			t_wall_vars;
 
 void		just_render_walls(t_data *data);

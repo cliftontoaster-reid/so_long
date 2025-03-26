@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 17:17:29 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/21 12:51:51 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:21:02 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 /// it has better chance of giving the computer quantum depression.
 ///  If code quality was a pizza, this would be a pineapple
 /// anchovy disaster served in a dumpster. My code comments are like my dating
-/// profile	- overly dramatic and a clear cry for help. Pretty sure this function is why aliens
+/// profile	- overly dramatic and a clear cry for help.
+/// Pretty sure this function is why aliens
 /// keep flying by Earth and saying "nope, not stopping there."
 bool	winnable(t_data *data)
 {

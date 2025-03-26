@@ -6,11 +6,12 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:59:39 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/25 15:54:55 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/26 12:57:46 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Crust/img/img.h"
+#include "Crust/img/scale.h"
 #include "Crust/img/set.h"
 #include "data.h"
 #include "libft.h"
@@ -23,7 +24,7 @@
 
 int	err(char *str)
 {
-	log_error(str, __FILE__, __LINE__);
+	log_error("%s", __FILE__, __LINE__, str);
 	return (1);
 }
 
@@ -73,10 +74,12 @@ static inline int	render_map(t_data *data, char *map)
 
 int	main(int argc, char *argv[])
 {
-	t_data	data;
 	char	*map;
 	int		res;
+	t_data	data;
+	t_img	*scaled;
 
+	ft_bzero(&data, sizeof(t_data));
 	data.mlx = mlx_init();
 	if (!data.mlx || argc != 2)
 		return (err("Usage: ./so_long [map.ber]"));
@@ -91,11 +94,17 @@ int	main(int argc, char *argv[])
 		ft_printf("\033[34mMap '%s' valid\033[0m\n", argv[1]);
 		if (render_map(&data, map))
 			return (1);
-		data.win = mlx_new_window(data.mlx, data.map->size.x * 32,
-				data.map->size.y * 32, "so_long");
+		// upscale image based on scale factor
+		scaled = crust_img_scale(data.img, (t_2d){data.map->size.x * 64,
+				data.map->size.y * 64}, CRUST_IMG_SCALE_NEAREST);
+		if (!scaled)
+			return (err("Image scaling failed"));
+		// WIN
+		data.win = mlx_new_window(data.mlx, scaled->width, scaled->height,
+				"so_long");
 		if (!data.win)
 			return (err("Window creation failed"));
-		mlx_put_image_to_window(data.mlx, data.win, data.img->img_ptr, 0, 0);
+		mlx_put_image_to_window(data.mlx, data.win, scaled->img_ptr, 0, 0);
 	}
 	else
 	{

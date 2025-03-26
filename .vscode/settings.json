@@ -4,6 +4,7 @@
     "*.hpp": "cpp",
     "*.c": "c",
     "*.cpp": "cpp",
+    "functional": "c"
   },
   "yaml.schemas": {
     "https://json.schemastore.org/clang-tidy.json": "file:///home/creid/Documents/42/_Games/so_long/.clang-tidy"
