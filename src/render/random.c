@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:18:19 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/25 13:51:15 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 10:00:07 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	ft_rand_init(void)
 
 	if (fd == -1)
 	{
-		fd = open("/dev/random", O_RDONLY);
+		fd = open("/dev/urandom", O_RDONLY);
 		if (fd == -1)
 		{
 			perror("open");

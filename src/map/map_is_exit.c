@@ -6,13 +6,14 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:53:48 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/05 14:05:10 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 10:10:12 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
+#include "utils.h"
 
-t_trinary	map_is_exit(t_map *map)
+static size_t	count_exits(t_map *map)
 {
 	size_t	exit_count;
 	int		i;
@@ -31,9 +32,26 @@ t_trinary	map_is_exit(t_map *map)
 		}
 		i++;
 	}
+	return (exit_count);
+}
+
+bool	map_is_exit(t_map *map)
+{
+	size_t	exit_count;
+	bool	is_valid;
+
+	is_valid = true;
+	exit_count = count_exits(map);
 	if (exit_count == 0)
-		return (ZONE);
+	{
+		log_error("No exit found", __FILE__, __LINE__);
+		is_valid = false;
+	}
 	if (exit_count > 1)
-		return (ZTWO);
-	return (ZERO);
+	{
+		log_error("Too many exits found", __FILE__, __LINE__);
+		is_valid = false;
+	}
+	log_debug("Exit count: %d", __FILE__, __LINE__, exit_count);
+	return (is_valid);
 }

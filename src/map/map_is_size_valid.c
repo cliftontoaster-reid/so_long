@@ -6,11 +6,12 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:39:47 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/05 14:05:18 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 10:11:32 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
+#include "utils.h"
 
 static inline void	ft_splitfree(char **str)
 {
@@ -35,31 +36,47 @@ static inline int	ft_strarr_len(char **arr)
 	return (i);
 }
 
-bool	map_is_size_valid(char *map)
+static bool	map_is_rectangular(char **map_lines)
 {
-	char	**map_lines;
-	int		i;
-	int		size;
+	int	i;
+	int	size;
 
-	map_lines = ft_split(map, '\n');
-	if (!map_lines)
-		return (false);
-	if (ft_strarr_len(map_lines) < 3)
-	{
-		ft_splitfree(map_lines);
-		return (false);
-	}
 	i = 0;
 	size = ft_strlen(map_lines[0]);
 	while (map_lines[i])
 	{
 		if (ft_strlen(map_lines[i]) != size)
 		{
-			ft_splitfree(map_lines);
+			log_error("Map not rectangular", __FILE__, __LINE__);
 			return (false);
 		}
 		i++;
 	}
-	ft_splitfree(map_lines);
 	return (true);
+}
+
+bool	map_is_size_valid(char *map)
+{
+	char	**map_lines;
+	bool	is_valid;
+
+	is_valid = true;
+	map_lines = ft_split(map, '\n');
+	if (!map_lines)
+	{
+		log_error("Map split failed", __FILE__, __LINE__);
+		return (false);
+	}
+	if (ft_strarr_len(map_lines) < 3)
+	{
+		log_error("Map too small", __FILE__, __LINE__);
+		ft_splitfree(map_lines);
+		is_valid = false;
+	}
+	else if (!map_is_rectangular(map_lines))
+		is_valid = false;
+	ft_splitfree(map_lines);
+	log_debug("Map size valid: %s", __FILE__, __LINE__,
+		is_valid ? "true" : "false");
+	return (is_valid);
 }

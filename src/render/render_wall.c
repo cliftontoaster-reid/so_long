@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 13:13:41 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/26 15:33:50 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 09:57:02 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -598,7 +598,7 @@ void	render_wall(t_data *data, t_map *map, t_2d pos, t_img *img)
 	}
 	else
 		log_error("Wall rendering failed, dumbass", __FILE__, __LINE__);
-	log_info("End of wall rendering process for wall at (%d, %d)", __FILE__,
+	log_debug("End of wall rendering process for wall at (%d, %d)", __FILE__,
 		__LINE__, pos.x, pos.y);
 	return ;
 }

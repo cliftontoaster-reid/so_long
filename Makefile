@@ -98,13 +98,13 @@ all: $(NAME)
 incl: $(BUILD_DIR)/include
 
 $(NAME): $(LFT) $(MLX) $(CRUST) $(OBJ) $(OBJ_DIR)/so_long/src/so_long.o
-	@$(CC) $(CCFLAGS) $(OBJ_DIR)/so_long/src/so_long.o $(OBJ) -o $(NAME) $(CRUST) $(LDFLAGS)
+	@$(CC) $(CCFLAGS) -DLOG_LEVEL=$(DEBUG) $(OBJ_DIR)/so_long/src/so_long.o $(OBJ) -o $(NAME) $(CRUST) $(LDFLAGS)
 	@echo -e "$(GREEN)====================================\n      $(NAME) ready.\n====================================$(RESET)"
 
 # Compile source files (dependency files generated alongside)
 $(OBJ_DIR)/so_long/%.o: %.c $(LFT) $(MLX)
 	@mkdir -p $(dir $@)
-	@$(CC) $(CCFLAGS) -c $< -o $@
+	@$(CC) $(CCFLAGS) -DLOG_LEVEL=$(DEBUG) -c $< -o $@
 	@echo -e "$(MAG)Compiled: $<$(RESET)"
 
 $(LFT):

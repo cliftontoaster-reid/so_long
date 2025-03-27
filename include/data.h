@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:08:20 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/26 14:35:39 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 10:05:07 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ typedef struct s_map
 {
 	char	**map;
 	t_2d	size;
+	char	*path;
 }			t_map;
+
 typedef struct s_data
 {
 	void	*mlx;

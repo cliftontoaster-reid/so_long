@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:59:39 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/26 15:38:50 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 09:58:40 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	main(int argc, char *argv[])
 	res = map_run_checks(map);
 	if (res == MAP_ERROR_NONE)
 	{
-		ft_printf("\033[34mMap '%s' valid\033[0m\n", argv[1]);
+		log_info("Map '%s' is valid", __FILE__, __LINE__, argv[1]);
 		if (setup_assets(&data, map))
 			return (1);
 		render(&data, data.map);
