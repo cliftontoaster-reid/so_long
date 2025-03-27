@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:52:30 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 10:13:30 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 10:23:11 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ bool	map_is_collectible(t_map *map)
 		log_error("No collectibles found", __FILE__, __LINE__);
 		is_valid = false;
 	}
-	log_debug("Collectible count: %d", __FILE__, __LINE__, collectible_count);
+	log_debug("Collectible count: %d", __FILE__, __LINE__,
+		(int)collectible_count);
 	return (is_valid);
 }

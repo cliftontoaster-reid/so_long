@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 14:30:32 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/26 15:06:59 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 10:21:00 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	render_guy(t_data *data)
 		log_error("Failed to get sprite", __FILE__, __LINE__);
 		return ;
 	}
-	pos.x = data->player.x * 32; // Center horizontally
-	pos.y = data->player.y * 32; // Center vertically
+	pos.x = data->player.x * 32;
+	pos.y = data->player.y * 32;
 	crust_img_draw(data->img, sprite, pos);
 }

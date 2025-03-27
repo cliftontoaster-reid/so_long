@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:39:47 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 10:11:32 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 10:24:33 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,9 @@ bool	map_is_size_valid(char *map)
 	else if (!map_is_rectangular(map_lines))
 		is_valid = false;
 	ft_splitfree(map_lines);
-	log_debug("Map size valid: %s", __FILE__, __LINE__,
-		is_valid ? "true" : "false");
+	if (!is_valid)
+		log_error("Map size invalid", __FILE__, __LINE__);
+	else
+		log_info("Map size is valid", __FILE__, __LINE__);
 	return (is_valid);
 }

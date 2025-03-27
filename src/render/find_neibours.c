@@ -6,13 +6,13 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:55:14 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/26 12:36:55 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 10:22:14 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
 
-/// Finds the neighbours of a given position
+/// @brief Finds the north, east, south, west neighbours of a given position
 ///
 /// This function is used to find the neighbours of a given position in the map.
 /// This is used to determine the connections of the walls in the map.
@@ -35,13 +35,11 @@
 /// @param x the x position
 /// @param y the y position
 /// @return the bitfield representing the neighbours
-inline uint8_t	find_neighbours(t_map *map, int x, int y)
+uint8_t	find_neibours_nesw(t_map *map, int x, int y)
 {
 	uint8_t	neighbours;
 
 	neighbours = 0;
-	if (!map || !map->map || !map->map[y])
-		return (neighbours);
 	if (x > 0)
 	{
 		if (map->map[y][x - 1] == '1')
@@ -62,6 +60,41 @@ inline uint8_t	find_neighbours(t_map *map, int x, int y)
 		if (map->map[y + 1][x] == '1')
 			neighbours |= NEIGHBOR_S;
 	}
+	return (neighbours);
+}
+
+/// @brief Finds the direct neighbours of a given position
+///
+/// This function is used to find the direct neighbours of a given position
+/// in the map. This is used to determine the connections of the walls in the
+/// map.
+///
+/// The return format is a uint8_t bitfield, where each bit represents a
+/// neighbour. The neighbours are represented as follows:
+///
+///   1
+/// 3   4
+///   2
+///
+/// Therefore the bitfield is represented as follows:
+///
+/// 1 = 0000 0001
+/// 2 = 0000 0010
+/// 3 = 0000 0100
+/// 4 = 0000 1000
+///
+/// @param map the map
+/// @param x the x position
+/// @param y the y position
+/// @return the bitfield representing the neighbours
+uint8_t	find_neighbours(t_map *map, int x, int y)
+{
+	uint8_t	neighbours;
+
+	neighbours = 0;
+	if (!map || !map->map)
+		return (neighbours);
+	neighbours |= find_neibours_nesw(map, x, y);
 	return (neighbours);
 }
 
