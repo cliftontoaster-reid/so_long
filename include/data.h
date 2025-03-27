@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:08:20 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 10:05:07 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 13:28:02 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ typedef struct s_map
 {
 	char	**map;
 	t_2d	size;
-	char	*path;
 }			t_map;
 
 typedef struct s_data
@@ -69,5 +68,6 @@ typedef enum e_trinary
 
 bool		winnable(t_data *data);
 void		delete_rndwall(bool **rndwall, t_map *map);
+void		delete_data(t_data *data);
 bool		**fill_rndwall(t_data *data, t_map *map);
 #endif
