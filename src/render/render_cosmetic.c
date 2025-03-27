@@ -85,6 +85,7 @@ void	render_cosmetic(t_data *data, t_map *map, t_2d pos, t_img *img)
 			return ;
 		new = crust_img_scale(img_to_draw, (t_2d){20, 20},
 				CRUST_IMG_SCALE_NEAREST);
+		crust_img_drop(img_to_draw);
 		if (!new)
 			return ;
 		log_debug("Drawing collectible", __FILE__, __LINE__);

@@ -6,11 +6,12 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 13:24:44 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 13:27:30 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 15:09:16 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "data.h"
+#include "mlx.h"
 
 static inline void	free_matrix(void **matrix, size_t size)
 {
@@ -56,5 +57,9 @@ void	delete_data(t_data *data)
 		drop_map(data->map);
 	if (data->rndwall)
 		free_matrix((void **)data->rndwall, data->map->size.y);
-	free(data);
+	if (data->mlx)
+	{
+		mlx_destroy_display(data->mlx);
+		free(data->mlx);
+	}
 }

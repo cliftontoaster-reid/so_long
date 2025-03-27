@@ -81,5 +81,9 @@ inline t_img	*wall_tbone(t_data *data, t_wall_vars vars)
 	crust_img_draw(wall, gay[1], (t_2d){16, 0});
 	crust_img_draw(wall, gay[2], (t_2d){0, 16});
 	crust_img_draw(wall, gay[3], (t_2d){16, 16});
+	crust_img_drop(gay[0]);
+	crust_img_drop(gay[1]);
+	crust_img_drop(gay[2]);
+	crust_img_drop(gay[3]);
 	return (wall);
 }

@@ -44,6 +44,10 @@ t_img	*create_wall_tile(t_data *data, t_wall_config config)
 	crust_img_draw(wall, segments[1], (t_2d){16, 0});
 	crust_img_draw(wall, segments[2], (t_2d){0, 16});
 	crust_img_draw(wall, segments[3], (t_2d){16, 16});
+	crust_img_drop(segments[0]);
+	crust_img_drop(segments[1]);
+	crust_img_drop(segments[2]);
+	crust_img_drop(segments[3]);
 	return (wall);
 }
 
@@ -62,6 +66,7 @@ inline t_img	*wall_no(t_data *data)
 	crust_img_draw(wall, none, (t_2d){16, 0});
 	crust_img_draw(wall, none, (t_2d){0, 16});
 	crust_img_draw(wall, none, (t_2d){16, 16});
+	crust_img_drop(none);
 	return (wall);
 }
 

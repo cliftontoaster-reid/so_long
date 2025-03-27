@@ -59,6 +59,7 @@ void	render_exit(t_data *data, t_map *map, t_2d pos, t_img *img)
 	if (!door)
 		return ;
 	crust_img_draw(img, door, (t_2d){pos.x * 32, (pos.y * 32) + 8});
+	crust_img_drop(door);
 }
 
 void	just_render_exit(t_data *data)

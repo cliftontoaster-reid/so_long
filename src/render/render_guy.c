@@ -21,6 +21,7 @@ static inline t_img	*get_sprite(t_data *data, t_dir direction, bool colour)
 {
 	t_2d	pos;
 	t_img	*img;
+	t_img	*scaled;
 
 	pos.y = direction;
 	if (colour)
@@ -34,7 +35,9 @@ static inline t_img	*get_sprite(t_data *data, t_dir direction, bool colour)
 		log_error("Failed to get image", __FILE__, __LINE__);
 		return (NULL);
 	}
-	return (crust_img_scale(img, (t_2d){30, 30}, CRUST_IMG_SCALE_NEAREST));
+	scaled = crust_img_scale(img, (t_2d){30, 30}, CRUST_IMG_SCALE_NEAREST);
+	crust_img_drop(img);
+	return (scaled);
 }
 
 static inline t_dir	get_direction(t_data *data)
@@ -70,4 +73,5 @@ void	render_guy(t_data *data)
 	pos.x = data->player.x * 32;
 	pos.y = data->player.y * 32;
 	crust_img_draw(data->img, sprite, pos);
+	crust_img_drop(sprite);
 }
