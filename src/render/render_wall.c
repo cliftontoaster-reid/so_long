@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 13:13:41 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 14:29:18 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 12:46:35 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,10 @@ t_img	*create_wall_tile(t_data *data, t_wall_config config)
 	crust_img_draw(wall, segments[1], (t_2d){16, 0});
 	crust_img_draw(wall, segments[2], (t_2d){0, 16});
 	crust_img_draw(wall, segments[3], (t_2d){16, 16});
-	crust_img_drop(segments[0]);
-	crust_img_drop(segments[1]);
-	crust_img_drop(segments[2]);
-	crust_img_drop(segments[3]);
 	return (wall);
 }
 
-t_img	*wall_no(t_data *data)
+inline t_img	*wall_no(t_data *data)
 {
 	t_img	*wall;
 	t_img	*none;
@@ -66,7 +62,6 @@ t_img	*wall_no(t_data *data)
 	crust_img_draw(wall, none, (t_2d){16, 0});
 	crust_img_draw(wall, none, (t_2d){0, 16});
 	crust_img_draw(wall, none, (t_2d){16, 16});
-	crust_img_drop(none);
 	return (wall);
 }
 

@@ -6,14 +6,14 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 10:59:45 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 14:30:05 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 11:17:01 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
 #include "utils.h"
 
-void	wall_t600_lonely_top(t_data *data, t_2d pos, t_img *gay[4])
+inline void	wall_t600_lonely_top(t_data *data, t_2d pos, t_img *gay[4])
 {
 	if (!islesbian(data, posadd(pos, -1, 0)))
 	{
@@ -37,7 +37,7 @@ void	wall_t600_lonely_top(t_data *data, t_2d pos, t_img *gay[4])
 	}
 }
 
-void	wall_t600_lonely_left(t_data *data, t_2d pos, t_img *gay[4])
+inline void	wall_t600_lonely_left(t_data *data, t_2d pos, t_img *gay[4])
 {
 	if (!islesbian(data, posadd(pos, 0, -1)))
 	{
@@ -61,7 +61,7 @@ void	wall_t600_lonely_left(t_data *data, t_2d pos, t_img *gay[4])
 	}
 }
 
-t_img	*wall_t600_lonely(t_data *data, t_wall_vars vars, t_2d pos)
+inline t_img	*wall_t600_lonely(t_data *data, t_wall_vars vars, t_2d pos)
 {
 	t_img	*wall;
 	t_img	*gay[4];
@@ -82,9 +82,5 @@ t_img	*wall_t600_lonely(t_data *data, t_wall_vars vars, t_2d pos)
 	crust_img_draw(wall, gay[1], (t_2d){16, 0});
 	crust_img_draw(wall, gay[2], (t_2d){0, 16});
 	crust_img_draw(wall, gay[3], (t_2d){16, 16});
-	crust_img_drop(gay[0]);
-	crust_img_drop(gay[1]);
-	crust_img_drop(gay[2]);
-	crust_img_drop(gay[3]);
 	return (wall);
 }

@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 10:47:02 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 14:26:59 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 12:44:06 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
  * @param img Pointer to the base image.
  * @return Pointer to the created wall image, or NULL on failure.
  */
-t_img	*wall_hull(t_data *data)
+inline t_img	*wall_hull(t_data *data)
 {
 	t_img	*wall;
 	t_img	*gay[4];

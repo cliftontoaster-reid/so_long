@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:38:49 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 14:26:59 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:31:46 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "render.h"
 #include "utils.h"
 
-static bool	is_won(t_data *data)
+static inline bool	is_won(t_data *data)
 {
 	int	i;
 	int	j;
@@ -59,7 +59,6 @@ void	render_exit(t_data *data, t_map *map, t_2d pos, t_img *img)
 	if (!door)
 		return ;
 	crust_img_draw(img, door, (t_2d){pos.x * 32, (pos.y * 32) + 8});
-	crust_img_drop(door);
 }
 
 void	just_render_exit(t_data *data)

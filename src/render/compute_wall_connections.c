@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 16:40:21 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 14:26:59 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:19:13 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "render.h"
 #include "utils.h"
 
-static void	safe_set(uint8_t **connections, t_map *map, int posx,
+static inline void	safe_set(uint8_t **connections, t_map *map, int posx,
 		int posy)
 {
 	if (posx >= 0 && posx < map->size.x && posy >= 0 && posy < map->size.y)
@@ -25,7 +25,7 @@ static void	safe_set(uint8_t **connections, t_map *map, int posx,
 	}
 }
 
-static uint8_t	**allocate_connections(t_map *map)
+static inline uint8_t	**allocate_connections(t_map *map)
 {
 	uint8_t	**connections;
 	int		y;
@@ -49,7 +49,7 @@ static uint8_t	**allocate_connections(t_map *map)
 	return (connections);
 }
 
-static void	set_wall_connection(uint8_t **connections, t_map *map,
+static inline void	set_wall_connection(uint8_t **connections, t_map *map,
 		int posx, int posy)
 {
 	if (map->map[posy][posx] == '1')

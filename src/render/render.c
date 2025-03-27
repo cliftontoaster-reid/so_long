@@ -6,13 +6,13 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:31:41 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 14:31:02 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 11:17:25 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
 
-static void	render_floors(t_data *data)
+static inline void	render_floors(t_data *data)
 {
 	t_2d	pos;
 

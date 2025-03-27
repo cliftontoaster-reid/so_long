@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:42:56 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 14:26:59 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:33:34 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 // images[2] = (t_2d){4, 15};
 // images[3] = (t_2d){5, 15};
 
-static void	eeemages(t_2d *imgs, t_data *data)
+static inline void	eeemages(t_2d *imgs, t_data *data)
 {
 	imgs[0] = (t_2d){4 + (data->d * 8), 14};
 	imgs[1] = (t_2d){5 + (data->d * 8), 14};
@@ -85,7 +85,6 @@ void	render_cosmetic(t_data *data, t_map *map, t_2d pos, t_img *img)
 			return ;
 		new = crust_img_scale(img_to_draw, (t_2d){20, 20},
 				CRUST_IMG_SCALE_NEAREST);
-		crust_img_drop(img_to_draw);
 		if (!new)
 			return ;
 		log_debug("Drawing collectible", __FILE__, __LINE__);
