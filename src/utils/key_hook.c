@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:03:21 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 16:02:51 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 16:32:46 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,15 @@ static void	move(t_data *data, int x, int y)
 	t_2d	new_pos;
 
 	new_pos = posadd(data->player, x, y);
-	if (data->map->map[new_pos.y][new_pos.x] != '1')
-	{
-		data->last_player = data->player;
-		data->player = new_pos;
-		data->moves++;
-		render(data, data->map);
-		log_debug("Player moved to %d, %d", __FILE__, __LINE__, data->player.x,
-			data->player.y);
-		log_info("Player has now made %d moves", __FILE__, __LINE__,
-			data->moves);
-	}
-	else
-		funnywall();
+	if (data->map->map[new_pos.y][new_pos.x] == '1')
+		return (funnywall());
+	data->last_player = data->player;
+	data->player = new_pos;
+	data->moves++;
+	render(data, data->map);
+	log_debug("Player moved to %d, %d", __FILE__, __LINE__, data->player.x,
+		data->player.y);
+	log_info("Player has now made %d moves", __FILE__, __LINE__, data->moves);
 }
 
 int	key_hook(int kc, t_data *data)
