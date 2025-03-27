@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:38:49 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/26 13:31:46 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 15:46:26 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,11 @@ void	just_render_exit(t_data *data)
 		while (pos.x < data->map->size.x)
 		{
 			if (data->map->map[pos.y][pos.x] == 'E')
+			{
 				render_exit(data, data->map, pos, data->img);
+				log_debug("Exit rendered at %d, %d", __FILE__, __LINE__, pos.x,
+					pos.y);
+			}
 			pos.x++;
 		}
 		pos.y++;

@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:08:20 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 13:28:02 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 15:37:03 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ typedef struct s_data
 	bool	**rndwall;
 	/// @brief Darker then ever
 	bool	d;
+
+	int		moves;
 }			t_data;
 
 typedef enum e_trinary
