@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:31:41 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/26 15:36:46 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 11:17:25 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static inline void	render_floors(t_data *data)
 	}
 }
 
-static void	prerender(t_data *data)
+void	prerender(t_data *data)
 {
 	setup_cosmetics(data);
 	render_floors(data);

@@ -90,6 +90,16 @@ SRC = \
 	$(SRC_DIR)render/find_neibours.c \
 	$(SRC_DIR)render/render_guy.c \
 	$(SRC_DIR)render/render.c \
+	\
+	$(SRC_DIR)render/wall/lgbt.c \
+	$(SRC_DIR)render/wall/utils.c \
+	$(SRC_DIR)render/wall/hull.c \
+	$(SRC_DIR)render/wall/tbone.c \
+	$(SRC_DIR)render/wall/t600.c \
+	$(SRC_DIR)render/wall/t600_con.c \
+	$(SRC_DIR)render/wall/t600_corn.c \
+	$(SRC_DIR)render/wall/t600_lon.c \
+	$(SRC_DIR)render/wall/bi.c \
 
 OBJ = $(addprefix $(OBJ_DIR)/so_long/, $(SRC:.c=.o))
 
