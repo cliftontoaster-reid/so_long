@@ -6,14 +6,14 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:01:16 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/18 18:21:58 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:26:59 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 #include "utils.h"
 
-static inline char	*owo(int errnum)
+static char	*owo(int errnum)
 {
 	if (errnum == MAP_ERROR_NONE)
 	{
@@ -38,7 +38,7 @@ static inline char	*owo(int errnum)
 	return ((void *)0);
 }
 
-static inline char	*uwu(int errnum)
+static char	*uwu(int errnum)
 {
 	if (errnum == MAP_ERROR_PLAYER_MULTIPLE)
 	{

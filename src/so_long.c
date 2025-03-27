@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:59:39 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 14:03:09 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:56:29 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	err(char *str)
 	return (1);
 }
 
-static inline int	setup_assets(t_data *data, char *map)
+static int	setup_assets(t_data *data, char *map)
 {
 	// parsing map & loading stuff
 	data->map = map_from_str(map);
@@ -50,20 +50,6 @@ static inline int	setup_assets(t_data *data, char *map)
 		return (err("Guy set creation failed"));
 	data->player = map_find_player(data->map);
 	data->last_player = (t_2d){data->player.x, data->player.y - 1};
-	return (0);
-}
-
-static inline int	setup_mlx(t_data *data)
-{
-	// mlx
-	data->mlx = mlx_init();
-	if (!data->mlx)
-		return (err("MLX initialization failed"));
-	data->win = mlx_new_window(data->mlx, data->map->size.x * 32,
-			data->map->size.y * 32, "so_long");
-	if (!data->win)
-		return (err("Window creation failed"));
-	mlx_key_hook(data->win, key_hook, data);
 	return (0);
 }
 
@@ -99,9 +85,11 @@ int	main(int argc, char *argv[])
 		// WIN
 		data.win = mlx_new_window(data.mlx, scaled->width, scaled->height,
 				"so_long");
+		mlx_key_hook(data.win, key_hook, &data);
 		if (!data.win)
 			return (err("Window creation failed"));
 		mlx_put_image_to_window(data.mlx, data.win, scaled->img_ptr, 0, 0);
+		crust_img_drop(scaled);
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:08:20 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 13:28:02 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:10:17 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_data
 	t_2d	last_player;
 
 	t_map	*map;
+	char	*raw_map;
 	/// @brief I hate this code more than segfaults at 3am.
 	/// This data structure is so painful I'd rather debug Windows ME
 	/// with a spoon while simultaneously explaining recursion to my

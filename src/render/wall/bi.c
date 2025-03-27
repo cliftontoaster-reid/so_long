@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 12:40:35 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 12:42:55 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:26:59 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
  * @note        This function appears incomplete as it doesn't assign the wall
  *              variable or include a return statement
  */
-inline t_img	*wall_tbi(t_data *data, t_wall_vars vars, t_2d pos)
+t_img	*wall_tbi(t_data *data, t_wall_vars vars, t_2d pos)
 {
 	t_wall_config	config;
 

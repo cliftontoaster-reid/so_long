@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 10:43:58 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 10:45:22 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:26:59 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  * @param y The y coordinate to add.
  * @return The new position after adding the coordinates.
  */
-inline t_2d	posadd(t_2d a, int x, int y)
+t_2d	posadd(t_2d a, int x, int y)
 {
 	return ((t_2d){a.x + x, a.y + y});
 }
@@ -38,7 +38,7 @@ inline t_2d	posadd(t_2d a, int x, int y)
  * @param y The y coordinate in the set.
  * @return Pointer to the retrieved wall image, or NULL on failure.
  */
-inline t_img	*get_wall(t_data *data, int x, int y, bool colour)
+t_img	*get_wall(t_data *data, int x, int y, bool colour)
 {
 	t_2d	pos;
 	t_img	*img;

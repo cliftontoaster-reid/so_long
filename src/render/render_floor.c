@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:33:12 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/26 13:30:13 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:26:59 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "Crust/img/set.h"
 #include "render.h"
 
-static inline t_img	*get_floor(t_data *data)
+static t_img	*get_floor(t_data *data)
 {
 	t_2d	images[9];
 	int		rand;
@@ -33,7 +33,7 @@ static inline t_img	*get_floor(t_data *data)
 	return (crust_set_get_img_by_pos(data->set, images[rand]));
 }
 
-static inline void	draw_random(t_img *base, t_2d pos, t_data *data)
+static void	draw_random(t_img *base, t_2d pos, t_data *data)
 {
 	t_img	*random;
 

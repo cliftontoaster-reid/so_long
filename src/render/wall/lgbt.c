@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 10:35:13 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 10:45:59 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:26:59 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
  * @param pos The position to check.
  * @return true if all four neighbors are walls or boundaries, false otherwise.
  */
-inline bool	isasexual(t_data *data, t_2d pos)
+bool	isasexual(t_data *data, t_2d pos)
 {
 	int8_t	nei;
 
@@ -53,7 +53,7 @@ inline bool	isasexual(t_data *data, t_2d pos)
  *       the original map data. If it is, it then checks the random wall data
  *       to determine if this specific wall should be hidden.
  */
-inline bool	islesbian(t_data *data, t_2d pos)
+bool	islesbian(t_data *data, t_2d pos)
 {
 	if (!data)
 		return (true);
@@ -82,7 +82,7 @@ inline bool	islesbian(t_data *data, t_2d pos)
  * @param pos The position to check.
  * @return true if the position is considered hidden, false otherwise.
  */
-inline bool	isgay(t_data *data, t_2d pos)
+bool	isgay(t_data *data, t_2d pos)
 {
 	if (!data)
 		return (true);

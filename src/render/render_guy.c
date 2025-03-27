@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 14:30:32 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 10:21:00 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:33:41 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "render.h"
 #include "utils.h"
 
-static inline t_img	*get_sprite(t_data *data, t_dir direction, bool colour)
+static t_img	*get_sprite(t_data *data, t_dir direction, bool colour)
 {
 	t_2d	pos;
 	t_img	*img;
@@ -34,10 +34,12 @@ static inline t_img	*get_sprite(t_data *data, t_dir direction, bool colour)
 		log_error("Failed to get image", __FILE__, __LINE__);
 		return (NULL);
 	}
-	return (crust_img_scale(img, (t_2d){30, 30}, CRUST_IMG_SCALE_NEAREST));
+	t_img *scale = crust_img_scale(img, (t_2d){30, 30}, CRUST_IMG_SCALE_NEAREST);
+	crust_img_drop(img);
+	return (scale);
 }
 
-static inline t_dir	get_direction(t_data *data)
+static t_dir	get_direction(t_data *data)
 {
 	t_2d	diff;
 
@@ -70,4 +72,5 @@ void	render_guy(t_data *data)
 	pos.x = data->player.x * 32;
 	pos.y = data->player.y * 32;
 	crust_img_draw(data->img, sprite, pos);
+	crust_img_drop(sprite);
 }
