@@ -6,13 +6,38 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:03:21 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 15:42:21 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 16:02:51 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
 #include "utils.h"
 #include <stdio.h>
+
+static void	funnywall(void)
+{
+	char	*file_content;
+	char	**messages;
+	int		count;
+	int		i;
+
+	file_content = fs_read_file("assets/text/funnywall.txt");
+	if (!file_content)
+		return ;
+	messages = ft_split(file_content, '\n');
+	free(file_content);
+	if (!messages)
+		return ;
+	count = 0;
+	while (messages[count])
+		count++;
+	if (count > 0)
+		log_warning("%s", __FILE__, __LINE__, messages[ft_rand_int(0, count)]);
+	i = 0;
+	while (messages[i])
+		free(messages[i++]);
+	free(messages);
+}
 
 static void	move(t_data *data, int x, int y)
 {
@@ -30,6 +55,8 @@ static void	move(t_data *data, int x, int y)
 		log_info("Player has now made %d moves", __FILE__, __LINE__,
 			data->moves);
 	}
+	else
+		funnywall();
 }
 
 int	key_hook(int kc, t_data *data)
