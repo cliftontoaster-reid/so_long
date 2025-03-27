@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 11:18:01 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 10:20:41 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 13:33:27 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,8 @@ void	log_info(char *format, char *file, int line,
 			...) __attribute__((format(printf, 1, 4)));
 void	log_debug(char *format, char *file, int line,
 			...) __attribute__((format(printf, 1, 4)));
+
+/// @brief K thanks bye
+/// @param data no
+void	kthxbye(t_data *data);
 #endif

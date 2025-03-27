@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:59:39 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 09:58:40 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/27 14:03:09 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,20 @@ static inline int	setup_assets(t_data *data, char *map)
 		return (err("Guy set creation failed"));
 	data->player = map_find_player(data->map);
 	data->last_player = (t_2d){data->player.x, data->player.y - 1};
+	return (0);
+}
+
+static inline int	setup_mlx(t_data *data)
+{
+	// mlx
+	data->mlx = mlx_init();
+	if (!data->mlx)
+		return (err("MLX initialization failed"));
+	data->win = mlx_new_window(data->mlx, data->map->size.x * 32,
+			data->map->size.y * 32, "so_long");
+	if (!data->win)
+		return (err("Window creation failed"));
+	mlx_key_hook(data->win, key_hook, data);
 	return (0);
 }
 
