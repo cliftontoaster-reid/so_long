@@ -9,12 +9,7 @@ RUN apt-get update && \
     libx11-dev libglfw3-dev libglfw3 \
     xorg-dev libbsd-dev clang mold \
     git autoconf automake libtool gcc make \
-    libpthread-stubs0-dev libasound2-dev \
-    libpulse-dev libsndio-dev \
-    libroar-dev libaudio-dev \
-    libaudiofile-dev \
-    libxau-dev libslang2-dev \
-    libalsa-ocaml-dev libasound2-plugins
+    pkg-config libpulse-dev libasound2-dev
 
 WORKDIR /app
 

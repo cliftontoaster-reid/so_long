@@ -8,8 +8,11 @@ OBJ_DIR    = $(CAC_DIR)/obj
 LFT_DIR    = libft
 MLX_DIR    = $(CAC_DIR)/minilibx
 CRUST_DIR  = $(CAC_DIR)/crust
-LIBAO_DIR  = $(CAC_DIR)/libao
 OPUS_DIR   = $(CAC_DIR)/opus-1.5.2
+OPENAL_DIR = $(CAC_DIR)/openal-soft
+
+OPENAL_INC = $(OPENAL_DIR)/include
+OPUS_INC = $(OPUS_DIR)/include
 
 INC_DIR    = include/
 SRC_DIR    = src/
@@ -35,11 +38,10 @@ SANITIZE ?= 0
 # Base compiler flags
 CCFLAGS = -Wall -Wextra -Werror -Wpedantic -MMD -MP \
 		  -I$(INC_DIR) -I$(LFT_DIR) -I$(MLX_DIR) -I$(CRUST_DIR)/build/include \
-		  -Wno-strict-prototypes -fPIC
+		  -Wno-strict-prototypes -fPIC -I$(OPENAL_INC) -I$(OPUS_INC) \
 
 # Linker flags
 LDFLAGS = -L$(LFT_DIR) -L$(MLX_DIR) -lft -lmlx -lXext -lX11 -lm \
-		  -L$(LIBAO_DIR)/src/.libs -lao \
 		  -L$(OPUS_DIR)/.libs -lopus \
 		  -Wl,--as-needed -Wl,-rpath,$(LFT_DIR) -Wl,-rpath,$(MLX_DIR) -Wl,-rpath,$(BUILD_DIR)
 
@@ -51,11 +53,8 @@ CCFLAGS += -flto -O3 -g
 LFT      = $(LFT_DIR)/libft.a
 MLX      = $(MLX_DIR)/libmlx.a
 CRUST    = $(CRUST_DIR)/build/libcrust.a
-LIBAO    = $(LIBAO_DIR)/src/.libs/libao.a
 OPUS     = $(OPUS_DIR)/.libs/libopus.a
-
-LIBAO_INC = $(LIBAO_DIR)/include/ao
-OPUS_INC = $(OPUS_DIR)/include
+OPENAL   = $(OPENAL_DIR)/build/libopenal.so
 
 NAME     = so_long
 
@@ -136,7 +135,7 @@ build: $(NAME)
 
 incl: $(BUILD_DIR)/include
 
-$(NAME): $(LIBAO) $(OPUS) $(LFT) $(MLX) $(CRUST) $(OBJ) $(OBJ_DIR)/so_long/src/so_long.o
+$(NAME): $(OPENAL) $(OPUS) $(LFT) $(MLX) $(CRUST) $(OBJ) $(OBJ_DIR)/so_long/src/so_long.o
 	@$(CC) $(CCFLAGS) -DLOG_LEVEL=$(DEBUG) $(OBJ_DIR)/so_long/src/so_long.o $(OBJ) -o $(NAME) $(CRUST) $(LDFLAGS)
 	@echo -e "$(GREEN)====================================\n      $(NAME) ready.\n====================================$(RESET)"
 
@@ -177,18 +176,6 @@ $(CRUST):
 	@$(MAKE) -C $(CRUST_DIR) OBJ_DIR=$(abspath $(OBJ_DIR))/crust CFLAGS+=" -fPIC" -j$(NPROC)
 	@echo -e "$(GREEN)====================================\n    crust ready.\n====================================$(RESET)"
 
-$(LIBAO):
-	@mkdir -p $(CAC_DIR)
-	@if [ ! -d "$(MLX_DIR)" ]; then \
-		echo -e "$(YELLOW)====================================\n    Cloning libao...\n====================================$(RESET)"; \
-		git clone https://github.com/xiph/libao $(LIBAO_DIR); \
-	fi
-	@cd $(LIBAO_DIR) && git checkout 20dc8ed9fa4605f5c25e7496ede42e8ba6468225
-	@cd $(LIBAO_DIR) && ./autogen.sh
-	@cd $(LIBAO_DIR) && ./configure --enable-static --disable-shared
-	@cd $(LIBAO_DIR) && make -j$(NPROC)
-	@echo -e "$(GREEN)====================================\n    libao ready.\n====================================$(RESET)"
-
 $(OPUS):
 	@mkdir -p $(CAC_DIR)
 # Download tar ball
@@ -203,6 +190,17 @@ $(OPUS):
 	@cd $(CAC_DIR)/opus-1.5.2 && ./configure --enable-static --disable-shared
 	@cd $(CAC_DIR)/opus-1.5.2 && make -j$(NPROC)
 	@echo -e "$(GREEN)====================================\n    opus ready.\n====================================$(RESET)"
+
+$(OPENAL):
+	@mkdir -p $(CAC_DIR)
+	# Clone OpenAL Soft repository
+	@echo -e "$(YELLOW)====================================\n    Cloning OpenAL Soft...\n====================================$(RESET)"
+	@if [ ! -d "$(OPENAL_DIR)" ]; then \
+		git clone https://github.com/kcat/openal-soft $(OPENAL_DIR); \
+	fi
+	@cd $(OPENAL_DIR)/build && cmake .. -DCMAKE_BUILD_TYPE=Release
+	@cd $(OPENAL_DIR)/build && make -j$(NPROC)
+	@echo -e "$(GREEN)====================================\n    OpenAL Soft ready.\n====================================$(RESET)"
 
 clean:
 	@rm -rf $(OBJ_DIR)
