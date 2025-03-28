@@ -95,6 +95,7 @@ SRC = \
 	$(SRC_DIR)render/find_neibours.c \
 	$(SRC_DIR)render/render_guy.c \
 	$(SRC_DIR)render/render.c \
+	$(SRC_DIR)render/cosmetic_init.c \
 	\
 	$(SRC_DIR)render/wall/lgbt.c \
 	$(SRC_DIR)render/wall/utils.c \
