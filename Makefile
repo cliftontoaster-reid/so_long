@@ -8,6 +8,9 @@ OBJ_DIR    = $(CAC_DIR)/obj
 LFT_DIR    = libft
 MLX_DIR    = $(CAC_DIR)/minilibx
 CRUST_DIR  = $(CAC_DIR)/crust
+LIBAO_DIR  = $(CAC_DIR)/libao
+OPUS_DIR   = $(CAC_DIR)/opus-1.5.2
+
 INC_DIR    = include/
 SRC_DIR    = src/
 BUILD_DIR  = build
@@ -36,16 +39,23 @@ CCFLAGS = -Wall -Wextra -Werror -Wpedantic -MMD -MP \
 
 # Linker flags
 LDFLAGS = -L$(LFT_DIR) -L$(MLX_DIR) -lft -lmlx -lXext -lX11 -lm \
+		  -L$(LIBAO_DIR)/src/.libs -lao \
+		  -L$(OPUS_DIR)/.libs -lopus \
 		  -Wl,--as-needed -Wl,-rpath,$(LFT_DIR) -Wl,-rpath,$(MLX_DIR) -Wl,-rpath,$(BUILD_DIR)
 
 # Optimization flags based on build type
 
-#	CCFLAGS += -O3 -march=native -flto -ffast-math -funroll-loops -fomit-frame-pointer
-	CCFLAGS += -flto -O3 -g
+CCFLAGS += -O3 -march=native -flto -ffast-math -funroll-loops -fomit-frame-pointer
+CCFLAGS += -flto -O3 -g
 
 LFT      = $(LFT_DIR)/libft.a
 MLX      = $(MLX_DIR)/libmlx.a
 CRUST    = $(CRUST_DIR)/build/libcrust.a
+LIBAO    = $(LIBAO_DIR)/src/.libs/libao.a
+OPUS     = $(OPUS_DIR)/.libs/libopus.a
+
+LIBAO_INC = $(LIBAO_DIR)/include/ao
+OPUS_INC = $(OPUS_DIR)/include
 
 NAME     = so_long
 
@@ -115,11 +125,18 @@ SRC = \
 
 OBJ = $(addprefix $(OBJ_DIR)/so_long/, $(SRC:.c=.o))
 
-all: $(NAME)
+all:
+# Preparing build environment
+	@echo -e "$(YELLOW)====================================\n      Preparing build environment...\n====================================$(RESET)"
+	@docker build -t solongbuilder -f tools/Dockerfile . &> /dev/null
+	@echo -e "$(YELLOW)====================================\n      Build environment ready.\n====================================$(RESET)"
+	@docker run --rm -v $$(pwd):/app:Z --user $$(id -u):$$(id -g) -w /app solongbuilder make build
+
+build: $(NAME)
 
 incl: $(BUILD_DIR)/include
 
-$(NAME): $(LFT) $(MLX) $(CRUST) $(OBJ) $(OBJ_DIR)/so_long/src/so_long.o
+$(NAME): $(LIBAO) $(OPUS) $(LFT) $(MLX) $(CRUST) $(OBJ) $(OBJ_DIR)/so_long/src/so_long.o
 	@$(CC) $(CCFLAGS) -DLOG_LEVEL=$(DEBUG) $(OBJ_DIR)/so_long/src/so_long.o $(OBJ) -o $(NAME) $(CRUST) $(LDFLAGS)
 	@echo -e "$(GREEN)====================================\n      $(NAME) ready.\n====================================$(RESET)"
 
@@ -159,6 +176,33 @@ $(CRUST):
 	fi
 	@$(MAKE) -C $(CRUST_DIR) OBJ_DIR=$(abspath $(OBJ_DIR))/crust CFLAGS+=" -fPIC" -j$(NPROC)
 	@echo -e "$(GREEN)====================================\n    crust ready.\n====================================$(RESET)"
+
+$(LIBAO):
+	@mkdir -p $(CAC_DIR)
+	@if [ ! -d "$(MLX_DIR)" ]; then \
+		echo -e "$(YELLOW)====================================\n    Cloning libao...\n====================================$(RESET)"; \
+		git clone https://github.com/xiph/libao $(LIBAO_DIR); \
+	fi
+	@cd $(LIBAO_DIR) && git checkout 20dc8ed9fa4605f5c25e7496ede42e8ba6468225
+	@cd $(LIBAO_DIR) && ./autogen.sh
+	@cd $(LIBAO_DIR) && ./configure --enable-static --disable-shared
+	@cd $(LIBAO_DIR) && make -j$(NPROC)
+	@echo -e "$(GREEN)====================================\n    libao ready.\n====================================$(RESET)"
+
+$(OPUS):
+	@mkdir -p $(CAC_DIR)
+# Download tar ball
+	@echo -e "$(YELLOW)====================================\n    Downloading opus...\n====================================$(RESET)"
+	@curl -o $(CAC_DIR)/opus.tar.gz https://ftp.osuosl.org/pub/xiph/releases/opus/opus-1.5.2.tar.gz
+# Extract tar ball
+	@echo -e "$(YELLOW)====================================\n    Extracting opus...\n====================================$(RESET)"
+	@tar -xzf $(CAC_DIR)/opus.tar.gz -C $(CAC_DIR)
+# Build opus
+	@echo -e "$(YELLOW)====================================\n    Building opus...\n====================================$(RESET)"
+	@cd $(CAC_DIR)/opus-1.5.2 && cmake .
+	@cd $(CAC_DIR)/opus-1.5.2 && ./configure --enable-static --disable-shared
+	@cd $(CAC_DIR)/opus-1.5.2 && make -j$(NPROC)
+	@echo -e "$(GREEN)====================================\n    opus ready.\n====================================$(RESET)"
 
 clean:
 	@rm -rf $(OBJ_DIR)
