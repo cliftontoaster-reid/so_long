@@ -220,6 +220,12 @@ bonus:
 		exit 1; \
 	fi
 	@echo -e "$(YELLOW)====================================\n      Switching to bonus branch...\n====================================$(RESET)"
+	@if git diff --quiet && git diff --cached --quiet; then \
+		echo -e "$(BLUE)Working directory clean, no need to stash.$(RESET)"; \
+	else \
+		echo -e "$(BLUE)Stashing changes before switching branches...$(RESET)"; \
+		git stash save "Auto-stash before switching to bonus branch"; \
+	fi
 	@if git show-ref --verify --quiet refs/heads/bonus; then \
 		echo -e "$(BLUE)Bonus branch found locally, switching...$(RESET)"; \
 		git checkout bonus; \
