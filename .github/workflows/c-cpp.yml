@@ -32,9 +32,6 @@ jobs:
           libglfw3-dev \
           libglfw3 \
           xorg-dev
-
-    - name: configure
-      run: ./configure
     
     - name: make
       run: make
