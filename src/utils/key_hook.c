@@ -6,10 +6,11 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:03:21 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 12:40:50 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 13:03:32 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "mlx.h"
 #include "render.h"
 #include "utils.h"
 #include <stdio.h>
@@ -50,9 +51,22 @@ void	funnywall(void)
 	free(messages);
 }
 
+static void	scale_change(t_data *data, int change)
+{
+	data->scale += change;
+	if (data->scale < 1)
+		data->scale = 1;
+	else if (data->scale > 10)
+		data->scale = 10;
+	mlx_destroy_window(data->mlx, data->win);
+	data->win = mlx_new_window(data->mlx, data->img->width * data->scale,
+			data->img->height * data->scale, GAME_NAME);
+	mlx_key_hook(data->win, key_hook, data);
+	render(data, data->map);
+}
+
 int	key_hook(int kc, t_data *data)
 {
-	log_debug("Key pressed: %x", __FILE__, __LINE__, kc);
 	(void)data;
 	if (kc == 65307 || kc == 113)
 		kthxbye(data);
@@ -64,5 +78,10 @@ int	key_hook(int kc, t_data *data)
 		move(data, 0, -1);
 	else if (kc == 115 || kc == 65364)
 		move(data, 0, 1);
+	else if (kc == 65451)
+		scale_change(data, 1);
+	else if (kc == 65453)
+		scale_change(data, -1);
+	log_debug("Key pressed: %x", __FILE__, __LINE__, kc);
 	return (0);
 }

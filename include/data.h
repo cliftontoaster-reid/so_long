@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:08:20 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 15:37:03 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 13:02:36 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "Crust/img/set.h"
 # include "libft.h"
 # include <stdbool.h>
+
+# define GAME_NAME "So Toast - The last bread"
 
 typedef enum e_dir
 {
@@ -59,6 +61,7 @@ typedef struct s_data
 	bool	d;
 
 	int		moves;
+	int		scale;
 }			t_data;
 
 typedef enum e_trinary

@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:31:41 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 15:46:59 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 12:56:45 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ static inline void	printscrn(t_data *data)
 {
 	t_img	*scaled;
 
-	scaled = crust_img_scale(data->img, (t_2d){data->img->width * 2,
-			data->img->height * 2}, CRUST_IMG_SCALE_NEAREST);
+	scaled = crust_img_scale(data->img, (t_2d){data->img->width * data->scale,
+			data->img->height * data->scale}, CRUST_IMG_SCALE_NEAREST);
 	if (!scaled)
 		return ;
 	mlx_put_image_to_window(data->mlx, data->win, scaled->img_ptr, 0, 0);

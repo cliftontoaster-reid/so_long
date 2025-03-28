@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:59:39 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 09:54:20 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 13:03:18 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static int	setup_assets(t_data *data, char *map)
 		return (err("Guy set creation failed"));
 	data->player = map_find_player(data->map);
 	data->last_player = (t_2d){data->player.x, data->player.y - 1};
+	data->scale = 1;
 	return (0);
 }
 
@@ -61,7 +62,6 @@ int	main(int argc, char *argv[])
 	char	*map;
 	int		res;
 	t_data	data;
-	t_img	*scaled;
 
 	ft_bzero(&data, sizeof(t_data));
 	data.d = ft_rand_int(0, 3) == 0;
@@ -80,18 +80,12 @@ int	main(int argc, char *argv[])
 			return (1);
 		render(&data, data.map);
 		// upscale image based on scale factor
-		scaled = crust_img_scale(data.img, (t_2d){data.map->size.x * 64,
-				data.map->size.y * 64}, CRUST_IMG_SCALE_NEAREST);
-		if (!scaled)
-			return (err("Image scaling failed"));
-		// WIN
-		data.win = mlx_new_window(data.mlx, scaled->width, scaled->height,
-				"so_long");
+		data.win = mlx_new_window(data.mlx, data.img->width, data.img->height,
+				GAME_NAME);
 		mlx_key_hook(data.win, key_hook, &data);
 		if (!data.win)
 			return (err("Window creation failed"));
-		mlx_put_image_to_window(data.mlx, data.win, scaled->img_ptr, 0, 0);
-		crust_img_drop(scaled);
+		mlx_put_image_to_window(data.mlx, data.win, data.img->img_ptr, 0, 0);
 	}
 	else
 	{
