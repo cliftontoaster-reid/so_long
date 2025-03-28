@@ -243,7 +243,7 @@ bonus:
 bundle: all
 	@mkdir -p $(BUILD_DIR)
 	@echo -e "$(YELLOW)====================================\n      Bundling $(NAME)...\n====================================$(RESET)"
-	@tar -czf $(BUILD_DIR)/$(NAME).tar.gz -C $(NAME) ./assets ./LICENCE ./README.md
+	@tar -czf $(BUILD_DIR)/$(NAME).tar.gz $(NAME) ./assets ./LICENCE ./README.md
 
 help:
 	@echo -e "$(BLUE)Usage: make [all|static|shared|clean|nclean|fclean|re|qre|incl|install|uninstall|test|help]$(RESET)"
