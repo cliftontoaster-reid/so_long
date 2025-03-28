@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:03:21 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 16:32:46 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 09:47:55 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,36 @@
 #include "utils.h"
 #include <stdio.h>
 
-static void	funnywall(void)
+static char	**load_file(char *filepath)
 {
 	char	*file_content;
+	char	**lines;
+
+	file_content = fs_read_file(filepath);
+	if (!file_content)
+		return (NULL);
+	lines = ft_split(file_content, '\n');
+	free(file_content);
+	return (lines);
+}
+
+static void	funnywall(void)
+{
 	char	**messages;
 	int		count;
 	int		i;
 
-	file_content = fs_read_file("assets/text/funnywall.txt");
-	if (!file_content)
-		return ;
-	messages = ft_split(file_content, '\n');
-	free(file_content);
+	messages = load_file("assets/text/funnywall.txt");
 	if (!messages)
 		return ;
 	count = 0;
 	while (messages[count])
 		count++;
 	if (count > 0)
-		log_warning("%s", __FILE__, __LINE__, messages[ft_rand_int(0, count)]);
+	{
+		i = ft_rand_int(0, count);
+		log_warning("%s [%x]", __FILE__, __LINE__, messages[i], i);
+	}
 	i = 0;
 	while (messages[i])
 		free(messages[i++]);
@@ -45,7 +56,10 @@ static void	move(t_data *data, int x, int y)
 
 	new_pos = posadd(data->player, x, y);
 	if (data->map->map[new_pos.y][new_pos.x] == '1')
-		return (funnywall());
+	{
+		funnywall();
+		return ;
+	}
 	data->last_player = data->player;
 	data->player = new_pos;
 	data->moves++;

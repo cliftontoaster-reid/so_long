@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 13:34:05 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 15:44:34 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 09:48:40 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,7 @@ void	kthxbye(t_data *data)
 	delete_data(data);
 	if (ft_rand_int(0, 100) == 42)
 		cryforhelp();
+	else
+		log_info("KTHXBYE", __FILE__, __LINE__);
 	exit(0);
 }
