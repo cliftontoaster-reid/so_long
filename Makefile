@@ -214,6 +214,32 @@ tidy:
 	@$(TIDY) $(TIDY_OPTS) $(SRC) -- $(CCFLAGS)
 	@echo -e "$(GREEN)====================================\n      clang-tidy complete.\n====================================$(RESET)"
 
+bonus:
+	@if ! git rev-parse --is-inside-work-tree &>/dev/null; then \
+		echo -e "$(RED)Not in a git repository. Cannot switch to bonus branch.$(RESET)"; \
+		exit 1; \
+	fi
+	@echo -e "$(YELLOW)====================================\n      Switching to bonus branch...\n====================================$(RESET)"
+	@if git show-ref --verify --quiet refs/heads/bonus; then \
+		echo -e "$(BLUE)Bonus branch found locally, switching...$(RESET)"; \
+		git checkout bonus; \
+	else \
+		echo -e "$(BLUE)Bonus branch not found locally, checking remotes...$(RESET)"; \
+		remote=$$(git remote | head -n1); \
+		if [ -z "$$remote" ]; then \
+			echo -e "$(RED)No git remotes found. Cannot get bonus branch.$(RESET)"; \
+			exit 1; \
+		fi; \
+		if git fetch $$remote bonus:bonus; then \
+			echo -e "$(GREEN)Bonus branch fetched, switching...$(RESET)"; \
+			git checkout bonus; \
+		else \
+			echo -e "$(RED)Could not find bonus branch in remote.$(RESET)"; \
+			exit 1; \
+		fi; \
+	fi
+	@$(MAKE) re
+
 help:
 	@echo -e "$(BLUE)Usage: make [all|static|shared|clean|nclean|fclean|re|qre|incl|install|uninstall|test|help]$(RESET)"
 	@echo -e "$(GREEN)all:$(RESET) Build both static and shared libraries."
