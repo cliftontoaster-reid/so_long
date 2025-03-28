@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 15:50:56 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 16:42:01 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 17:03:37 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,10 @@
 
 bool	didummy_reach_player(t_data *data, t_dummy *dummy)
 {
-	t_2d	player_pos;
-
-	player_pos = data->player;
-	if (dummy->pos.x == player_pos.x && dummy->pos.y == player_pos.y)
+	if (dummy->pos.x == data->player.x && dummy->pos.y == data->player.y)
 	{
 		log_debug("Dummy %d reached player at [%d][%d]", __FILE__, __LINE__,
-			dummy->colour, player_pos.x, player_pos.y);
+			dummy->colour, data->player.x, data->player.y);
 		return (true);
 	}
 	return (false);

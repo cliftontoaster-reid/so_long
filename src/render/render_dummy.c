@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 16:35:17 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 16:49:47 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 17:09:12 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ t_img	*get_dummy(t_data *data, int colour, int direction, bool var)
 
 	pos.x = colour * 3;
 	pos.y = direction + var * 4;
+	log_debug("Dummy pos.x: %d, pos.y: %d", __FILE__, __LINE__, pos.x, pos.y);
+	log_debug("Dummy colour: %d, direction: %d", __FILE__, __LINE__, colour,
+		direction);
 	img = crust_set_get_img_by_pos(data->dum, pos);
 	if (img == NULL)
 	{
@@ -41,7 +44,7 @@ static int	getdir(t_dummy *dummy)
 	if (dummy->horizontal)
 	{
 		if (dummy->pos.x > dummy->lst_pos.x)
-			return (3);
+			return (2);
 		else
 			return (1);
 	}
@@ -50,7 +53,7 @@ static int	getdir(t_dummy *dummy)
 		if (dummy->pos.y > dummy->lst_pos.y)
 			return (0);
 		else
-			return (2);
+			return (3);
 	}
 }
 

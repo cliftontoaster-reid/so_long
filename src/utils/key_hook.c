@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:03:21 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 16:32:59 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 17:06:05 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,12 @@ int	key_hook(int kc, t_data *data)
 	(void)data;
 	if (kc == 65307 || kc == 113)
 		kthxbye(data);
-	else if (kc == 100 || kc == 65363)
+	else if (kc == 65451)
+		scale_change(data, 1);
+	else if (kc == 65453)
+		scale_change(data, -1);
+	move_dummies(data);
+	if (kc == 100 || kc == 65363)
 		move(data, 1, 0);
 	else if (kc == 97 || kc == 65361)
 		move(data, -1, 0);
@@ -79,12 +84,7 @@ int	key_hook(int kc, t_data *data)
 		move(data, 0, -1);
 	else if (kc == 115 || kc == 65364)
 		move(data, 0, 1);
-	else if (kc == 65451)
-		scale_change(data, 1);
-	else if (kc == 65453)
-		scale_change(data, -1);
 	log_debug("Key pressed: %x", __FILE__, __LINE__, kc);
-	move_dummies(data);
 	if (didummies_reach_player(data))
 	{
 		log_error("Dummies kissed player", __FILE__, __LINE__);
