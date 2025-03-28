@@ -255,6 +255,8 @@ help:
 	@echo -e "$(BLUE)Usage: make [all|static|shared|clean|nclean|fclean|re|qre|incl|install|uninstall|test|help]$(RESET)"
 	@echo -e "$(GREEN)all:$(RESET) Build both static and shared libraries."
 	@echo -e "$(GREEN)tidy:$(RESET) Run clang-tidy on source files."
+	@echo -e "$(GREEN)bonus:$(RESET) Switch to the bonus branch."
+	@echo -e "$(GREEN)bundle:$(RESET) Create a tarball of the project."
 	@echo -e "$(YELLOW)clean:$(RESET) Remove object files only."
 	@echo -e "$(YELLOW)nclean:$(RESET) Remove object files and the build directory."
 	@echo -e "$(RED)fclean:$(RESET) Remove object files, build directory, and dependencies."
