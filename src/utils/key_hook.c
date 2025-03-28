@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:03:21 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 09:47:55 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 09:57:52 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	funnywall(void)
 	if (count > 0)
 	{
 		i = ft_rand_int(0, count);
-		log_warning("%s [%x]", __FILE__, __LINE__, messages[i], i);
+		log_warning("%s [%x]", __FILE__, __LINE__, messages[i - 1], i);
 	}
 	i = 0;
 	while (messages[i])
