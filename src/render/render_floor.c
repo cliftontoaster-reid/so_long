@@ -6,13 +6,14 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 14:33:12 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/26 13:30:13 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 10:19:33 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Crust/img/img.h"
 #include "Crust/img/set.h"
 #include "render.h"
+#include "utils.h"
 
 static inline t_img	*get_floor(t_data *data)
 {
@@ -73,7 +74,12 @@ void	render_floor(t_data *data, t_map *map, t_2d pos, t_img *img)
 		return ;
 	floors = create_floor(data);
 	if (!floors)
+	{
+		log_error("Failed to create floor", __FILE__, __LINE__);
 		return ;
+	}
 	crust_img_draw(img, floors, (t_2d){pos.x * 32, pos.y * 32});
 	crust_img_drop(floors);
+	log_debug("Floor rendered at position x: %d, y: %d", __FILE__, __LINE__,
+		pos.x, pos.y);
 }

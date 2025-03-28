@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:38:49 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 15:46:26 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 12:46:44 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "render.h"
 #include "utils.h"
 
-static inline bool	is_won(t_data *data)
+bool	is_won(t_data *data)
 {
 	int	i;
 	int	j;

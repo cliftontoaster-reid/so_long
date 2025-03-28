@@ -6,11 +6,12 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 18:20:55 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/06 15:30:01 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 10:21:38 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
+#include "utils.h"
 
 inline t_2d	*t2dclone(t_2d src)
 {
@@ -70,6 +71,8 @@ inline void	find_neibours(t_map *map, t_list **to_visit, t_list **visited,
 	t_list	**lists[3];
 
 	pos = (*to_visit)->content;
+	log_debug("Analyzing tile: %c at position x: %d, y: %d", __FILE__, __LINE__,
+		map->map[pos->y][pos->x], pos->x, pos->y);
 	neibours[0] = (t_2d){pos->x + 1, pos->y};
 	neibours[1] = (t_2d){pos->x - 1, pos->y};
 	neibours[2] = (t_2d){pos->x, pos->y + 1};

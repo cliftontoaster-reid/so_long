@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:26:37 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 09:57:54 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 10:22:58 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static inline t_map_error	map_run_checks_part1(t_map *map_struct)
 static inline t_map_error	map_is_valid_part2(t_map *map_struct)
 {
 	char	tmp;
+	t_2d	t;
 
 	tmp = map_is_exit(map_struct);
 	if (tmp == ZONE)
@@ -50,7 +51,8 @@ static inline t_map_error	map_is_valid_part2(t_map *map_struct)
 	if (tmp == ZTWO)
 		return (freenret(map_struct, MAP_ERROR_EXIT_MULTIPLE,
 				ERR_MAP_ERROR_EXIT_MULTIPLE));
-	log_info("Exit is valid", __FILE__, __LINE__);
+	t = map_find_exit(map_struct);
+	log_info("Exit is valid at %d %d", __FILE__, __LINE__, t.x, t.y);
 	tmp = map_is_player(map_struct);
 	if (tmp == ZONE)
 		return (freenret(map_struct, MAP_ERROR_PLAYER_NOT_FOUND,
@@ -58,7 +60,8 @@ static inline t_map_error	map_is_valid_part2(t_map *map_struct)
 	if (tmp == ZTWO)
 		return (freenret(map_struct, MAP_ERROR_PLAYER_MULTIPLE,
 				ERR_MAP_ERROR_PLAYER_MULTIPLE));
-	log_info("Player is valid", __FILE__, __LINE__);
+	t = map_find_player(map_struct);
+	log_info("Player is valid at %d %d", __FILE__, __LINE__, t.x, t.y);
 	return (MAP_ERROR_NONE);
 }
 

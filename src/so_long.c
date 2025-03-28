@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:59:39 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 15:06:43 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 09:54:20 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ int	err(char *str)
 
 static int	setup_assets(t_data *data, char *map)
 {
+	data->mlx = mlx_init();
+	if (!data->mlx)
+		return (err("MLX initialization failed"));
 	// parsing map & loading stuff
 	data->map = map_from_str(map);
 	if (!data->map)
@@ -61,9 +64,8 @@ int	main(int argc, char *argv[])
 	t_img	*scaled;
 
 	ft_bzero(&data, sizeof(t_data));
-	data.mlx = mlx_init();
 	data.d = ft_rand_int(0, 3) == 0;
-	if (!data.mlx || argc != 2)
+	if (argc != 2)
 		return (err("Usage: ./so_long [map.ber]"));
 	if (!fs_exists(argv[1]))
 		return (err("Map file not found"));

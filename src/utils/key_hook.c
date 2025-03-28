@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:03:21 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 09:57:52 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 12:40:50 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "utils.h"
 #include <stdio.h>
 
-static char	**load_file(char *filepath)
+char	**load_file(char *filepath)
 {
 	char	*file_content;
 	char	**lines;
@@ -27,7 +27,7 @@ static char	**load_file(char *filepath)
 	return (lines);
 }
 
-static void	funnywall(void)
+void	funnywall(void)
 {
 	char	**messages;
 	int		count;
@@ -50,28 +50,9 @@ static void	funnywall(void)
 	free(messages);
 }
 
-static void	move(t_data *data, int x, int y)
-{
-	t_2d	new_pos;
-
-	new_pos = posadd(data->player, x, y);
-	if (data->map->map[new_pos.y][new_pos.x] == '1')
-	{
-		funnywall();
-		return ;
-	}
-	data->last_player = data->player;
-	data->player = new_pos;
-	data->moves++;
-	render(data, data->map);
-	log_debug("Player moved to %d, %d", __FILE__, __LINE__, data->player.x,
-		data->player.y);
-	log_info("Player has now made %d moves", __FILE__, __LINE__, data->moves);
-}
-
 int	key_hook(int kc, t_data *data)
 {
-	printf("Key pressed: %d\n", kc);
+	log_debug("Key pressed: %x", __FILE__, __LINE__, kc);
 	(void)data;
 	if (kc == 65307 || kc == 113)
 		kthxbye(data);

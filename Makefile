@@ -80,6 +80,7 @@ SRC = \
 	$(SRC_DIR)utils/log_debug.c \
 	$(SRC_DIR)utils/key_hook.c \
 	$(SRC_DIR)utils/kthxbye.c \
+	$(SRC_DIR)utils/move.c \
 	\
 	$(SRC_DIR)data/del.c \
 	\
