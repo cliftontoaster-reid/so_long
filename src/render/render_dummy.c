@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 16:35:17 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 16:42:10 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:49:47 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_img	*get_dummy(t_data *data, int colour, int direction, bool var)
 
 	pos.x = colour * 3;
 	pos.y = direction + var * 4;
-	img = crust_set_get_img_by_pos(data->guy, pos);
+	img = crust_set_get_img_by_pos(data->dum, pos);
 	if (img == NULL)
 	{
 		log_error("Failed to get image", __FILE__, __LINE__);

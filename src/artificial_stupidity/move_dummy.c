@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 15:42:45 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 16:07:18 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:47:10 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,17 @@ void	justmovealready_dummy(t_data *data, t_dummy *dummy, t_2d pos)
 {
 	t_2d	newpos;
 
-	dummy->lst_pos = dummy->pos;
-	if (data->map->map[pos.y][pos.x] != '1')
-		dummy->pos = posadd(dummy->pos, pos.x, pos.y);
+	newpos = posadd(dummy->pos, pos.x, pos.y);
+	if (data->map->map[newpos.y][newpos.x] == '1')
+	{
+		log_debug("dummy %d hit a wall at [%d][%d]", __FILE__, __LINE__,
+			dummy->colour, newpos.x, newpos.y);
+		dummy->lst_pos = newpos;
+	}
 	else
 	{
-		newpos.x = 0 - dummy->pos.x;
-		newpos.y = 0 - dummy->pos.y;
-		dummy->pos = posadd(dummy->pos, newpos.x, newpos.y);
+		dummy->lst_pos = dummy->pos;
+		dummy->pos = newpos;
 	}
 }
 

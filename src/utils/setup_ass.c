@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 16:09:14 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 16:26:12 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:49:24 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ int	setup_textures(t_data *data)
 			(t_2d){24, 24});
 	if (!data->guy)
 		return (err("Guy set creation failed"));
+	data->dum = crust_set_from_xpm(data->mlx, "assets/images/dummy.xpm",
+			(t_2d){24, 24});
+	if (!data->dum)
+		return (err("Dummy set creation failed"));
 	if (!setup_dummies(data, data->map))
 		return (err("Dummy setup failed"));
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 15:54:56 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 16:34:21 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:56:58 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,33 @@
 #include "libft.h"
 #include "render.h"
 
-#define ri ft_rand_int
+static bool	ft_rand_bool(void)
+{
+	return (ft_rand_int(0, 2) == 1);
+}
+
+static t_2d	randdir(t_2d pos, bool horizontal)
+{
+	t_2d	dir;
+
+	if (horizontal)
+	{
+		if (ft_rand_bool())
+			dir.x = -1;
+		else
+			dir.x = 1;
+		dir.y = 0;
+	}
+	else
+	{
+		if (ft_rand_bool())
+			dir.y = -1;
+		else
+			dir.y = 1;
+		dir.x = 0;
+	}
+	return (posadd(pos, dir.x, dir.y));
+}
 
 static int	create_dummy_at_position(t_data *data, t_map *map, t_2d pos)
 {
@@ -28,11 +54,8 @@ static int	create_dummy_at_position(t_data *data, t_map *map, t_2d pos)
 			return (0);
 		dummy->pos = pos;
 		dummy->horizontal = (map->map[pos.y][pos.x] == 'd');
-		if (dummy->horizontal)
-			dummy->lst_pos = (t_2d){pos.x + ri(0, 2), pos.y};
-		else
-			dummy->lst_pos = (t_2d){pos.x, pos.y + ri(0, 2)};
-		dummy->colour = ft_rand_int(0, 4);
+		dummy->lst_pos = randdir(pos, dummy->horizontal);
+		dummy->colour = ft_rand_int(0, 3);
 		dummy_list = ft_lstnew(dummy);
 		if (!dummy_list)
 			return (0);

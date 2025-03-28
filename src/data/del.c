@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 13:24:44 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 15:53:15 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:48:43 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	drop_map(t_map *map)
 
 static void	delete_data_graphics(t_data *data)
 {
-	log_debug("Deleting graphics data", __FILE__, __LINE__);
 	if (data->win)
 	{
 		log_debug("Destroying window", __FILE__, __LINE__);
@@ -53,6 +52,11 @@ static void	delete_data_graphics(t_data *data)
 	{
 		log_debug("Dropping guy", __FILE__, __LINE__);
 		crust_set_drop(data->guy);
+	}
+	if (data->dum)
+	{
+		log_debug("Dropping dummies", __FILE__, __LINE__);
+		crust_set_drop(data->dum);
 	}
 	if (data->img)
 	{
@@ -93,6 +97,7 @@ static void	delete_data_map_resources(t_data *data)
 void	delete_data(t_data *data)
 {
 	log_debug("Starting data deletion process", __FILE__, __LINE__);
+	log_debug("Deleting graphics data", __FILE__, __LINE__);
 	delete_data_graphics(data);
 	log_debug("Deleting map resources", __FILE__, __LINE__);
 	delete_data_map_resources(data);
