@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:31:41 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 12:56:45 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:41:11 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	render(t_data *data, t_map *map)
 	render_cosmetics(data);
 	just_render_exit(data);
 	render_guy(data);
+	render_dummies(data);
 	if (data->win)
 		printscrn(data);
 }

@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 13:16:40 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 12:46:11 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:35:00 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -363,5 +363,8 @@ bool		is600cornered_check(t_data *data, t_wall_vars vars, t_2d pos,
 t_img		*wall_tbi(t_data *data, t_wall_vars vars, t_2d pos);
 t_img		*create_wall_tile(t_data *data, t_wall_config config);
 bool		is_won(t_data *data);
+
+void		render_dummy(t_data *data, t_dummy *dummy);
+void		render_dummies(t_data *data);
 
 #endif

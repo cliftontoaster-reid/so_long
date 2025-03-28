@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 13:24:44 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 13:01:02 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 15:53:15 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ static void	delete_data_graphics(t_data *data)
 
 static void	delete_data_map_resources(t_data *data)
 {
-	log_debug("Deleting map resources", __FILE__, __LINE__);
 	if (data->floor)
 	{
 		log_debug("Dropping floor", __FILE__, __LINE__);
@@ -84,12 +83,18 @@ static void	delete_data_map_resources(t_data *data)
 		log_debug("Freeing wall_vars matrix", __FILE__, __LINE__);
 		free_matrix((void **)data->wall_vars, data->map->size.y);
 	}
+	if (data->dummies)
+	{
+		log_debug("Freeing dummies list", __FILE__, __LINE__);
+		ft_lstclear(&data->dummies, free);
+	}
 }
 
 void	delete_data(t_data *data)
 {
 	log_debug("Starting data deletion process", __FILE__, __LINE__);
 	delete_data_graphics(data);
+	log_debug("Deleting map resources", __FILE__, __LINE__);
 	delete_data_map_resources(data);
 	if (data->map)
 	{

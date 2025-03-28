@@ -6,13 +6,14 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:59:39 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 13:27:21 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:15:15 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Crust/img/img.h"
 #include "Crust/img/scale.h"
 #include "Crust/img/set.h"
+#include "artificial_stupidity.h"
 #include "data.h"
 #include "libft.h"
 #include "map.h"
@@ -26,32 +27,6 @@ int	err(char *str)
 {
 	log_error("%s", __FILE__, __LINE__, str);
 	return (1);
-}
-
-static int	setup_assets(t_data *data, char *map)
-{
-	data->mlx = mlx_init();
-	if (!data->mlx)
-		return (err("MLX initialization failed"));
-	data->map = map_from_str(map);
-	if (!data->map)
-		return (err("Map file read error"));
-	data->set = crust_set_from_xpm(data->mlx,
-			"assets/images/CuteRPG_Dungeon.xpm", (t_2d){16, 16});
-	if (!data->set)
-		return (err("Image set creation failed"));
-	data->img = crust_img_new(data->mlx, data->map->size.x * 32,
-			data->map->size.y * 32);
-	if (!data->img)
-		return (err("Image creation failed"));
-	data->guy = crust_set_from_xpm(data->mlx, "assets/images/guy.xpm",
-			(t_2d){24, 24});
-	if (!data->guy)
-		return (err("Guy set creation failed"));
-	data->player = map_find_player(data->map);
-	data->last_player = (t_2d){data->player.x, data->player.y - 1};
-	data->scale = 1;
-	return (0);
 }
 
 static int	setup(t_data *data, char **map, int argc, char *argv[])

@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:08:20 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 13:02:36 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 15:50:34 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,14 @@ typedef struct s_map
 	char	**map;
 	t_2d	size;
 }			t_map;
+
+typedef struct s_dummy
+{
+	t_2d	pos;
+	t_2d	lst_pos;
+	bool	horizontal;
+	int		colour;
+}			t_dummy;
 
 typedef struct s_data
 {
@@ -62,6 +70,8 @@ typedef struct s_data
 
 	int		moves;
 	int		scale;
+
+	t_list	*dummies;
 }			t_data;
 
 typedef enum e_trinary

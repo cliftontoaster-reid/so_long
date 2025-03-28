@@ -6,13 +6,13 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:36:35 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/21 13:36:44 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:31:51 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_H
 # define MAP_H
-# define MAP_CHARS "01CEP"
+# define MAP_CHARS "01dDCEP"
 
 # include "Crust/img/img.h"
 # include "data.h"

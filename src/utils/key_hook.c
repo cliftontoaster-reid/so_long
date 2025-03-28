@@ -6,10 +6,11 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:03:21 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 13:03:32 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:32:59 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "artificial_stupidity.h"
 #include "mlx.h"
 #include "render.h"
 #include "utils.h"
@@ -83,5 +84,11 @@ int	key_hook(int kc, t_data *data)
 	else if (kc == 65453)
 		scale_change(data, -1);
 	log_debug("Key pressed: %x", __FILE__, __LINE__, kc);
+	move_dummies(data);
+	if (didummies_reach_player(data))
+	{
+		log_error("Dummies kissed player", __FILE__, __LINE__);
+		kthxbye(data);
+	}
 	return (0);
 }

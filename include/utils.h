@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 11:18:01 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 12:40:22 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:16:45 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,7 @@ int		key_hook(int kc, t_data *data);
 
 void	funnywall(void);
 void	move(t_data *data, int x, int y);
+int		setup_assets(t_data *data, char *map);
+int		err(char *str);
 
 #endif

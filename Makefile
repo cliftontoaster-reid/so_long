@@ -81,6 +81,7 @@ SRC = \
 	$(SRC_DIR)utils/key_hook.c \
 	$(SRC_DIR)utils/kthxbye.c \
 	$(SRC_DIR)utils/move.c \
+	$(SRC_DIR)utils/setup_ass.c \
 	\
 	$(SRC_DIR)data/del.c \
 	\
@@ -96,6 +97,7 @@ SRC = \
 	$(SRC_DIR)render/render_guy.c \
 	$(SRC_DIR)render/render.c \
 	$(SRC_DIR)render/cosmetic_init.c \
+	$(SRC_DIR)render/render_dummy.c \
 	\
 	$(SRC_DIR)render/wall/lgbt.c \
 	$(SRC_DIR)render/wall/utils.c \
@@ -106,6 +108,10 @@ SRC = \
 	$(SRC_DIR)render/wall/t600_corn.c \
 	$(SRC_DIR)render/wall/t600_lon.c \
 	$(SRC_DIR)render/wall/bi.c \
+	\
+	$(SRC_DIR)artificial_stupidity/didummy_reach_player.c \
+	$(SRC_DIR)artificial_stupidity/move_dummy.c \
+	$(SRC_DIR)artificial_stupidity/setup_dummies.c \
 
 OBJ = $(addprefix $(OBJ_DIR)/so_long/, $(SRC:.c=.o))
 
