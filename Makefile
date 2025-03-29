@@ -208,6 +208,15 @@ $(OPENAL):
 
 clean:
 	@rm -rf $(OBJ_DIR)
+# If opus / openal directories are not empty, run make clean
+	@if [ -d "$(OPUS_DIR)" ]; then \
+		echo -e "$(YELLOW)====================================\n    Cleaning opus...\n====================================$(RESET)"; \
+		cd $(OPUS_DIR) && make clean; \
+	fi
+	@if [ -d "$(OPENAL_DIR)" ]; then \
+		echo -e "$(YELLOW)====================================\n    Cleaning OpenAL Soft...\n====================================$(RESET)"; \
+		cd $(OPENAL_DIR)/build && make clean; \
+	fi
 	@echo -e "$(RED)====================================\n   Cleaned object files.\n====================================$(RESET)"
 
 nclean: clean

@@ -1,15 +1,11 @@
 # trunk-ignore-all(checkov/CKV_DOCKER_3)
-FROM ubuntu:22.04
+FROM archlinux:base-devel-20250323.0.325468
 
-# Install dependencies
-RUN apt-get update && \
-  apt-get purge man-db -y && \
-  apt-get install -y \
-    build-essential cmake curl \
-    libx11-dev libglfw3-dev libglfw3 \
-    xorg-dev libbsd-dev clang mold \
-    git autoconf automake libtool gcc make \
-    pkg-config libpulse-dev libasound2-dev
+# Enable parallel downloads in pacman and install dependencies
+RUN sed -i 's/^#ParallelDownloads = 5/ParallelDownloads = 6/' /etc/pacman.conf && \
+  pacman -Syu --noconfirm && \
+  pacman -S --noconfirm base-devel cmake curl libx11 glfw xorg-server libbsd clang mold git autoconf automake libtool gcc make pkgconf libpulse alsa-lib && \
+  pacman -Scc --noconfirm
 
 WORKDIR /app
 
