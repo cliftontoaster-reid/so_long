@@ -185,15 +185,15 @@ $(OPUS):
 	@mkdir -p $(CAC_DIR)
 # Download tar ball
 	@echo -e "$(YELLOW)====================================\n    Downloading opus...\n====================================$(RESET)"
-	@curl -o $(CAC_DIR)/opus.tar.gz https://ftp.osuosl.org/pub/xiph/releases/opus/opus-1.5.2.tar.gz
+	@curl -o $(CAC_DIR)/opus.tar.gz https://ftp.osuosl.org/pub/xiph/releases/opus/opus-1.5.2.tar.gz &> /dev/null
 # Extract tar ball
 	@echo -e "$(YELLOW)====================================\n    Extracting opus...\n====================================$(RESET)"
 	@tar -xzf $(CAC_DIR)/opus.tar.gz -C $(CAC_DIR)
 # Build opus
 	@echo -e "$(YELLOW)====================================\n    Building opus...\n====================================$(RESET)"
-	@cd $(CAC_DIR)/opus-1.5.2 && cmake .
-	@cd $(CAC_DIR)/opus-1.5.2 && ./configure --enable-static --disable-shared
-	@cd $(CAC_DIR)/opus-1.5.2 && make -j$(NPROC)
+	@cd $(CAC_DIR)/opus-1.5.2 && cmake . &> /dev/null
+	@cd $(CAC_DIR)/opus-1.5.2 && ./configure --enable-static --disable-shared &> /dev/null
+	@cd $(CAC_DIR)/opus-1.5.2 && make -j$(NPROC) &> /dev/null
 	@echo -e "$(GREEN)====================================\n    opus ready.\n====================================$(RESET)"
 
 $(OPENAL):
@@ -203,8 +203,8 @@ $(OPENAL):
 	@if [ ! -d "$(OPENAL_DIR)" ]; then \
 		git clone https://github.com/kcat/openal-soft $(OPENAL_DIR); \
 	fi
-	@cd $(OPENAL_DIR)/build && cmake .. -DCMAKE_BUILD_TYPE=Release
-	@cd $(OPENAL_DIR)/build && make -j$(NPROC)
+	@cd $(OPENAL_DIR)/build && cmake .. -DCMAKE_BUILD_TYPE=Release &> /dev/null
+	@cd $(OPENAL_DIR)/build && make -j$(NPROC) &> /dev/null
 	@echo -e "$(GREEN)====================================\n    OpenAL Soft ready.\n====================================$(RESET)"
 
 clean:
