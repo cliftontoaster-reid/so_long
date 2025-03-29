@@ -1,0 +1,1 @@
+{"rule":"LICENCE_LICENSE_NOUN_SINGULAR","sentence":"^\\QOpenAL - A cross-platform 3D audio library, used for sound effects and music in the game is licenced under the \"GNU LIBRARY GENERAL PUBLIC LICENSE\" Version 2.\\E$"}

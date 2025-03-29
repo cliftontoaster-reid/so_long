@@ -24,3 +24,11 @@ You cannot:
 - Sell this asset pack, not even modified.
 - Claim that this asset is yours.
 ```
+
+### Dependencies
+
+[OpenAL](https://github.com/kcat/openal-soft) - A cross-platform 3D audio library, used for sound effects and music in the game
+is licenced under the "GNU LIBRARY GENERAL PUBLIC LICENSE" Version 2.
+
+[libOPUS](https://opus-codec.org/) - A codec for interactive speech and audio transmission over the Internet, used for sound effects and music in the game
+is licenced under the "BSD 2-Clause" Licence.

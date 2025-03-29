@@ -4,3 +4,5 @@ tileset
 pixelart
 MinilibX
 Engi
+OpenAL
+libOPUS
