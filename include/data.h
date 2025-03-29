@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:08:20 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 16:48:17 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/28 23:11:27 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_data
 	t_set	*set;
 	t_set	*guy;
 	t_set	*dum;
+	t_set	*text_set;
 	t_img	*img;
 	t_img	*floor;
 

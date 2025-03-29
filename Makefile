@@ -121,6 +121,10 @@ SRC = \
 	$(SRC_DIR)artificial_stupidity/didummy_reach_player.c \
 	$(SRC_DIR)artificial_stupidity/move_dummy.c \
 	$(SRC_DIR)artificial_stupidity/setup_dummies.c \
+	\
+	$(SRC_DIR)text/draw_char.c \
+	$(SRC_DIR)text/draw_text.c \
+	$(SRC_DIR)text/create_text.c \
 
 OBJ = $(addprefix $(OBJ_DIR)/so_long/, $(SRC:.c=.o))
 
