@@ -48,7 +48,7 @@ LDFLAGS = -L$(LFT_DIR) -L$(MLX_DIR) -lft -lmlx -lXext -lX11 -lm \
 
 # Optimization flags based on build type
 
-CCFLAGS += -O3 -march=native -flto -ffast-math -funroll-loops -fomit-frame-pointer
+CCFLAGS += -O3 -flto -ffast-math -funroll-loops -fomit-frame-pointer
 CCFLAGS += -flto -O3 -g
 
 LFT      = $(LFT_DIR)/libft.a
