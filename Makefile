@@ -133,7 +133,7 @@ all:
 	@echo -e "$(YELLOW)====================================\n      Preparing build environment...\n====================================$(RESET)"
 	@docker build -t solongbuilder -f tools/Dockerfile . &> /dev/null
 	@echo -e "$(YELLOW)====================================\n      Build environment ready.\n====================================$(RESET)"
-	@docker run --rm -v $$(pwd):/app:Z --user $$(id -u):$$(id -g) -w /app solongbuilder make build
+	@docker run --rm -v $$(pwd):/app:Z --user $$(id -u):$$(id -g) -w /app solongbuilder make build -j$(NPROC)
 
 build: $(NAME)
 
@@ -211,11 +211,11 @@ clean:
 # If opus / openal directories are not empty, run make clean
 	@if [ -d "$(OPUS_DIR)" ]; then \
 		echo -e "$(YELLOW)====================================\n    Cleaning opus...\n====================================$(RESET)"; \
-		cd $(OPUS_DIR) && make clean; \
+		cd $(OPUS_DIR) && make clean || true; \
 	fi
 	@if [ -d "$(OPENAL_DIR)" ]; then \
 		echo -e "$(YELLOW)====================================\n    Cleaning OpenAL Soft...\n====================================$(RESET)"; \
-		cd $(OPENAL_DIR)/build && make clean; \
+		cd $(OPENAL_DIR)/build && make clean || true; \
 	fi
 	@echo -e "$(RED)====================================\n   Cleaned object files.\n====================================$(RESET)"
 
