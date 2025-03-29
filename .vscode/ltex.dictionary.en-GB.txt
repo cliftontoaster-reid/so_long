@@ -6,3 +6,4 @@ MinilibX
 Engi
 OpenAL
 libOPUS
+libFT

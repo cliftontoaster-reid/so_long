@@ -19,7 +19,7 @@ SRC_DIR    = src/
 BUILD_DIR  = build
 VERSION    = 0.1.1-$(shell git rev-parse --short HEAD)
 
-LFT_VER    = d04a425
+LFT_VER    = aaf4737
 
 # ANSI Color Variables
 RED    = \033[0;31m
