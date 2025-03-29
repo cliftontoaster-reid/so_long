@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:59:39 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 16:15:15 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/29 10:44:36 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,21 @@
 #include "utils.h"
 #include <fcntl.h>
 #include <unistd.h>
+
+#ifndef VERSION
+# define VERSION "DEV"
+#endif
+
+void	print_usage(void)
+{
+	log_info("So Toast", __FILE__, __LINE__);
+	log_debug("CC %s", __FILE__, __LINE__, __VERSION__);
+	log_debug("Compiled on %s at %s", __FILE__, __LINE__, __DATE__, __TIME__);
+	log_debug("Author: %s", __FILE__, __LINE__, "Clifton Toaster Reid");
+	log_debug("Assets by %s", __FILE__, __LINE__, "https://pixymoon.itch.io");
+	log_debug("Version: %s", __FILE__, __LINE__, VERSION);
+	return ;
+}
 
 int	err(char *str)
 {
@@ -64,6 +79,7 @@ int	main(int argc, char *argv[])
 	int		res;
 	t_data	data;
 
+	print_usage();
 	map = NULL;
 	res = setup(&data, &map, argc, argv);
 	if (res == MAP_ERROR_NONE)

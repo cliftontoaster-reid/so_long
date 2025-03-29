@@ -17,7 +17,7 @@ OPUS_INC = $(OPUS_DIR)/include
 INC_DIR    = include/
 SRC_DIR    = src/
 BUILD_DIR  = build
-VERSION    = 0.1.0
+VERSION    = 0.1.1-$(shell git rev-parse --short HEAD)
 
 LFT_VER    = d04a425
 
@@ -39,6 +39,7 @@ SANITIZE ?= 0
 CCFLAGS = -Wall -Wextra -Werror -Wpedantic -MMD -MP \
 		  -I$(INC_DIR) -I$(LFT_DIR) -I$(MLX_DIR) -I$(CRUST_DIR)/build/include \
 		  -Wno-strict-prototypes -fPIC -I$(OPENAL_INC) -I$(OPUS_INC) \
+		  -DVERSION=\"$(VERSION)\" \
 
 # Linker flags
 LDFLAGS = -L$(LFT_DIR) -L$(MLX_DIR) -lft -lmlx -lXext -lX11 -lm \

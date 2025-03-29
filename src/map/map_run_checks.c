@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:26:37 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 10:22:58 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/29 10:49:56 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,19 @@
 static t_map_error	freenret(t_map *map, t_map_error ret, char *msg)
 {
 	if (msg)
+	{
 		log_warning("%s", __FILE__, __LINE__, msg);
+		log_error("Rule 1: Map file must have a .ber extension", __FILE__,
+			__LINE__);
+		log_error("Rule 2: Map must be rectangular", __FILE__, __LINE__);
+		log_error("Rule 3: Map must be enclosed by walls", __FILE__, __LINE__);
+		log_error("Rule 4: Map must contain exactly one player", __FILE__,
+			__LINE__);
+		log_error("Rule 5: Map must contain at least one exit", __FILE__,
+			__LINE__);
+		log_error("Rule 6: Map must contain at least one collectible", __FILE__,
+			__LINE__);
+	}
 	map_free(map);
 	return (ret);
 }
