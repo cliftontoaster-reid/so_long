@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 13:24:44 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/29 11:16:25 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/29 11:20:34 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,6 @@ static inline void	free_matrix(void **matrix, size_t size)
 	free(matrix);
 }
 
-void	drop_map(t_map *map)
-{
-	if (map)
-	{
-		free_matrix((void **)map->map, map->size.y);
-		free(map);
-	}
-}
-
 static void	delete_data_graphics(t_data *data)
 {
 	if (data->win)
@@ -48,10 +39,6 @@ static void	delete_data_graphics(t_data *data)
 		crust_set_drop(data->dum);
 	if (data->img)
 		crust_img_drop(data->img);
-}
-
-static void	delete_data_map_resources(t_data *data)
-{
 	if (data->floor)
 		crust_img_drop(data->floor);
 	if (data->col_available)
@@ -67,9 +54,11 @@ static void	delete_data_map_resources(t_data *data)
 void	delete_data(t_data *data)
 {
 	delete_data_graphics(data);
-	delete_data_map_resources(data);
 	if (data->map)
-		drop_map(data->map);
+	{
+		free_matrix((void **)data->map->map, data->map->size.y);
+		free(data->map);
+	}
 	if (data->rndwall)
 		free_matrix((void **)data->rndwall, data->map->size.y);
 	if (data->mlx)
