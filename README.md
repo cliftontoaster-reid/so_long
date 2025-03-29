@@ -33,7 +33,7 @@ is licenced under the "GNU LIBRARY GENERAL PUBLIC LICENSE" Version 2.
 [libOPUS](https://opus-codec.org/) - A codec for interactive speech and audio transmission over the Internet, used for sound effects and music in the game
 is licenced under the "BSD 2-Clause" Licence.
 
-[libFT](https://github.com/cliftontoaster-reid/libft) - A collection of useful functions for C programming, used in the game
+[Clifton Toaster Reid's libFT](https://github.com/cliftontoaster-reid/libft) - A collection of useful functions for C programming, used in the game
 is licenced under the "MIT" Licence.
 
 [MinilibX](https://github.com/42Paris/minilibx-linux) - A simple graphics library for C, used for rendering in the game,
