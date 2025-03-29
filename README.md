@@ -4,7 +4,7 @@ So Toast is a simple game made in C using the [MinilibX](https://github.com/42Pa
 
 ## Licence
 
-[So Toast](https://github.com/cliftontoaster-reid/so_long) © 2025 by [Clifton Toaster Reid](https://floofy.tech/@CliftonToasterReid) is licensed under [Creative Commons Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/?ref=chooser-v1).
+[So Toast bonus](https://github.com/cliftontoaster-reid/so_long/tree/bonus) © 2025 by [Clifton Toaster Reid](https://floofy.tech/@CliftonToasterReid) is licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html).
 
 The artwork used in this project was created [PixyMoon](https://pixymoon.itch.io).
 And are available at the following itch.io pages:
