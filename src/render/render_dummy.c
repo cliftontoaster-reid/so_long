@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 16:35:17 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 17:09:12 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/31 12:15:06 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	render_dummy(t_data *data, t_dummy *dummy)
 		log_error("Failed to scale image", __FILE__, __LINE__);
 		return ;
 	}
-	crust_img_draw(data->img, scaled, pos);
+	drawtoscale(data, data->img, scaled, pos);
 	crust_img_drop(scaled);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:38:49 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 12:46:44 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/31 12:11:49 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	render_exit(t_data *data, t_map *map, t_2d pos, t_img *img)
 	door = crust_set_get_img_offgrid(data->set, image_pos, image_size);
 	if (!door)
 		return ;
-	crust_img_draw(img, door, (t_2d){pos.x * 32, (pos.y * 32) + 8});
+	drawtoscale(data, img, door, (t_2d){pos.x * 32, (pos.y * 32) + 8});
 	crust_img_drop(door);
 }
 

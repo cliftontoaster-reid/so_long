@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:42:56 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 13:19:05 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/31 12:11:05 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ inline void	render_nonconsumed(t_2d *images, t_data *data, t_2d pos, t_img *img)
 	log_debug("Drawing collectible", __FILE__, __LINE__);
 	newpos.x = pos.x * 32 + (32 - 20) / 2;
 	newpos.y = pos.y * 32 + (32 - 20) / 2;
-	crust_img_draw(img, new, newpos);
+	drawtoscale(data, img, new, newpos);
 	crust_img_drop(new);
 }
 
@@ -66,7 +66,7 @@ inline void	render_consumed(t_2d *images, t_data *data, t_2d pos, t_img *img)
 	log_debug("Drawing collectible", __FILE__, __LINE__);
 	newpos.x = pos.x * 32 + (32 - 20) / 2;
 	newpos.y = pos.y * 32 + (32 - 20) / 2;
-	crust_img_draw(img, new, newpos);
+	drawtoscale(data, img, new, newpos);
 	crust_img_drop(new);
 }
 

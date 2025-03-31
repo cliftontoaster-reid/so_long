@@ -108,6 +108,7 @@ SRC = \
 	$(SRC_DIR)render/render.c \
 	$(SRC_DIR)render/cosmetic_init.c \
 	$(SRC_DIR)render/render_dummy.c \
+	$(SRC_DIR)render/drawtoscale.c \
 	\
 	$(SRC_DIR)render/wall/lgbt.c \
 	$(SRC_DIR)render/wall/utils.c \

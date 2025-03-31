@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 13:16:40 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 16:35:00 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/31 12:10:45 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -366,5 +366,7 @@ bool		is_won(t_data *data);
 
 void		render_dummy(t_data *data, t_dummy *dummy);
 void		render_dummies(t_data *data);
+
+void		drawtoscale(t_data *data, t_img *dst, t_img *img, t_2d pos);
 
 #endif

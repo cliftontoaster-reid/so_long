@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 13:24:44 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/29 11:20:34 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/31 12:16:43 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ static void	delete_data_graphics(t_data *data)
 		crust_img_drop(data->img);
 	if (data->floor)
 		crust_img_drop(data->floor);
+	if (data->floorsc)
+		crust_img_drop(data->floorsc);
 	if (data->col_available)
 		free_matrix((void **)data->col_available, data->map->size.y);
 	if (data->collectibles)

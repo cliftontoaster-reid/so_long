@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 14:30:32 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 10:21:00 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/31 12:12:09 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,6 @@ void	render_guy(t_data *data)
 	}
 	pos.x = data->player.x * 32;
 	pos.y = data->player.y * 32;
-	crust_img_draw(data->img, sprite, pos);
+	drawtoscale(data, data->img, sprite, pos);
 	crust_img_drop(sprite);
 }
