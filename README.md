@@ -36,5 +36,8 @@ is licenced under the "BSD 2-Clause" Licence.
 [Clifton Toaster Reid's libFT](https://github.com/cliftontoaster-reid/libft) - A collection of useful functions for C programming, used in the game
 is licenced under the "MIT" Licence.
 
+[Crust](https://github.com/cliftontoaster-reid/crust) - A simple graphical library interface for the MinilibX, used for rendering in the game
+is licenced under the "BSD 2-Clause" Licence.
+
 [MinilibX](https://github.com/42Paris/minilibx-linux) - A simple graphics library for C, used for rendering in the game,
 is licenced under the "BSD 2-Clause" Licence.
