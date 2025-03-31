@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:31:41 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/31 12:57:04 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/31 14:30:01 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "render.h"
 #include "utils.h"
 #include <math.h>
+#include <time.h>
 
 static inline void	render_floors(t_data *data)
 {
@@ -76,13 +77,12 @@ static inline void	printscrn(t_data *data)
 	mlx_put_image_to_window(data->mlx, data->win, data->img->img_ptr, 0, 0);
 }
 
-#include <time.h>
-
 void	render(t_data *data, t_map *map)
 {
 	double	elapsed_ms;
+	clock_t	start;
+	clock_t	end;
 
-	clock_t start, end;
 	start = clock();
 	if (!data || !map)
 		return ;
