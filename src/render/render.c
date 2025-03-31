@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:31:41 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/31 12:36:06 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/31 12:57:04 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	render(t_data *data, t_map *map)
 		prescale(data);
 	printscrn(data);
 	end = clock();
-	elapsed_ms = (end - start) * 1000000.0 / CLOCKS_PER_SEC;
+	elapsed_ms = end - start;
 	log_debug("Render CPU time: %x micro-seconds", __FILE__, __LINE__,
 		(int)elapsed_ms);
 }
