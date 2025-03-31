@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 11:44:58 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/31 12:13:37 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/31 12:42:32 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ inline void	drawtoscale(t_data *data, t_img *dst, t_img *img, t_2d pos)
 	t_2d	newsize;
 	t_2d	newpos;
 
+	if (data->scale <= 0 || data->scale > 10)
+		return ;
 	newsize.x = img->width * data->scale;
 	newsize.y = img->height * data->scale;
 	scaled = crust_img_scale(img, newsize, CRUST_IMG_SCALE_NEAREST);
@@ -27,10 +29,8 @@ inline void	drawtoscale(t_data *data, t_img *dst, t_img *img, t_2d pos)
 		return ;
 	newpos.x = pos.x * data->scale;
 	newpos.y = pos.y * data->scale;
-	crust_img_draw(dst, scaled, newpos);
+	if (newpos.x + newsize.x <= dst->width && newpos.y
+		+ newsize.y <= dst->height)
+		crust_img_draw(dst, scaled, newpos);
 	crust_img_drop(scaled);
-	ft_bzero(&scaled, sizeof(t_img));
-	ft_bzero(&newsize, sizeof(t_2d));
-	ft_bzero(&newpos, sizeof(t_2d));
-	return ;
 }
