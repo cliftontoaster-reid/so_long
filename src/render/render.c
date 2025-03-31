@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:31:41 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/31 12:18:58 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/31 12:36:06 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "Crust/img/scale.h"
 #include "mlx.h"
 #include "render.h"
+#include "utils.h"
+#include <math.h>
 
 static inline void	render_floors(t_data *data)
 {
@@ -59,15 +61,29 @@ void	prescale(t_data *data)
 
 static inline void	printscrn(t_data *data)
 {
+	t_2d	scaled;
+
+	scaled.x = data->scale * data->map->size.x * 32;
+	scaled.y = data->scale * data->map->size.y * 32;
+	crust_img_cpy(data->img, data->floorsc, (t_2d){0, 0}, (t_2d){scaled.x,
+		scaled.y});
+	render_cosmetics(data);
+	just_render_exit(data);
+	render_guy(data);
+	render_dummies(data);
 	if (!data || !data->mlx || !data->win || !data->img || !data->img->img_ptr)
 		return ;
 	mlx_put_image_to_window(data->mlx, data->win, data->img->img_ptr, 0, 0);
 }
 
+#include <time.h>
+
 void	render(t_data *data, t_map *map)
 {
-	t_2d	scaled;
+	double	elapsed_ms;
 
+	clock_t start, end;
+	start = clock();
 	if (!data || !map)
 		return ;
 	data->map = map;
@@ -77,14 +93,9 @@ void	render(t_data *data, t_map *map)
 		* data->scale || data->floorsc->height != data->floor->height
 		* data->scale)
 		prescale(data);
-	scaled.x = data->scale * data->map->size.x * 32;
-	scaled.y = data->scale * data->map->size.y * 32;
-	crust_img_cpy(data->img, data->floorsc, (t_2d){0, 0}, (t_2d){scaled.x,
-		scaled.y});
-	render_cosmetics(data);
-	just_render_exit(data);
-	render_guy(data);
-	render_dummies(data);
-	if (data->win)
-		printscrn(data);
+	printscrn(data);
+	end = clock();
+	elapsed_ms = (end - start) * 1000000.0 / CLOCKS_PER_SEC;
+	log_debug("Render CPU time: %x micro-seconds", __FILE__, __LINE__,
+		(int)elapsed_ms);
 }
