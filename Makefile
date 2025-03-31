@@ -8,11 +8,9 @@ OBJ_DIR    = $(CAC_DIR)/obj
 LFT_DIR    = libft
 MLX_DIR    = $(CAC_DIR)/minilibx
 CRUST_DIR  = $(CAC_DIR)/crust
-OPUS_DIR   = $(CAC_DIR)/opus-1.5.2
 OPENAL_DIR = $(CAC_DIR)/openal-soft
 
 OPENAL_INC = $(OPENAL_DIR)/include
-OPUS_INC = $(OPUS_DIR)/include
 
 INC_DIR    = include/
 SRC_DIR    = src/
@@ -38,12 +36,11 @@ SANITIZE ?= 0
 # Base compiler flags
 CCFLAGS = -Wall -Wextra -Werror -Wpedantic -MMD -MP \
 		  -I$(INC_DIR) -I$(LFT_DIR) -I$(MLX_DIR) -I$(CRUST_DIR)/build/include \
-		  -Wno-strict-prototypes -fPIC -I$(OPENAL_INC) -I$(OPUS_INC) \
+		  -Wno-strict-prototypes -fPIC -I$(OPENAL_INC) \
 		  -DVERSION=\"$(VERSION)\" \
 
 # Linker flags
 LDFLAGS = -L$(LFT_DIR) -L$(MLX_DIR) -lft -lmlx -lXext -lX11 -lm \
-		  -L$(OPUS_DIR)/.libs -lopus \
 		  -Wl,--as-needed -Wl,-rpath,$(LFT_DIR) -Wl,-rpath,$(MLX_DIR) -Wl,-rpath,$(BUILD_DIR)
 
 # Optimization flags based on build type
@@ -54,7 +51,6 @@ CCFLAGS += -flto -O3 -g
 LFT      = $(LFT_DIR)/libft.a
 MLX      = $(MLX_DIR)/libmlx.a
 CRUST    = $(CRUST_DIR)/build/libcrust.a
-OPUS     = $(OPUS_DIR)/.libs/libopus.a
 OPENAL   = $(OPENAL_DIR)/build/libopenal.so
 
 NAME     = so_long
@@ -127,6 +123,18 @@ SRC = \
 	$(SRC_DIR)text/draw_char.c \
 	$(SRC_DIR)text/draw_text.c \
 	$(SRC_DIR)text/create_text.c \
+	\
+	$(SRC_DIR)audio/read_wav_file.c \
+	$(SRC_DIR)audio/read_riff_header.c \
+	$(SRC_DIR)audio/read_fmt_subchunk.c \
+	$(SRC_DIR)audio/init_openal.c \
+	$(SRC_DIR)audio/free_openal.c \
+	$(SRC_DIR)audio/free_wav_data.c \
+	$(SRC_DIR)audio/newsource.c \
+	$(SRC_DIR)audio/freesource.c \
+	$(SRC_DIR)audio/playsource.c \
+	$(SRC_DIR)audio/free_wav_file.c \
+	$(SRC_DIR)audio/set_options.c \
 
 OBJ = $(addprefix $(OBJ_DIR)/so_long/, $(SRC:.c=.o))
 
@@ -141,7 +149,7 @@ build: $(NAME)
 
 incl: $(BUILD_DIR)/include
 
-$(NAME): $(OPENAL) $(OPUS) $(LFT) $(MLX) $(CRUST) $(OBJ) $(OBJ_DIR)/so_long/src/so_long.o
+$(NAME): $(OPENAL) $(LFT) $(MLX) $(CRUST) $(OBJ) $(OBJ_DIR)/so_long/src/so_long.o
 	@$(CC) $(CCFLAGS) -DLOG_LEVEL=$(DEBUG) $(OBJ_DIR)/so_long/src/so_long.o $(OBJ) -o $(NAME) $(CRUST) $(LDFLAGS)
 	@echo -e "$(GREEN)====================================\n      $(NAME) ready.\n====================================$(RESET)"
 
@@ -182,21 +190,6 @@ $(CRUST):
 	@$(MAKE) -C $(CRUST_DIR) OBJ_DIR=$(abspath $(OBJ_DIR))/crust CFLAGS+=" -fPIC" -j$(NPROC)
 	@echo -e "$(GREEN)====================================\n    crust ready.\n====================================$(RESET)"
 
-$(OPUS):
-	@mkdir -p $(CAC_DIR)
-# Download tar ball
-	@echo -e "$(YELLOW)====================================\n    Downloading opus...\n====================================$(RESET)"
-	@curl -o $(CAC_DIR)/opus.tar.gz https://ftp.osuosl.org/pub/xiph/releases/opus/opus-1.5.2.tar.gz &> /dev/null
-# Extract tar ball
-	@echo -e "$(YELLOW)====================================\n    Extracting opus...\n====================================$(RESET)"
-	@tar -xzf $(CAC_DIR)/opus.tar.gz -C $(CAC_DIR)
-# Build opus
-	@echo -e "$(YELLOW)====================================\n    Building opus...\n====================================$(RESET)"
-	@cd $(CAC_DIR)/opus-1.5.2 && cmake . &> /dev/null
-	@cd $(CAC_DIR)/opus-1.5.2 && ./configure --enable-static --disable-shared &> /dev/null
-	@cd $(CAC_DIR)/opus-1.5.2 && make -j$(NPROC) &> /dev/null
-	@echo -e "$(GREEN)====================================\n    opus ready.\n====================================$(RESET)"
-
 $(OPENAL):
 	@mkdir -p $(CAC_DIR)
 	# Clone OpenAL Soft repository
@@ -211,10 +204,6 @@ $(OPENAL):
 clean:
 	@rm -rf $(OBJ_DIR)
 # If opus / openal directories are not empty, run make clean
-	@if [ -d "$(OPUS_DIR)" ]; then \
-		echo -e "$(YELLOW)====================================\n    Cleaning opus...\n====================================$(RESET)"; \
-		cd $(OPUS_DIR) && make clean || true; \
-	fi
 	@if [ -d "$(OPENAL_DIR)" ]; then \
 		echo -e "$(YELLOW)====================================\n    Cleaning OpenAL Soft...\n====================================$(RESET)"; \
 		cd $(OPENAL_DIR)/build && make clean || true; \
