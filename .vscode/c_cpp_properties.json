@@ -5,7 +5,8 @@
       "includePath": [
         "${workspaceFolder}/**",
         "${workspaceFolder}/include",
-        "${workspaceFolder}/.cache/crust/build/include"
+        "${workspaceFolder}/.cache/crust/build/include",
+        "${workspaceFolder}/.cache/openal-soft/include",
       ],
       "defines": [],
       "compilerPath": "/usr/lib64/ccache/clang",

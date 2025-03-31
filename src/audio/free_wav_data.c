@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:47:25 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/31 14:47:58 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/31 17:43:00 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,4 @@ void	free_wav_data(t_wav_data *wavData)
 			free(wavData->data);
 		free(wavData);
 	}
-	ft_bzero(wavData, sizeof(t_wav_data));
 }

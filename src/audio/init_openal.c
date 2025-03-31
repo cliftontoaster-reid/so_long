@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:38:29 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/31 14:42:19 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/31 17:49:25 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static inline int	open_device_and_create_context(t_openalctx *ctx)
 	{
 		LER("Error: Could not create OpenAL context.", __FILE__, __LINE__);
 		alcCloseDevice(ctx->device);
+		ctx->device = NULL;
 		return (0);
 	}
 	alcMakeContextCurrent(ctx->context);

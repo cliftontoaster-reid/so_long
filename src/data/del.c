@@ -6,10 +6,11 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 13:24:44 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/31 12:16:43 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/31 17:36:33 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "audio.h"
 #include "data.h"
 #include "mlx.h"
 #include "utils.h"
@@ -68,4 +69,8 @@ void	delete_data(t_data *data)
 		mlx_destroy_display(data->mlx);
 		free(data->mlx);
 	}
+	if (data->music)
+		freesource(data->music);
+	if (data->alctx)
+		free_openal(data->alctx);
 }

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/31 14:46:24 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/31 14:46:43 by lfiorell         ###   ########.fr       */
+/*   Created: 2025/03/31 18:10:25 by creid             #+#    #+#             */
+/*   Updated: 2025/03/31 17:54:10 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,16 @@ void	free_openal(t_openalctx *ctx)
 	if (ctx)
 	{
 		if (ctx->context)
+		{
+			alcMakeContextCurrent(NULL);
 			alcDestroyContext(ctx->context);
+			ctx->context = NULL;
+		}
 		if (ctx->device)
+		{
 			alcCloseDevice(ctx->device);
+			ctx->device = NULL;
+		}
 		free(ctx);
 	}
 }

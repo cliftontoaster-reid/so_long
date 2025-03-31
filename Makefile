@@ -41,7 +41,8 @@ CCFLAGS = -Wall -Wextra -Werror -Wpedantic -MMD -MP \
 
 # Linker flags
 LDFLAGS = -L$(LFT_DIR) -L$(MLX_DIR) -lft -lmlx -lXext -lX11 -lm \
-		  -Wl,--as-needed -Wl,-rpath,$(LFT_DIR) -Wl,-rpath,$(MLX_DIR) -Wl,-rpath,$(BUILD_DIR)
+		  -Wl,--as-needed -Wl,-rpath,$(LFT_DIR) -Wl,-rpath,$(MLX_DIR) -Wl,-rpath,$(BUILD_DIR) \
+		  -L$(OPENAL_DIR)/build -lopenal \
 
 # Optimization flags based on build type
 
@@ -135,6 +136,7 @@ SRC = \
 	$(SRC_DIR)audio/playsource.c \
 	$(SRC_DIR)audio/free_wav_file.c \
 	$(SRC_DIR)audio/set_options.c \
+	$(SRC_DIR)audio/playmusic.c \
 
 OBJ = $(addprefix $(OBJ_DIR)/so_long/, $(SRC:.c=.o))
 
@@ -154,7 +156,7 @@ $(NAME): $(OPENAL) $(LFT) $(MLX) $(CRUST) $(OBJ) $(OBJ_DIR)/so_long/src/so_long.
 	@echo -e "$(GREEN)====================================\n      $(NAME) ready.\n====================================$(RESET)"
 
 # Compile source files (dependency files generated alongside)
-$(OBJ_DIR)/so_long/%.o: %.c $(LFT) $(MLX)
+$(OBJ_DIR)/so_long/%.o: %.c $(LFT) $(MLX) $(OPENAL) $(CRUST)
 	@mkdir -p $(dir $@)
 	@$(CC) $(CCFLAGS) -DLOG_LEVEL=$(DEBUG) -c $< -o $@
 	@echo -e "$(MAG)Compiled: $<$(RESET)"

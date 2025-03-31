@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:08:20 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/31 11:53:59 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/31 17:36:54 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@
 # include "libft.h"
 # include <stdbool.h>
 
+// Forward declarations
+struct s_openalctx;
+typedef struct s_openalctx		t_openalctx;
+typedef struct s_openalsource	t_openalsource;
+# include "audio.h"
+
 # define GAME_NAME "So Toast - The last bread"
 
 typedef enum e_dir
@@ -25,68 +31,72 @@ typedef enum e_dir
 	LEFT = 1,
 	RIGHT = 2,
 	UP = 3,
-}			t_dir;
+}								t_dir;
 
 typedef struct s_map
 {
-	char	**map;
-	t_2d	size;
-}			t_map;
+	char						**map;
+	t_2d						size;
+}								t_map;
 
 typedef struct s_dummy
 {
-	t_2d	pos;
-	t_2d	lst_pos;
-	bool	horizontal;
-	int		colour;
-}			t_dummy;
+	t_2d						pos;
+	t_2d						lst_pos;
+	bool						horizontal;
+	int							colour;
+}								t_dummy;
 
 typedef struct s_data
 {
-	void	*mlx;
-	void	*win;
+	void						*mlx;
+	void						*win;
 
-	t_set	*set;
-	t_set	*guy;
-	t_set	*dum;
-	t_set	*text_set;
-	t_img	*img;
+	t_set						*set;
+	t_set						*guy;
+	t_set						*dum;
+	t_set						*text_set;
+	t_img						*img;
 
-	t_img	*floor;
-	t_img	*floorsc;
+	t_img						*floor;
+	t_img						*floorsc;
 
-	bool	**col_available;
-	int8_t	**collectibles;
-	uint8_t	**wall_vars;
-	t_2d	player;
-	t_2d	last_player;
+	bool						**col_available;
+	int8_t						**collectibles;
+	uint8_t						**wall_vars;
+	t_2d						player;
+	t_2d						last_player;
 
-	t_map	*map;
+	t_map						*map;
 	/// @brief I hate this code more than segfaults at 3am.
 	/// This data structure is so painful I'd rather debug Windows ME
 	/// with a spoon while simultaneously explaining recursion to my
 	/// grandma over dial-up. If this code were food,
 	/// it would be a mayonnaise and pickle sandwich
 	/// left in a hot car for 3 days.
-	bool	**rndwall;
+	bool						**rndwall;
 	/// @brief Darker then ever
-	bool	d;
+	bool						d;
 
-	int		moves;
-	int		scale;
+	int							moves;
+	int							scale;
 
-	t_list	*dummies;
-}			t_data;
+	t_list						*dummies;
+
+	// audio stuff
+	t_openalctx					*alctx;
+	t_openalsource				*music;
+}								t_data;
 
 typedef enum e_trinary
 {
 	ZERO,
 	ZONE,
 	ZTWO,
-}			t_trinary;
+}								t_trinary;
 
-bool		winnable(t_data *data);
-void		delete_rndwall(bool **rndwall, t_map *map);
-void		delete_data(t_data *data);
-bool		**fill_rndwall(t_data *data, t_map *map);
+bool							winnable(t_data *data);
+void							delete_rndwall(bool **rndwall, t_map *map);
+void							delete_data(t_data *data);
+bool							**fill_rndwall(t_data *data, t_map *map);
 #endif

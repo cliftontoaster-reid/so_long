@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 13:14:27 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/31 15:49:30 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/03/31 17:45:20 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "AL/al.h"
 # include "AL/alc.h"
 # include "data.h"
+# include "libft.h"
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 
@@ -90,6 +92,7 @@ int					read_fmt_subchunk(FILE *file, t_fmt_subchunk *fmt);
 
 t_openalsource		*newsource(t_openalctx *ctx, t_wav_data *wav);
 void				freesource(t_openalsource *source);
+void				freesrcidx(t_list *srcs, int idx);
 
 void				playsource(t_openalsource *source);
 void				pausesource(t_openalsource *source);
@@ -98,5 +101,8 @@ void				stopsource(t_openalsource *source);
 t_openalsource		*setlooping(t_openalsource *source, bool looping);
 void				setgain(t_openalsource *source, float gain);
 void				setpitch(t_openalsource *source, float pitch);
+void				setvolume(t_openalsource *source, float volume);
+
+t_openalsource		*playmusic(t_openalctx *ctx, const char *filename);
 
 #endif
