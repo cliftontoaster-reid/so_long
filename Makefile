@@ -145,7 +145,12 @@ all:
 	@echo -e "$(YELLOW)====================================\n      Preparing build environment...\n====================================$(RESET)"
 	@docker build -t solongbuilder -f tools/Dockerfile . &> /dev/null
 	@echo -e "$(YELLOW)====================================\n      Build environment ready.\n====================================$(RESET)"
-	@docker run --rm -v $$(pwd):/app:Z --user $$(id -u):$$(id -g) -w /app solongbuilder make build -j$(NPROC)
+	@if command -v getenforce > /dev/null && [ "$$(getenforce)" != "Disabled" ]; then \
+		echo -e "$(BLUE)SELinux detected, adding Z flag to Docker volume$(RESET)"; \
+		docker run --rm -v $$(pwd):/app:Z --user $$(id -u):$$(id -g) -w /app solongbuilder make build -j$(NPROC); \
+	else \
+		docker run --rm -v $$(pwd):/app --user $$(id -u):$$(id -g) -w /app solongbuilder make build -j$(NPROC); \
+	fi
 
 build: $(NAME)
 
