@@ -143,7 +143,7 @@ OBJ = $(addprefix $(OBJ_DIR)/so_long/, $(SRC:.c=.o))
 all:
 # Preparing build environment
 	@echo -e "$(YELLOW)====================================\n      Preparing build environment...\n====================================$(RESET)"
-	@docker build -t solongbuilder -f tools/Dockerfile . &> /dev/null
+	@docker build -t solongbuilder -f tools/Dockerfile .
 	@echo -e "$(YELLOW)====================================\n      Build environment ready.\n====================================$(RESET)"
 	@if command -v getenforce > /dev/null && [ "$$(getenforce)" != "Disabled" ]; then \
 		echo -e "$(BLUE)SELinux detected, adding Z flag to Docker volume$(RESET)"; \
@@ -204,8 +204,8 @@ $(OPENAL):
 	@if [ ! -d "$(OPENAL_DIR)" ]; then \
 		git clone https://github.com/kcat/openal-soft $(OPENAL_DIR); \
 	fi
-	@cd $(OPENAL_DIR)/build && cmake .. -DCMAKE_BUILD_TYPE=Release &> /dev/null
-	@cd $(OPENAL_DIR)/build && make -j$(NPROC) &> /dev/null
+	@cd $(OPENAL_DIR)/build && cmake .. -DCMAKE_BUILD_TYPE=Release
+	@cd $(OPENAL_DIR)/build && make -j$(NPROC)
 	@echo -e "$(GREEN)====================================\n    OpenAL Soft ready.\n====================================$(RESET)"
 
 clean:
