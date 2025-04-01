@@ -42,7 +42,7 @@ CCFLAGS = -Wall -Wextra -Werror -Wpedantic -MMD -MP \
 # Linker flags
 LDFLAGS = -L$(LFT_DIR) -L$(MLX_DIR) -lft -lmlx -lXext -lX11 -lm \
 		  -Wl,--as-needed -Wl,-rpath,$(LFT_DIR) -Wl,-rpath,$(MLX_DIR) -Wl,-rpath,$(BUILD_DIR) \
-		  -L$(OPENAL_DIR)/build -lopenal \
+		  -L$(OPENAL_DIR)/build -lopenal -Wl,-rpath,$(OPENAL_DIR)/build
 
 # Optimization flags based on build type
 
