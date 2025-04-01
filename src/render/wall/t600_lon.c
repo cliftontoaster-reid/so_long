@@ -13,7 +13,7 @@
 #include "render.h"
 #include "utils.h"
 
-inline void	wall_t600_lonely_top(t_data *data, t_2d pos, t_img *gay[4])
+void	wall_t600_lonely_top(t_data *data, t_2d pos, t_img *gay[4])
 {
 	if (!islesbian(data, posadd(pos, -1, 0)))
 	{
@@ -37,7 +37,7 @@ inline void	wall_t600_lonely_top(t_data *data, t_2d pos, t_img *gay[4])
 	}
 }
 
-inline void	wall_t600_lonely_left(t_data *data, t_2d pos, t_img *gay[4])
+void	wall_t600_lonely_left(t_data *data, t_2d pos, t_img *gay[4])
 {
 	if (!islesbian(data, posadd(pos, 0, -1)))
 	{
@@ -61,7 +61,7 @@ inline void	wall_t600_lonely_left(t_data *data, t_2d pos, t_img *gay[4])
 	}
 }
 
-inline t_img	*wall_t600_lonely(t_data *data, t_wall_vars vars, t_2d pos)
+t_img	*wall_t600_lonely(t_data *data, t_wall_vars vars, t_2d pos)
 {
 	t_img	*wall;
 	t_img	*gay[4];
