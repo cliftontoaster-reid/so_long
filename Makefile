@@ -149,7 +149,7 @@ all:
 		echo -e "$(BLUE)SELinux detected, adding Z flag to Docker volume$(RESET)"; \
 		docker run --rm -v $$(pwd):/app:Z --user $$(id -u):$$(id -g) -w /app solongbuilder make build -j$(NPROC); \
 	else \
-		docker run --rm -v $$(pwd):/app --user $$(id -u):$$(id -g) -w /app solongbuilder make build -j$(NPROC); \
+		docker run --rm -v $$(pwd):/app solongbuilder make build -j$(NPROC); \
 	fi
 
 build: $(NAME)
