@@ -140,19 +140,7 @@ SRC = \
 
 OBJ = $(addprefix $(OBJ_DIR)/so_long/, $(SRC:.c=.o))
 
-all:
-# Preparing build environment
-	@echo -e "$(YELLOW)====================================\n      Preparing build environment...\n====================================$(RESET)"
-	@docker build -t solongbuilder -f tools/Dockerfile .
-	@echo -e "$(YELLOW)====================================\n      Build environment ready.\n====================================$(RESET)"
-	@if command -v getenforce > /dev/null && [ "$$(getenforce)" != "Disabled" ]; then \
-		echo -e "$(BLUE)SELinux detected, adding Z flag to Docker volume$(RESET)"; \
-		docker run --rm -v $$(pwd):/app:Z --user $$(id -u):$$(id -g) -w /app solongbuilder make build -j$(NPROC); \
-	else \
-		docker run --rm -v $$(pwd):/app solongbuilder make build -j$(NPROC); \
-	fi
-
-build: $(NAME)
+all: $(NAME)
 
 incl: $(BUILD_DIR)/include
 

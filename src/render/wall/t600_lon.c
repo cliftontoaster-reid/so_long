@@ -6,14 +6,14 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 10:59:45 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/27 11:17:01 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:10:09 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
 #include "utils.h"
 
-inline void	wall_t600_lonely_top(t_data *data, t_2d pos, t_img *gay[4])
+void	wall_t600_lonely_top(t_data *data, t_2d pos, t_img *gay[4])
 {
 	if (!islesbian(data, posadd(pos, -1, 0)))
 	{
@@ -37,7 +37,7 @@ inline void	wall_t600_lonely_top(t_data *data, t_2d pos, t_img *gay[4])
 	}
 }
 
-inline void	wall_t600_lonely_left(t_data *data, t_2d pos, t_img *gay[4])
+void	wall_t600_lonely_left(t_data *data, t_2d pos, t_img *gay[4])
 {
 	if (!islesbian(data, posadd(pos, 0, -1)))
 	{
