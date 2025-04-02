@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:03:21 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/31 12:45:53 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/04/02 11:56:46 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "mlx.h"
 #include "render.h"
 #include "utils.h"
+#include <X11/X.h>
 #include <stdio.h>
 
 char	**load_file(char *filepath)
@@ -62,6 +63,8 @@ static void	scale_change(t_data *data, int change)
 	mlx_destroy_window(data->mlx, data->win);
 	data->win = mlx_new_window(data->mlx, data->img->width * data->scale,
 			data->img->height * data->scale, GAME_NAME);
+	mlx_hook(data->win, DestroyNotify, StructureNotifyMask, (int (*)())vkthxbye,
+		data);
 	mlx_key_hook(data->win, key_hook, data);
 	crust_img_drop(data->img);
 	data->img = crust_img_new(data->mlx, data->floor->width * data->scale,
