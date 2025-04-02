@@ -95,8 +95,6 @@ int	main(int argc, char *argv[])
 	else
 	{
 		free(map);
-		mlx_destroy_display(data.mlx);
-		free(data.mlx);
 		return (err("Map file invalid"));
 	}
 	free(map);
