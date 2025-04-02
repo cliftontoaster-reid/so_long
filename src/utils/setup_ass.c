@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 16:09:14 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/31 17:39:00 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/04/02 11:39:33 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ int	setup_textures(t_data *data)
 		return (err("Dummy set creation failed"));
 	if (!setup_dummies(data, data->map))
 		return (err("Dummy setup failed"));
+	data->text_set = crust_set_from_xpm(data->mlx, "assets/images/classic.xpm",
+			(t_2d){8, 8});
+	if (!data->text_set)
+		return (err("Text set creation failed"));
 	return (0);
 }
 

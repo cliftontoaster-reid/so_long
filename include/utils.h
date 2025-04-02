@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 11:18:01 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 16:16:45 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/04/02 11:49:48 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	log_debug(char *format, char *file, int line,
 /// @brief K thanks bye
 /// @param data no
 void	kthxbye(t_data *data);
+int		vkthxbye(t_data *d);
 int		key_hook(int kc, t_data *data);
 
 void	funnywall(void);

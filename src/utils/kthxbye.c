@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 13:34:05 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 09:48:40 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/04/02 11:49:30 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,10 @@ void	kthxbye(t_data *data)
 	else
 		log_info("KTHXBYE", __FILE__, __LINE__);
 	exit(0);
+}
+
+int	vkthxbye(t_data *d)
+{
+	kthxbye(d);
+	return (0);
 }

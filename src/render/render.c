@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:31:41 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/31 14:30:01 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/04/02 11:41:43 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "Crust/img/scale.h"
 #include "mlx.h"
 #include "render.h"
+#include "text.h"
 #include "utils.h"
 #include <math.h>
 #include <time.h>
@@ -39,13 +40,6 @@ static inline void	render_floors(t_data *data)
 	}
 }
 
-void	prerender(t_data *data)
-{
-	setup_cosmetics(data);
-	render_floors(data);
-	just_render_walls(data);
-}
-
 void	prescale(t_data *data)
 {
 	t_2d	new_size;
@@ -60,6 +54,27 @@ void	prescale(t_data *data)
 	data->img = crust_img_new(data->mlx, new_size.x, new_size.y);
 }
 
+static inline void	render_move_text(t_data *data)
+{
+	char	*str;
+	char	*nbr;
+	t_img	*img;
+
+	nbr = ft_itoa(data->moves);
+	if (!nbr)
+		return ;
+	str = ft_strjoin("Moves: ", nbr);
+	free(nbr);
+	if (!str)
+		return ;
+	img = create_text(data, str);
+	free(str);
+	if (!img)
+		return ;
+	drawtoscale(data, data->img, img, (t_2d){8, 8});
+	crust_img_drop(img);
+}
+
 static inline void	printscrn(t_data *data)
 {
 	t_2d	scaled;
@@ -72,6 +87,7 @@ static inline void	printscrn(t_data *data)
 	just_render_exit(data);
 	render_guy(data);
 	render_dummies(data);
+	render_move_text(data);
 	if (!data || !data->mlx || !data->win || !data->img || !data->img->img_ptr)
 		return ;
 	mlx_put_image_to_window(data->mlx, data->win, data->img->img_ptr, 0, 0);
@@ -88,7 +104,11 @@ void	render(t_data *data, t_map *map)
 		return ;
 	data->map = map;
 	if (!data->floor)
-		prerender(data);
+	{
+		setup_cosmetics(data);
+		render_floors(data);
+		just_render_walls(data);
+	}
 	if (!data->floorsc || data->floorsc->width != data->floor->width
 		* data->scale || data->floorsc->height != data->floor->height
 		* data->scale)

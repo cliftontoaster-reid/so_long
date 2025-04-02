@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:03:48 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 23:32:43 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/04/02 11:42:52 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_img	*get_char_img(t_data *data, char c)
 		while (SPECIALS[special_idx] != c)
 			special_idx++;
 		pos.x = special_idx;
-		pos.y = 6;
+		pos.y = 5;
 	}
 	else if (ft_isalnum(c))
 		pos = get_alphanum_pos(c);

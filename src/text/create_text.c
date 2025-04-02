@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:34:44 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/28 23:39:06 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/04/02 11:40:22 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_img	*create_text(t_data *data, char *text)
 		return (NULL);
 	pos.x = 0;
 	pos.y = 0;
-	img = crust_img_new(data, ft_strlen(text) * 8, 8);
+	img = crust_img_new(data->mlx, ft_strlen(text) * 8, 8);
 	if (!img)
 		return (NULL);
 	draw_text(data, img, text, pos);

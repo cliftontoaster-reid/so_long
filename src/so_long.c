@@ -6,7 +6,7 @@
 /*   By: lfiorell <lfiorell@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:59:39 by lfiorell          #+#    #+#             */
-/*   Updated: 2025/03/29 10:44:36 by lfiorell         ###   ########.fr       */
+/*   Updated: 2025/04/02 11:50:46 by lfiorell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 #include "mlx.h"
 #include "render.h"
 #include "utils.h"
+#include <X11/X.h>
+#include <X11/keysym.h>
 #include <fcntl.h>
 #include <unistd.h>
 
@@ -66,6 +68,8 @@ static int	game_start(t_data *data, char *map, char *argv[])
 	render(data, data->map);
 	data->win = mlx_new_window(data->mlx, data->img->width, data->img->height,
 			GAME_NAME);
+	mlx_hook(data->win, DestroyNotify, StructureNotifyMask, (int (*)())vkthxbye,
+		data);
 	mlx_key_hook(data->win, key_hook, data);
 	if (!data->win)
 		return (err("Window creation failed"));
